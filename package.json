@@ -1,0 +1,17 @@
+
+{
+  "name": "reminder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+"engines": {
+    "node": "10.16.0"
+  },
+    "dependencies": {
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0"
+}
