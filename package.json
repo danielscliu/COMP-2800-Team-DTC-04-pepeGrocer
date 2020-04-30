@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "express-ejs-layouts": "^2.5.0"
+    "express-ejs-layouts": "^2.5.0",
+    "firebase": "^7.14.2",
+    "firebase-admin": "^8.11.0",
+    "i": "^0.3.6"
   }
 }
