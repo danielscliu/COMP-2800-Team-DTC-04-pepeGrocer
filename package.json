@@ -2,7 +2,7 @@
   "name": "pepeGrocer",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "function/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,10 +10,14 @@
     "node": "10.16.0"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "firebase": "^7.14.2",
     "firebase-admin": "^8.11.0",
-    "i": "^0.3.6"
+    "firebase-functions": "^3.6.1",
+    "heroku": "^7.39.5",
+    "i": "^0.3.6",
+    "path": "^0.12.7"
   }
 }
