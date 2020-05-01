@@ -33,7 +33,7 @@ app.use(cookieParser());
 
 // app.use(express.static(__dirname + "/public"));
 app.get("/", function(req, res) {
-    res.sendFile(path.resolve("client/fireBase.html"));
+    res.sendFile(path.resolve("public/fireBase.html"));
 })
 
 
