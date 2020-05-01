@@ -1,7 +1,9 @@
 const express = require("express");
-const app = express();
+// const functions = require('firebase-functions');
 const path = require("path");
 const cookieParser = require("cookie-parser");
+
+const app = express();
 // Firebase init
 
 
@@ -41,4 +43,4 @@ app.get("/", function(req, res) {
 app.listen(8080);
 
 // app.listen(process.env.PORT || 3000,
-//     () => console.log("Express server running"));
+//     () => console.log("Express function running"));
