@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const path = require("path");
+const cookieParser = require("cookie-parser");
 // Firebase init
 
 
@@ -19,18 +21,19 @@ admin.initializeApp({
 var db = admin.firestore();
 
 //Simple Read:
-let storesRef = db.collection('stores');
-let allStores = storesRef.get()
-    .then(snapshot => {
-        snapshot.forEach(doc =>{
-            console.log(doc.id, "==>", doc.data());
-        });
-    })
+// let storesRef = db.collection('stores');
+// let allStores = storesRef.get()
+//     .then(snapshot => {
+//         snapshot.forEach(doc =>{
+//             console.log(doc.id, "==>", doc.data());
+//         });
+//     })
 
+app.use(cookieParser());
 
-app.use(express.static(__dirname + "/public"));
+// app.use(express.static(__dirname + "/public"));
 app.get("/", function(req, res) {
-    res.send("Hello Heroku")
+    res.sendFile(path.resolve("client/fireBase.html"));
 })
 
 
