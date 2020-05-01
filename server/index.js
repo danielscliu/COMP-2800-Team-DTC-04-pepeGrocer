@@ -16,18 +16,7 @@ admin.initializeApp({
 });
 
 // As an admin, the app has access to read and write all data, regardless of Security Rules
-var db = admin.firestore(); // TODO: daniel, we are using firestore and not database
-// var ref = db.ref("restricted_access/secret_document");
-// ref.once("value", function(snapshot) {
-//   console.log(snapshot.val());
-// });
-
-
-//Test to read database : 
-// var ref = db.ref("restricted_access/secret_document");
-// ref.once("value", function(snapshot) {
-//   console.log(snapshot.val());
-// });
+var db = admin.firestore();
 
 //Simple Read:
 let storesRef = db.collection('stores');
@@ -46,7 +35,7 @@ app.get("/", function(req, res) {
 
 
 
+app.listen(8080);
 
-
-app.listen(process.env.PORT || 3000, 
-    () => console.log("Express server running"));
+// app.listen(process.env.PORT || 3000,
+//     () => console.log("Express server running"));
