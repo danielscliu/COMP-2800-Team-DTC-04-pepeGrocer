@@ -1,1 +1,1 @@
-web: node function/index.js
+web: node function/addData.js
