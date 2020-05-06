@@ -32,6 +32,18 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 </script>
+
+<script>
+    firebase.auth().currentUser
+        .getIdToken(forceRefresh)
+        .then(function (idToken) {
+            console.log("ID OK");
+
+        }).catch(function (error) {
+        // Handle error
+    });
+</script>
+
 <!--CHECK LOGIN 2?-->
 <script>
     firebase.auth().onAuthStateChanged(function (user) {
@@ -39,25 +51,11 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
             console.log("loggedin");
 
         } else {
-            console.log("NOPE");
+            console.log("NOPE not logged in");
+            window.location.href = "/";
         }
     });
 </script>
-
-
-<!--CHECK LOGIN-->
-<!--<script>-->
-<!--    firebase.auth().currentUser-->
-<!--        .getIdToken(/* forceRefresh */ true)-->
-<!--        .then(function (idToken) {-->
-<!--            console.log("ID OK");-->
-<!--            $.post-->
-<!--    }).catch(function (error) {-->
-<!--        // Handle error-->
-<!--    });-->
-<!--</script>-->
-
-
 
 
 <body>
@@ -70,6 +68,10 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         e.preventDefault();
         firebase.auth().signOut();
         console.log("user signed out");
+        window.location.href = "/";
     });
 </script>
+<!--CHECK LOGIN-->
+
+
 </html>
