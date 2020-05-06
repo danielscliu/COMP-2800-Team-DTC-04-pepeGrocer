@@ -4,6 +4,9 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 
 const app = express();
+app.use(express.urlencoded({extended: true}));
+app.use(express.static("public"));
+app.set("view engine", "ejs");
 // Firebase init
 
 
@@ -39,6 +42,7 @@ app.get("/", function(req, res) {
 })
 
 
+app.get("/searchByIngredients", (req, res)=> res.render("pages/searchByIngredients"));
 
 // app.listen(8080);
 
