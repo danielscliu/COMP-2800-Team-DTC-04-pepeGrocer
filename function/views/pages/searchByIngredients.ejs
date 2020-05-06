@@ -9,16 +9,58 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <style>
+
         div.storeBox {
             overflow-y: auto;
             height: 59vh;
-            border-style: solid;
-            border-color: black;
+            background-color: orange;
+        }
+
+        div.card {
+            margin: 5vh;
+            background-color: lightgray;
         }
 
         div#stores {
             padding: 2vh;
         }
+
+        div#mainBlock {
+            background-color: #2e2b2e;
+        }
+
+        body {
+            background-color: #2e2b2e;
+        }
+
+        #inputBox {
+            background-color: orange;
+            width: 30vw;
+            text-align: center;
+        }
+
+        .appBrand {
+            display: inline;
+        }
+        
+        #pepe {
+            color: white;
+            float: left;
+        }
+        
+        #grocer {
+            color: orange;
+            float: right;
+        }
+
+        #enterItem {
+            color: white;
+        }
+
+        #inStock {
+            color: white;
+        }
+
     </style>
 
     <title>Search By Ingredients</title>
@@ -36,16 +78,16 @@
         crossorigin="anonymous"></script>
 
 <div id='mainBlock' class="container vertical-align table-responsive">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
         <a class="navbar-brand" id='pepeGrocer'>
-            <img src="/Project_2/COMP-2800-Team-DTC-04-pepeGrocer/public/imgs/feelsGoodMan.Png" witdth="40" height="40" alt="">
-            pepeGrocer
+            <div id="pepe" class="appBrand">pepe</div> <div id="grocer" class="appBrand">Grocer</div>
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon navbar-light">
+            </span>
         </button>
 
         <div class="collapse navbar-collapse" id='navbarNav'>
@@ -82,8 +124,8 @@
 
     <div class="row justify-content-center" id="search">
         <form action="/searchByIngredients" method="post">
-            <input type="text" name="ingredients" />
-            <input type="submit" />
+            <input type="text" name="ingredients"  value="Enter Item" id="inputBox" />
+            <input type="submit" value="Search" id="submitBtn" />
         </form>
     </div>
 
