@@ -1,7 +1,5 @@
 const express = require("express");
 // const functions = require('firebase-functions');
-const path = require("path");
-const cookieParser = require("cookie-parser");
 
 const app = express();
 // Firebase init
@@ -22,7 +20,21 @@ admin.initializeApp({
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = admin.firestore();
 
-//Simple Read:
+
+
+
+//Write store name data
+//When maps available, dictionary of stores NEED to be long+lat or unique or group search
+
+dictionaryOfStores = ["costco downtown", "Costco Willingdon", "Costco Richmond", "Safeway Robson", "Osaka Supermarket"];
+dictOfAddress = ["605 Expo Blvd, Vancouver, BC V6B 1V4", "4500 Still Creek RD, Burnaby, BC V5C 0B5",
+    "9151 Bridgeport Rd, Richmond, BC V6X 3L9", "1766 Robson St, Vancouver, BC V6G 1E2"]
+
+// function enterMultipleStoreName(item) {
+//     let setDoc = db.collection('stores').doc("costco rmd").set({name: "Costco Richmond"});
+// }
+
+
 // let storesRef = db.collection('stores');
 // let allStores = storesRef.get()
 //     .then(snapshot => {
@@ -30,15 +42,6 @@ var db = admin.firestore();
 //             console.log(doc.id, "==>", doc.data());
 //         });
 //     })
-
-app.use(cookieParser());
-
-// app.use(express.static(__dirname + "/public"));
-app.get("/", function(req, res) {
-    res.sendFile(path.resolve("public/fireBase.html"));
-})
-
-
 
 // app.listen(8080);
 
