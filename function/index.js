@@ -26,17 +26,23 @@ app.get("/test", function(req, res) {
     res.sendFile(path.resolve("public/persistTest.html"));
 })
 
-function verifyIdentity(idToken) {
-    // idToken comes from the client app
-    admin.auth().verifyIdToken(idToken)
-        .then(function(decodedToken) {
-            let uid = decodedToken.uid;
-            return true;
-        }).catch(function(error) {
-        console.log("Not signed in");
-            return false;
-    });
-}
+app.post("/auth", function(req, res) {
+    console.log("successful post");
+    let uid = req.query.uid;
+    console.log(uid);
+})
+
+// function verifyIdentity(idToken) {
+//     // idToken comes from the client app
+//     admin.auth().verifyIdToken(idToken)
+//         .then(function(decodedToken) {
+//             let uid = decodedToken.uid;
+//             return true;
+//         }).catch(function(error) {
+//         console.log("Not signed in");
+//             return false;
+//     });
+// }
 
 // app.listen(8080);
 

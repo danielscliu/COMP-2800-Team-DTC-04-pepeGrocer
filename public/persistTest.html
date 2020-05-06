@@ -34,14 +34,14 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 </script>
 
 <script>
-    firebase.auth().currentUser
-        .getIdToken(forceRefresh)
-        .then(function (idToken) {
-            console.log("ID OK");
-
-        }).catch(function (error) {
-        // Handle error
-    });
+    // firebase.auth().currentUser
+    //     .getIdToken(forceRefresh)
+    //     .then(function (idToken) {
+    //         console.log("ID OK");
+    //
+    //     }).catch(function (error) {
+    //     // Handle error
+    // });
 </script>
 
 <!--CHECK LOGIN 2?-->
@@ -49,6 +49,13 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             console.log("loggedin");
+            $.ajax({
+                type: 'POST',
+                data: {
+                    "uid" : user.uid
+                },
+                url: '/auth?uid=' + user.uid
+            })
 
         } else {
             console.log("NOPE not logged in");
