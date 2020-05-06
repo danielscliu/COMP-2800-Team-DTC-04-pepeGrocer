@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Persistence Test</title>
 </head>
+<!--AJAX CDN-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
 
@@ -34,9 +36,10 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 <script>
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-console.log("loggedin");
+            console.log("loggedin");
+
         } else {
-        console.log("NOPE");
+            console.log("NOPE");
         }
     });
 </script>
@@ -48,23 +51,25 @@ console.log("loggedin");
 <!--        .getIdToken(/* forceRefresh */ true)-->
 <!--        .then(function (idToken) {-->
 <!--            console.log("ID OK");-->
-<!--            $.ajax(-->
-<!--                {-->
-<!--                    url: '/auth',-->
-<!--                    type: 'POST',-->
-<!--                    data: {idToken: idToken},-->
-<!--                    success: function (response) {-->
-<!--                        console.log('sent successfully')-->
-<!--                        console.log(uid)-->
-<!--                    }-->
-<!--                })-->
-<!--        }).catch(function (error) {-->
+<!--            $.post-->
+<!--    }).catch(function (error) {-->
 <!--        // Handle error-->
 <!--    });-->
 <!--</script>-->
 
+
+
+
 <body>
-
-
+<a href="#"id="logoutButton">Logout</a>
 </body>
+<!--LOGOUT-->
+<script>
+    const logout = document.querySelector("#logoutButton");
+    logout.addEventListener('click', (e) => {
+        e.preventDefault();
+        firebase.auth().signOut();
+        console.log("user signed out");
+    });
+</script>
 </html>
