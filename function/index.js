@@ -24,25 +24,51 @@ admin.initializeApp({
 
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = admin.firestore();
-
-//Simple Read:
+// Simple Read:
 // let storesRef = db.collection('stores');
 // let allStores = storesRef.get()
 //     .then(snapshot => {
 //         snapshot.forEach(doc =>{
 //             console.log(doc.id, "==>", doc.data());
 //         });
+
 //     })
+
+let stores = db.collection('stores');
+let targetItem = 'banana'
+
+// Search by Item
+let query = stores.where(targetItem, '==', true).get()
+  .then(snapshot => {
+    if (snapshot.empty) {
+      console.log('ooof looks like everything out of stock');
+      return;
+    }  
+
+    snapshot.forEach(doc => {
+      console.log(`the following stores contain ${targetItem}`)
+      console.log(doc.id);
+    });
+  })
+  .catch(err => {
+    console.log('Error getting documents', err);
+  });
+
+
+  
+  
+
+
 
 app.use(cookieParser());
 
 // app.use(express.static(__dirname + "/public"));
 app.get("/", function(req, res) {
-    res.sendFile(path.resolve("public/fireBase.html"));
+    res.sendFile(path.resolve("../public/fireBase.html"));
 })
 
 
-app.get("/searchByIngredients", (req, res)=> res.render("pages/searchByIngredients"));
+app.get("/search", (req, res)=> res.render("pages/searchByIngredients"));
 
 // app.listen(8080);
 
