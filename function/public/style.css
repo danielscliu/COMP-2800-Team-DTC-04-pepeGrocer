@@ -1,0 +1,55 @@
+div.storeBox {
+    overflow-y: auto;
+    height: 59vh;
+    background-color: orange;
+}
+
+div.card {
+    margin: 5vh;
+    background-color: lightgray;
+}
+
+div#stores {
+    padding: 2vh;
+}
+
+div#mainBlock {
+    background-color: #2e2b2e;
+}
+
+body {
+    background-color: #2e2b2e;
+}
+
+#inputBox {
+    background-color: orange;
+    width: 30vw;
+    text-align: center;
+}
+
+.appBrand {
+    display: inline;
+}
+
+#pepe {
+    color: white;
+    float: left;
+}
+
+#grocer {
+    color: orange;
+    float: right;
+}
+
+#enterItem {
+    color: white;
+}
+
+#inStock {
+    color: white;
+}
+
+.navbar-nav > li{
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
