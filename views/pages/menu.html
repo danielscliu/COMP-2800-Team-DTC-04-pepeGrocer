@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <style>
+        div.top{
+            margin-top: 80px;
+        }
+    header {
+        text-align: center;
+        
+    }
+    div.text-center {
+        margin-top: 30px;
+    }
+    button {
+        height: 70px;
+    }
+    body {
+        background-color: #292929;
+
+    }
+    p {
+        color: white;
+    }
+
+
+    </style>
+
+    <title>Search By Ingredients</title>
+</head>
+<body>
+    <header>
+        <button style="text-align: start; height: 40px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Log out
+          </button>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  ...
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                  <button type="button" class="btn btn-primary">Yes</button>
+                </div>
+              </div>
+            </div>
+          </div></header>
+
+    <div class="top">
+    <div class="text-center">
+        <p class="white">
+        <p >Welcome, User</p>
+        <p>You have 5 free searches left.</p>
+        <p>Please update a missing item or 
+        <p>report a lineup status to earn more searches</p>
+        </p>
+    </div>
+    <div class="text-center">
+        <button type="button" class="btn btn-primary">Report Missing Item Wait Time</button>
+    </div>
+        <div class="text-center">
+        <button onclick="window.location.href='./searchByIngredients.html'" type="button" class="btn btn-primary">Search by Ingredient</button>
+    </div>
+        <div class="text-center">
+        <button type="button" class="btn btn-primary">Shopping List</button>
+    </div>
+        <div class="text-center">
+        <button type="button" class="btn btn-primary">Store Lineup near me</button>
+    </div>
+    </div>
+
+
+
+
+</body>
+</html>
