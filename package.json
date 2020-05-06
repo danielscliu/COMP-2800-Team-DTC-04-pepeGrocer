@@ -1,5 +1,5 @@
 {
-  "name": "pepeGrocer",
+  "name": "pepegrocer",
   "version": "1.0.0",
   "description": "",
   "main": "function/index.js",
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "cookie-parser": "^1.4.5",
+    "ejs": "^3.1.2",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "firebase": "^7.14.2",
@@ -19,5 +20,15 @@
     "heroku": "^7.39.5",
     "i": "^0.3.6",
     "path": "^0.12.7"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielscliu/COMP-2800-Team-DTC-04-pepeGrocer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielscliu/COMP-2800-Team-DTC-04-pepeGrocer/issues"
+  },
+  "homepage": "https://github.com/danielscliu/COMP-2800-Team-DTC-04-pepeGrocer#readme"
 }
