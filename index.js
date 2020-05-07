@@ -23,81 +23,60 @@ admin.initializeApp({
 
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = admin.firestore();
-// Simple Read:
-// let storesRef = db.collection('stores');
-// let allStores = storesRef.get()
-//     .then(snapshot => {
-//         snapshot.forEach(doc =>{
-//             console.log(doc.id, "==>", doc.data());
-//         });
+let query = db.collection('stores').get()
+    .then(snapshot => {});
 
-//     })
-let inStockBoolean = false;
+app.get("/a", (req, res) => {
+    console.log(query);
+})
 
-function storeSummary(name, address, waittime) {
-    this.name = name;
-    this.address = address;
-    this.waittime = waittime;
-}
-
-let itemStockBoolean;
-// function search by Item
+let itemStockBoolean = true;
+let storeInStock = [];
 function queryItem(targetItem) {
     let stores = db.collection('stores');
-    var storesInStock = new Array();
+    itemStockBoolean = false;
+    stores.where(targetItem, '==', true).get()
 
-    let query = stores.where(targetItem, '==', true).get()
-
-        .then(snapshot => {
+        .then(async snapshot => {
             if (snapshot.empty) {
                 console.log('ooof looks like everything out of stock');
                 itemStockBoolean = false;
                 return;
             }
-            snapshot.forEach(doc => {
-                //console.log(`the following stores contain ${targetItem} is at location: `)
-                let address = doc.get("Address")
-                let name = doc.get("Name")
-                let waittime = doc.get("WaitTime")
-                inStock = new storeSummary(name, address, waittime)
-
-
-                //console.log(inStock);
-
-                storesInStock.push(inStock);
-                //console.log(storesInStock)
-                // name = doc.get('Name')
-                // address = doc.get('Address')
-                // waitTime = doc.get('WaitTime')
-                // let thisStore = new storeSummary(name, address, waittime)
-                // stores.push(storesInStock);
-            itemStockBoolean = true;
-
-            });
-            ;
-        }, console.log(storesInStock))
-
-
-    // .catch(err => {
-    //   console.log('Error getting documents', err);
-    // });
-
+            await snapshotAsync(snapshot);
+            // return storesInStock;
+        });
 
 }
-
-function storeArr(item, Array) {
-    Array.push(item)
+function snapshotAsync(snap) {
+    snap.forEach(doc => {
+        //console.log(`the following stores contain ${targetItem} is at location: `)
+        let address = doc.get("Address");
+        let name = doc.get("Name");
+        let waitTime = doc.get("WaitTime");
+        let inStock = new storeSummary(name, address, waitTime);
+        itemStockBoolean = true;
+        storeInStock.push(inStock);
+    })
+}
+function storeSummary(name, address, waitTime) {
+    this.name = name;
+    this.address = address;
+    this.waitTime = waitTime;
 }
 
-app.post("/searchByIngredients", async(req, res) => {
-    console.log("searched");
-        let targetItem = req.body.ingredients;
-        await queryItem(targetItem);
-        if (inStockBoolean) {
-            res.render("pages/searchByIngredients", {notFound: " "});
-        } else {
-            res.render("pages/searchByIngredients", {notFound: "Sorry we couldn't find your item"});
-        }
+
+app.post("/searchByIngredients", (req, res) => {
+    let targetItem = req.body.ingredients;
+    queryItem(targetItem);
+
+    console.log(storeInStock);
+
+    if (itemObject) {
+        // console.log("return ed yes");
+    } else {
+        // console.log("returned none");
+    }
 });
 
 
