@@ -23,15 +23,17 @@ admin.initializeApp({
 
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = admin.firestore();
-let query = db.collection('stores').get()
-    .then(snapshot => {});
+// Testing
+// let query = db.collection('stores').get()
+//    .then(snapshot => {});
 
 app.get("/a", (req, res) => {
     console.log(query);
-})
+});
 
 let itemStockBoolean = true;
 let storeInStock = [];
+
 function queryItem(targetItem) {
     let stores = db.collection('stores');
     itemStockBoolean = false;
@@ -45,18 +47,23 @@ function queryItem(targetItem) {
             }
             await snapshotAsync(snapshot);
             // return storesInStock;
-        });
-
+        })
+        .then(console.log(`${storeInStock} are the stores that carry your item`))
 }
+
 function snapshotAsync(snap) {
-    snap.forEach(doc => {
+
+    //console.log(snap);
+     snap.forEach(doc => {
+        //console.log(typeof(doc));
         //console.log(`the following stores contain ${targetItem} is at location: `)
-        let address = doc.get("Address");
-        let name = doc.get("Name");
-        let waitTime = doc.get("WaitTime");
-        let inStock = new storeSummary(name, address, waitTime);
-        itemStockBoolean = true;
-        storeInStock.push(inStock);
+        // let address = doc.get("Address");
+        // let name = doc.get("Name");
+        // let waitTime = doc.get("WaitTime");
+        // inStock= new storeSummary(name, address, waitTime);
+        // itemStockBoolean = true;
+        // console.log(inStock);
+         storeInStock.push(new storeSummary(doc.get("Name"), doc.get("Address"), doc.get("WaitTime")))
     })
 }
 function storeSummary(name, address, waitTime) {
@@ -68,15 +75,15 @@ function storeSummary(name, address, waitTime) {
 
 app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
+    // clear the list of stores, otherwise they will append all the stores to list
     queryItem(targetItem);
+    console.log(Object.values(storeInStock));
 
-    console.log(storeInStock);
-
-    if (itemObject) {
-        // console.log("return ed yes");
-    } else {
-        // console.log("returned none");
-    }
+    // if (itemObject) {
+    //      console.log("return ed yes");
+    // } else {
+    //      console.log("returned none");
+    // }
 });
 
 

@@ -19,7 +19,7 @@ var db = admin.firestore();
 
 // app.use(express.static(__dirname + "/public"));
 app.get("/", function(req, res) {
-    res.sendFile(path.resolve("public/fireBase.html"));
+    res.sendFile(path.resolve("../public/fireBase.html"));
 })
 
 app.get("/test", function(req, res) {
@@ -46,5 +46,5 @@ app.post("/auth", function(req, res) {
 
 // app.listen(8080);
 
-app.listen(process.env.PORT || 3000,
+app.listen(process.env.PORT || 8000,
     () => console.log("Express function running"));
