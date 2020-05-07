@@ -3,16 +3,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            background-color: #292929;
+
+        }
+
+        form {
+            text-align: center;
+            padding: 5vh 5vw;
+        }
+
+
+        header {
+      border: black solid 1px;
+      background-color: black;
+      text-align: center;
+    }
+        input.box {
+            height: 5vh;
+            width: 30vw;
+
+        }
+    button {
+        background-color: #FFA31A;
+        border: #FFA31A solid 0px;
+        width: 7vw;
+        height: 5vh;
+    }
+
+    img {
+        height: 32vh;
+    }
+
+    </style>
+
 </head>
 <body>
-    <h1>Login</h1>
-<div>
-Username: <input type="text" name="username">
-Password: <input type="password" name="password">
+    <header><h3><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h3></header>
+
+<form action="" method="post" style="color: white;">
+<h2>Username:</h2><input class="box" type="text" name="username">
+<h2>Password: </h2><input class="box" type="password" name="password">
+
+<div class="">
+<button onlick="location.href='menu.html'" id="login" type="submit" name="submit">Login</button>
+<a style="color: powderblue;" href="">Sign Up</a>
 </div>
+</form>
 <div>
-<input type="submit" name="submit" value="Login">
-<a href=
+    <img src="../../../public/imgs/pepe.png"></img>
+
 </div>
+
+
 </body>
 </html>
