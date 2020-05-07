@@ -1,11 +1,11 @@
 div.storeBox {
     overflow-y: auto;
-    height: 59vh;
+    height: 65vh;
     background-color: orange;
 }
 
 div.card {
-    margin: 5vh;
+    margin: 4vh;
     background-color: lightgray;
 }
 
@@ -43,6 +43,7 @@ body {
 }
 
 #enterItem {
+    padding-top: 1vh;
     color: white;
 }
 
@@ -59,3 +60,7 @@ body {
     margin: 5vh;
 }
 
+#search {
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+}

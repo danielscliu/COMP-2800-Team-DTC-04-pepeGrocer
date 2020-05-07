@@ -24,7 +24,6 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-<div id='mainBlock' class="mx-auto vertical-align table-responsive">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
         <a class="navbar-brand" id='pepeGrocer'>
@@ -40,21 +39,21 @@
         <div class="collapse navbar-collapse" id='navbarNav'>
             <ul class="navbar-nav w-100 mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Report Missing Items/Wait Time</a>
+                    <a class="nav-link" href="/underConstruction.html">Report Missing Items/Wait Time</a>
                 </li>
 
                 <li class="nav-item active">
-                    <a class="nav-link active" href="#">Search by Ingredients</a>
+                    <a class="nav-link active">Search by Ingredients</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Shopping List</a>
+                    <a class="nav-link" href="/underConstruction.html">Shopping List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Store Lineup Near Me<span
+                    <a class="nav-link" href="/underConstruction.html">Store Lineup Near Me<span
                                 class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About Us</a>
+                    <a class="nav-link" href="/underConstruction.html">About Us</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link btn btn-secondary" type='button' href="#" id='signout'
@@ -66,11 +65,12 @@
 
     <hr>
 
+    <div id='mainBlock' class="container vertical-align table-responsive">
+
     <div id='enterItem'>
-    <h1 id='counter' style="text-align: center">Enter an item to search</h1>
+    <h3 style="text-align: center">Enter an item to search</h3>
     </div>
 
-    <hr>
 
     <div class="row justify-content-center" id="search">
         <form action="/searchByIngredients" method="post">
@@ -79,12 +79,9 @@
         </form>
     </div>
 
-    <hr>
-
-
     <div id="stores" class="container vertical-align table-responsive">
         <div id='inStock'>
-            <h5 id='store'>Stores in stock</h5>
+            <h6 id='store'>Stores in stock</h6>
         </div>
         <div class="storeBox">
 
