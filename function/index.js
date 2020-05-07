@@ -34,29 +34,70 @@ var db = admin.firestore();
 
 //     })
 
-let stores = db.collection('stores');
-let targetItem = 'banana'
-
-// Search by Item
-let query = stores.where(targetItem, '==', true).get()
-  .then(snapshot => {
-    if (snapshot.empty) {
-      console.log('ooof looks like everything out of stock');
-      return;
-    }  
-
-    snapshot.forEach(doc => {
-      console.log(`the following stores contain ${targetItem}`)
-      console.log(doc.id);
-    });
-  })
-  .catch(err => {
-    console.log('Error getting documents', err);
-  });
+function storeSummary(name, address, waittime) {
+  this.name = name;
+  this.address = address;
+  this.waittime = waittime; 
+}
 
 
+// function search by Item
+function queryItem(targetItem) {
+      let stores = db.collection('stores');
+      var storesInStock = new Array (); 
+      
+      let query = stores.where(targetItem, '==', true).get()
+
+        .then(snapshot => {
+          if (snapshot.empty) {
+            console.log('ooof looks like everything out of stock');
+            return;
+          }  
+          snapshot.forEach(doc => {
+            //console.log(`the following stores contain ${targetItem} is at location: `)
+            let address = doc.get("Address")
+            let name = doc.get("Name")
+            let waittime = doc.get("WaitTime")
+            inStock = new storeSummary(name, address, waittime)
+
+          
+         
+            //console.log(inStock); 
+
+            storesInStock.push(inStock);
+            //console.log(storesInStock)
+            // name = doc.get('Name')
+            // address = doc.get('Address')
+            // waitTime = doc.get('WaitTime')
+            // let thisStore = new storeSummary(name, address, waittime)
+            // stores.push(storesInStock);
+          
+          });
+         ;
+        }, console.log(storesInStock)) 
+      
+        
+        // .catch(err => {
+        //   console.log('Error getting documents', err);
+        // });
+  
+ 
+} 
+
+function storeArr (item, Array) {
+  Array.push(item)
+} 
+
+  app.post("/searchByIngredients", (req, res) => {
+     let targetItem = req.body.ingredients
+     queryItem(targetItem) 
+  }
+  
+  )
   
   
+
+
 
 
 
