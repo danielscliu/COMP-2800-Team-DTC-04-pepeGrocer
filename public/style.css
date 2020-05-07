@@ -39,6 +39,7 @@ body {
 #grocer {
     color: orange;
     float: right;
+    margin-right: 1vw;
 }
 
 #enterItem {
@@ -50,7 +51,11 @@ body {
 }
 
 .navbar-nav > li {
-    margin-left: 1vw;
-    margin-right: 1vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+
+#notFound {
+    margin: 5vh;
 }
 
