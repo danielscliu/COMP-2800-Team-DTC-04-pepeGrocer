@@ -46,6 +46,10 @@ app.get("/searchByIngredients", (req, res)=> res.render("./pages/searchByIngredi
 
 app.get("/menu", (req, res)=> res.render("./pages/menu"));
 
+app.get("/login", (req, res)=> res.render("./pages/login"));
+
+app.get("/aboutUs", (req, res)=> res.render("./pages/aboutUs"));
+
 
 // app.listen(8080);
 

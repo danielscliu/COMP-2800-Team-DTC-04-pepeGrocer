@@ -53,13 +53,14 @@ html {
 }
 
 .title {
-  color: grey;
+  color: white;
 }
 
 .button {
   border: none;
   outline: 0;
   display: inline-block;
+  color: white;
   padding: 8px;
   background-color: #808080;
   text-align: center;
@@ -70,6 +71,15 @@ html {
 .button:hover {
   background-color: #555;
 }
+.textrow {
+  display: flex;
+  justify-content: center;
+}
+
+.textcolumn {
+  margin: 20px;
+}
+
 
 @media screen and (max-width: 800px) {
   .column {
@@ -80,8 +90,6 @@ html {
 </style>
 
 
-
-  </style>
 
 
 </head>
@@ -133,8 +141,21 @@ html {
 
 <div class="description" style="text-align:center; color: #FFA31A;">
   <h1>Our Team</h1>
-    <br>We are a team of students collaborating across a great range of<br> time-zones that quite work around the clock to bring you the solution to your shopping needs.</br></br></div>
-<div class="row">
+    <div class="textrow">
+    <p class="textcolumn">
+      When you’re deciding,
+      <br>What to buy today?
+      <br>The best time to avoid lines?
+    </p>
+    <p class="textcolumn">
+      Minimize the spread<br>
+      Save that precious time shopping<br>
+      Social distancing
+    </p>
+    </div>
+</div>
+
+    <div class="row">
   <div class="column">
     <div class="card">
       <img src="../../../public/imgs/contributors/daniel.jpg" alt="Jane" style="width:100%">
