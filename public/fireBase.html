@@ -47,12 +47,22 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 </body>
 
 <script>
+
+    // CHANGE USER PERSISTENCE TO THIS SESSION (EXITS WHEN TAB/WINDOW CLOSES)
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then(function() {
+            console.log("user persistence confirmed SESSION");
+            return firebase.auth().signInWithEmailAndPassword(email, password);
+        });
+
+
+    // LOG IN UI
     var uiConfig = {
 
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
     signInFlow: 'popup',
         credentialHelper: firebaseui.auth.CredentialHelper.NONE,
-        signInSuccessUrl: "https://www.figma.com/proto/oueTootwpmgt6g7UZIKPZ7/Login?node-id=69%3A11&scaling=min-zoom", //TODO: redirect
+        signInSuccessUrl: "/test", //TODO: redirect
         signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         firebase.auth.EmailAuthProvider.PROVIDER_ID,
