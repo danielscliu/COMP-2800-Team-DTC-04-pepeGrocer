@@ -14,6 +14,46 @@
     <title>Menu</title>
 </head>
 
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
+
+
+<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+
+<!--firebase API config files-->
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyBqB5QHNRRquDJxd9OiXXa9c33dI4zDSDA",
+        authDomain: "firebaetest-6e21a.firebaseapp.com",
+        databaseURL: "https://firebaetest-6e21a.firebaseio.com",
+        projectId: "firebaetest-6e21a",
+        storageBucket: "firebaetest-6e21a.appspot.com",
+        messagingSenderId: "763860546362",
+        appId: "1:763860546362:web:35a3ed2ac35df4abd5d603",
+        measurementId: "G-V56860GVZL"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
+
+<!--RETREIVE USER'S NAME-->
+<script>
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            document.getElementById("user").innerHTML = user.displayName;
+        } else {
+            console.log("error retreiving username");
+        }
+    })
+
+</script>
+
 <body id="menuBody">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -79,7 +119,7 @@
 
     <div class="paragraph menuParagraph">
         <p class="white">
-        <p>Welcome, User</p>
+        <p>Welcome, <span id="user"></span>.</p>
         <p>You have 5 free searches left.</p>
         <p>Please update a missing item or 
         <p>report a lineup status to earn more searches</p>
