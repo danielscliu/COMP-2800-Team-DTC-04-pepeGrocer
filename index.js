@@ -46,6 +46,7 @@ function queryItem(targetItem) {
                 itemStockBoolean = false;
                 return;
             }
+            itemStockBoolean = true;
             await snapshotAsync(snapshot);
             // return storesInStock;
         })
@@ -80,7 +81,7 @@ app.post("/searchByIngredients", (req, res) => {
     // clear the list of stores, otherwise they will append all the stores to list
     queryItem(targetItem);
     // can't get async working here for query item so we're just gonna take a nap for 500 ms
-    setTimeout(function(){res.render("pages/searchByIngredients", {stores: storeInStock})
+    setTimeout(function(){res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
     }, 500)
 });
 
@@ -92,7 +93,7 @@ app.get("/", function (req, res) {
 
 
 app.get("/search", (req, res) =>
-    res.render("pages/searchByIngredients", {stores: storeInStock}));
+    res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean:itemStockBoolean}));
     ;
 
 

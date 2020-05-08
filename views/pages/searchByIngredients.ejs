@@ -68,13 +68,13 @@
     <div id='mainBlock' class="container vertical-align table-responsive">
 
     <div id='enterItem'>
-    <h3 style="text-align: center">Enter an item to search</h3>
+    <h3 style="text-align: center">Enter an item to see what store carries it near you</h3>
     </div>
 
 
     <div class="row justify-content-center" id="search">
         <form action="/searchByIngredients" method="post">
-            <input type="text" name="ingredients"  value="Enter Item" id="inputBox" />
+            <input type="text" name="ingredients"  placeholder="Enter Item" id="inputBox" />
             <input type="submit" value="Search" id="submitBtn" />
         </form>
     </div>
@@ -86,7 +86,7 @@
         <div class="storeBox">
 
             <div id="notFound">
-                <h3><% stores.length == 0 ? 'Sorry out of stock': 'These are the stores for you' %></h3>
+                <h3><%= itemStockBoolean? 'These are the stores for you':'oof we are having trouble find that item' %></h3>
             </div>
 
             <% stores.forEach(store => { %>
