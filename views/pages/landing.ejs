@@ -2,18 +2,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>pepeGrocer</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
+    <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
 
     <link rel="stylesheet" href="/style.css">
     <style>
         body {
             background-color: #292929;
-            overflow-y: hidden; 
+            overflow-y: hidden;
             overflow-x: hidden;
         }
+
         form {
             justify-content: center;
             padding: 5px 10px;
@@ -22,9 +23,10 @@
             height: 260px;
             /* text-align: center; */
         }
+
         .container {
             text-align: center;
-        }  
+        }
 
         #login {
             width: 100px;
@@ -34,88 +36,98 @@
 
         header {
 
-      text-align: center;
-    }
+            text-align: center;
+        }
 
-    button {
-        background-color: #FFA31A;
-        border: #FFA31A solid 1px;
-        /* left: 270px; */
-        top: 10px;
-        /* position: relative; */
-        width: 5px;
-        height: 5px;
-    }
+        button {
+            background-color: #FFA31A;
+            border: #FFA31A solid 1px;
+            /* left: 270px; */
+            top: 10px;
+            /* position: relative; */
+            width: 5px;
+            height: 5px;
+            border-radius: 25px;
+        }
 
-    /* div.pepe {
-        height: 60vh;
-        /* width: auto; 
-        overflow-y: hidden; 
-        overflow-x: hidden;
-        top: 40px;       
-    } */
+        /* div.pepe {
+            height: 60vh;
+            /* width: auto;
+            overflow-y: hidden;
+            overflow-x: hidden;
+            top: 40px;
+        } */
 
-    /* div.container {
-        text-align: center;
-    } */
+        /* div.container {
+            text-align: center;
+        } */
 
-    div.container input {
-        /* background-color: red; */
-        text-align: center;
-        border: white solid 2px;
-        position: relative;
-    }
+        div.container input {
+            /* background-color: red; */
+            text-align: center;
+            border: white solid 2px;
+            position: relative;
+        }
 
-    img {
-        height: 60vh;
-        /* margin-top: 5px; */
-        width: auto;
-        /* margin-bottom: ; */
-    }
+        img {
+            height: 60vh;
+            /* margin-top: 5px; */
+            width: auto;
+            /* margin-bottom: ; */
+        }
 
 
-    input.box {
-        width: 370px;
-    }
-    input.userlog {
-        text-align: center;
+        input.box {
+            width: 370px;
+        }
 
-    }
+        input.userlog {
+            text-align: center;
 
+        }
+
+        #pepe {
+            position: absolute;
+            bottom: -5vh;
+            left: -5vh;
+            width: 35vw;
+            height: 35vw;
+        }
 
     </style>
 
 </head>
 <body>
-    <header><h3><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h3>
-        <br><h5 style="font-weight: bold;color: #AF640C;">Don’t troll yourself waiting in line</h5>
-        <br><p style="color: white;">This app is in its early stages of development</p>
-        <p style="color: white;">Don't become a meme using this app irresponsibly</p>
-        <p style="color: white;">For now, You will get to experience the very basics of what this app has to offer</p>
-    </header>
-        
+<header><h3><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h3>
+    <br><h5 style="font-weight: bold;color: #AF640C;">Don’t troll yourself waiting in line</h5>
+    <br>
+    <div style="padding:10px">
+    <p style="color: white;">This app is in its early stages of development</p>
+    <p style="color: white;">Don't become a meme using this app irresponsibly</p>
+    <p style="color: white;">For now, You will get to experience the very basics of what this app has to offer</p>
+        </div>
+</header>
+
 <form action="" method="post" style="color: white;">
-<div class="container">
-<div class="userlog">
-<!-- <h3 >Login:</h3><input class="box" type="text" name="username">
-<h3>Password: </h3><input class="box" type="password" name="password"><br> -->
-<button onclick="window.location='/menu'" id="login" type="submit" name="submit"><h4 style="color: white;">Start</h4></button>
+    <div class="container">
+        <div class="userlog">
+            <!-- <h3 >Login:</h3><input class="box" type="text" name="username">
+            <h3>Password: </h3><input class="box" type="password" name="password"><br> -->
+            <button onclick="window.location='/fLogin'" id="login" type="submit" name="submit"><h4
+                        style="color: white;">Start</h4></button>
 
 
-</div>
-</div>
-<div style="height: 100px" class="access">
+        </div>
+    </div>
+    <div style="height: 100px" class="access">
         <!-- <span style="color: white; margin-right: 10px;">First Time? <a href="../../public/fireBase.html" style="color: #FFA31A;">Sign Up</a></span></span><br>
         <a style="color: #FFA31A; left: 500px;" href="">Forgot Password?</a> -->
 
     </div>
-    <img style="width: 250px;" src="/imgs/pepe.png"></img>
-<br><br>
+    <img id="pepe" src="/imgs/pepe.png"></img>
+    <br><br>
 
 </form>
-
-
-
 
 
 </body>
