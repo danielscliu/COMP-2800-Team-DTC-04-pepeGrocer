@@ -11,12 +11,16 @@
     <style>
         body {
             background-color: #292929;
+            overflow-y: hidden; 
+            overflow-x: hidden;
         }
         form {
             justify-content: center;
             padding: 5px 10px;
-            border: white solid 1px;
+            /* border: red solid 3px; */
+            /* border: white solid 1px; */
             height: 260px;
+            /* text-align: center; */
         }
         /* .container {
             text-align: center;
@@ -29,47 +33,88 @@
 
 
         header {
-      border: black solid 1px;
-      background-color: black;
+
       text-align: center;
     }
-        input.box {
-            height: 5vh;
-            width: 30vw;
 
-        }
     button {
         background-color: #FFA31A;
-        border: #FFA31A solid 0px;
-        position: absolute;
+        border: #FFA31A solid 1px;
+        left: 270px;
+        top: 10px;
+        position: relative;
         width: 5px;
         height: 5px;
     }
 
-    img {
-        height: 32vh;
+    /* div.pepe {
+        height: 60vh;
+        /* width: auto; 
+        overflow-y: hidden; 
+        overflow-x: hidden;
+        top: 40px;       
+    } */
+
+    /* div.container {
+        text-align: center;
+    } */
+
+    div.container input {
+        /* background-color: red; */
+        text-align: center;
+        border: white solid 2px;
+        position: relative;
     }
+
+    img {
+        height: 40vh;
+        /* margin-top: 5px; */
+        width: auto;
+        /* margin-bottom: ; */
+    }
+
+
+    input.box {
+        width: 370px;
+    }
+    input.userlog {
+        text-align: center;
+        margin: 0 auto;
+
+    }
+
 
     </style>
 
 </head>
 <body>
-    <header><h3><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h3></header>
-
+    <header><h3><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h3>
+        <br><h5 style="font-weight: bold;color: #AF640C;">Don’t troll yourself waiting in line</h5>
+        <br><p style="color: white;">This app is in its early stages of development</p>
+        <p style="color: white;">Don't become a meme using this app irresponsibly</p>
+    </header>
+        
 <form action="" method="post" style="color: white;">
 <div class="container">
-<h2>Username:</h2><input class="box" type="text" name="username">
-<h2>Password: </h2><input class="box" type="password" name="password">
-</div>
-<div class="">
-    <button onclick="window.location='/menu'" id="login" type="submit" name="submit"><span>Log in</span></button>
-<a style="color: powderblue;" href="">Sign Up</a>
-</div>
-</form>
-<div>
-    <img src="/imgs/pepe.png"></img>
+<div class="userlog">
+<h3 >Login:</h3><input class="box" type="text" name="username">
+<h3>Password: </h3><input class="box" type="password" name="password"><br>
+<button onclick="window.location='/menu'" id="login" type="submit" name="submit"><h4 style="color: white;">Log in</h4></button>
+
 
 </div>
+</div>
+<div style="height: 100px" class="access">
+        <!-- <span style="color: white; margin-right: 10px;">First Time? <a href="../../public/fireBase.html" style="color: #FFA31A;">Sign Up</a></span></span><br>
+        <a style="color: #FFA31A; left: 500px;" href="">Forgot Password?</a> -->
+
+    </div>
+<br><br>
+
+</form>
+
+    <img style="width: 250px; overflow: hidden;" src="/imgs/pepe.png"></img>
+
 
 
 </body>
