@@ -96,7 +96,6 @@ app.get("/login", (req, res)=> res.render("pages/login"));
 
 app.get("/aboutUs", (req, res)=> res.render("pages/aboutUs"));
 
-
 app.listen(process.env.PORT || 3000,
     () => console.log("Express function running"));
 
