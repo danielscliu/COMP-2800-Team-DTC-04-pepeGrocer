@@ -12,7 +12,8 @@
     <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
     <title>Search By Ingredients</title>
 </head>
-<body>
+
+<body id="searchByIngredientBody">
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -72,7 +73,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content"  style="background-color: orange">
             <div class="modal-body">
-                <div class="container-fluid">
+                <div class="container-fluid searchByIngredientsContainer">
                     <div class="row">
                         <h3>Are you sure you want to sign out?</h3>
                     </div>
@@ -95,10 +96,9 @@
     </div>
 </div>
 
-
     <hr>
 
-<div id='mainBlock' class="container vertical-align table-responsive">
+<div id='mainBlock' class="container vertical-align table-responsive searchByIngredientsContainer">
 
     <div id='enterItem'>
     <h3 style="text-align: center">Enter an item to search</h3>
@@ -112,7 +112,7 @@
         </form>
     </div>
 
-    <div id="stores" class="container vertical-align table-responsive">
+    <div id="stores" class="container vertical-align table-responsive searchByIngredientsContainer">
         <div id='inStock'>
             <h6 id='store'>Stores in stock</h6>
         </div>

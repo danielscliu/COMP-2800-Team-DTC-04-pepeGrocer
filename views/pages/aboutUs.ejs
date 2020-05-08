@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" id="aboutUsHtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,94 +9,10 @@
   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/style.css">
-<style>
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
-  background-color: #292929;
-}
-
-html {
-  box-sizing: border-box;
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
-.column {
-  float: left;
-  width: 33.3%;
-  margin-bottom: 16px;
-  padding: 0 8px;
-}
-
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  margin: 40px;
-  background-color: #FFA31A;
-}
-
-.about-section {
-  padding: 50px;
-  text-align: center;
-  background-color: #474e5d;
-  color: white;
-}
-
-.container {
-  padding: 0 16px;
-}
-
-.container::after, .row::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-.title {
-  color: white;
-}
-
-.button {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  color: white;
-  padding: 8px;
-  background-color: #808080;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-}
-
-.button:hover {
-  background-color: #555;
-}
-.textrow {
-  display: flex;
-  justify-content: center;
-}
-
-.textcolumn {
-  margin: 20px;
-}
-
-
-@media screen and (max-width: 800px) {
-  .column {
-    width: 100%;
-    display: block;
-  }
-}
-</style>
-
-
 
 
 </head>
-<body>
+<body id="aboutUsBody">
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -150,21 +66,21 @@ html {
     <div class="modal-dialog" role="document">
         <div class="modal-content"  style="background-color: orange">
             <div class="modal-body">
-                <div class="container-fluid">
-                    <div class="row">
+                <div class="container-fluid aboutUsContainer">
+                    <div class="row aboutUsRow">
                         <h3>Are you sure you want to sign out?</h3>
                     </div>
-                    <div class="row">
+                    <div class="row aboutUsRow">
                         <div class="col-6 offset-3">
-                            <div class="row justify-content-center" id="logOutBtn">
+                            <div class="row aboutUsRow justify-content-center" id="logOutBtn">
                                 <button type="button" class="btn btn-dark btn-block">Log Out</button>
                             </div>
-                            <div class="row justify-content-center" id="closeBtn">
+                            <div class="row aboutUsRow justify-content-center" id="closeBtn">
                                 <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row aboutUsRow">
                         <img src="imgs/monkaS.png">
                     </div>
                 </div>
@@ -173,7 +89,7 @@ html {
     </div>
 </div>
 
-
+<div id='mainBlock' class="container vertical-align table-responsive searchByIngredientsContainer">
 <div class="description" style="text-align:center; color: #FFA31A;">
   <h1>Our Team</h1>
     <div class="textrow">
@@ -190,55 +106,55 @@ html {
     </div>
 </div>
 
-    <div class="row">
-  <div class="column">
-    <div class="card">
+    <div class="row aboutUsRow">
+  <div class="column aboutUsCol">
+    <div class="card aboutUsCard">
       <img src="/imgs/daniel.jpg" alt="Daniel" style="width:100%">
-      <div class="container">
+      <div class="container aboutUsContainer">
         <h2>Daniel Liu      </h2>
-        <p class="title">Backend Developer</p>
+        <p class="aboutUsTitle">Backend Developer</p>
         <p>Some text that describes me lorem ipsum ipsum lorem.</p>
         <p>Github: </p>
-        <p><button class="button">Contact</button></p>
+        <p><button class="aboutUsBtn">Contact</button></p>
       </div>
     </div>
   </div>
 
-  <div class="column">
-    <div class="card">
+  <div class="column aboutUsCol">
+    <div class="card aboutUsCard">
       <img src="/imgs/kevin.jpg" alt="Kevin" style="width:100%">
-      <div class="container">
+      <div class="container aboutUsContainer">
         <h2>Kevin Shih      </h2>
-        <p class="title">Backend Developer</p>
+        <p class="aboutUsTitle">Backend Developer</p>
         <p>Some text that describes me lorem ipsum ipsum lorem.</p>
         <p>mike@example.com</p>
-        <p><button class="button">Contact</button></p>
+        <p><button class="aboutUsBtn">Contact</button></p>
       </div>
     </div>
   </div>
   
-    <div class="column">
-    <div class="card">
+    <div class="column aboutUsCol">
+    <div class="card aboutUsCard">
       <img src="/imgs/sepehr.jfif" alt="Sepehr" style="width:100%">
-      <div class="container">
+      <div class="container aboutUsContainer">
         <h2>Sepehr Mansouri</h2>
-        <p class="title">Frontend Developer</p>
+        <p class="aboutUsTitle">Frontend Developer</p>
         <p>Some text that describes me lorem ipsum ipsum lorem.</p>
         <p>mike@example.com</p>
-        <p><button class="button">Contact</button></p>
+        <p><button class="aboutUsBtn">Contact</button></p>
       </div>
     </div>
   </div>
   
-  <div class="column">
-    <div class="card">
+  <div class="column aboutUsCol">
+    <div class="card aboutUsCard">
       <img src="/imgs/jay.jfif" alt="Jay" style="width:100%">
-      <div class="container">
+      <div class="container aboutUsContainer">
         <h2>Jay Sui      </h2>
-        <p class="title">Frontend Developer</p>
+        <p class="aboutUsTitle">Frontend Developer</p>
         <p>Some text that describes me lorem ipsum ipsum lorem.</p>
         <p>john@example.com</p>
-        <p><button class="button">Contact</button></p>
+        <p><button class="aboutUsBtn">Contact</button></p>
       </div>
     </div>
   </div>
@@ -247,7 +163,7 @@ html {
 
 
 
-
+</div>
 </div>
 </body>
 </html>

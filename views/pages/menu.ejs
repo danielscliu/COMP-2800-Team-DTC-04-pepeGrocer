@@ -11,64 +11,15 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
 
-    <style>
-        div.top{
-            margin-top: 80px;
-        }
-    div.main_btns {
-        text-align: center;
-        /* padding: 20px; */
-    }
-    div.main_btns {
-        margin-top: 30px;
-    }
-    button {
-        height: 70px;
-        background-color: #292929;
-        border-radius: 12px;
-        margin-top: 25px;
-    }
-    body {
-        background-color: #292929;
-        }
-    p {
-        color: white;
-    }
-
-    div #grey {
-      background-color: #808080;
-    }
-
-    div #cream {
-      background-color: #FFA31A;
-    }
-    #cream, #grey {
-    border: #FFA31A solid 0px;
-    font-weight: bold;
-    color: white;
-    }
-    div.paragraph {
-      text-align: center;
-    }
-    header {
-      border: black solid 1px;
-      background-color: black;
-      text-align: center;
-    }
-
-
-
-    </style>
-
     <title>Menu</title>
 </head>
-<body>
-<header><h3><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h3></header>
+<body id="menuBody">
+<header id="menuHeader"><h3><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h3></header>
 
-<div id='mainBlock' class="container vertical-align table-responsive">
+<div id='mainBlock' class="container vertical-align table-responsive menuContainer">
 
 
-    <div class="paragraph">
+    <div class="paragraph menuParagraph">
         <p class="white">
         <p>Welcome, User</p>
         <p>You have 5 free searches left.</p>
@@ -77,23 +28,23 @@
         </p>
     </div>
 
-    <div class="container">
+    <div class="container menuContainer">
     <div class="row">
         <div class="col-md-4 offset-md-4">
             <div class="row">
-                <button type="button" onclick="window.location='/underConstruction.html'" id="cream" class="btn-block">Report Missing Item Wait Time</button>
+                <button type="button" onclick="window.location='/underConstruction.html'" id="cream" class="btn-block menuBtn">Report Missing Item Wait Time</button>
             </div>
             <div class="row">
-                <button id="grey" onclick="window.location='/search'" type="button" class="btn-block">Search by Ingredient</button>
+                <button id="grey" onclick="window.location='/search'" type="button" class="btn-block menuBtn">Search by Ingredient</button>
             </div>
             <div class="row">
-                <button type="button" id="cream" onclick="window.location='/underConstruction.html'" class="btn-block">Shopping List</button>
+                <button type="button" id="cream" onclick="window.location='/underConstruction.html'" class="btn-block menuBtn">Shopping List</button>
             </div>
             <div class="row">
-                <button id="grey" type="button" onclick="window.location='/underConstruction.html'" class="btn-block">Store Lineup near me</button>
+                <button id="grey" type="button" onclick="window.location='/underConstruction.html'" class="btn-block menuBtn">Store Lineup near me</button>
             </div>
             <div class="row">
-                <button type="button" onclick="window.location='/aboutUs'" id="cream" class="btn-block">About Us</button>
+                <button type="button" onclick="window.location='/aboutUs'" id="cream" class="btn-block menuBtn">About Us</button>
             </div>
         </div>
     </div>

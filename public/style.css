@@ -1,4 +1,4 @@
-div.storeBox {
+.storeBox {
     overflow-y: auto;
     height: 65vh;
     background-color: orange;
@@ -10,7 +10,7 @@ div.storeBox {
     border-radius: 1vh;
 }
 
-div#stores {
+#stores {
     padding: 2vh;
 }
 
@@ -18,7 +18,7 @@ div#mainBlock {
     background-color: #2e2b2e;
 }
 
-body {
+#searchByIngredientBody {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #2e2b2e;
 }
@@ -75,3 +75,110 @@ body {
     padding-bottom: 2vh;
 }
 
+.menuBtn {
+    height: 70px;
+    background-color: #292929;
+    border-radius: 12px;
+    margin-top: 25px;
+}
+#menuBody {
+    background-color: #292929;
+}
+.menuParagraph {
+    color: white;
+    text-align: center;
+}
+
+div #grey {
+    background-color: #808080;
+}
+
+div #cream {
+    background-color: #FFA31A;
+}
+#cream, #grey {
+    border: #FFA31A solid 0px;
+    font-weight: bold;
+    color: white;
+}
+
+#menuHeader {
+    border: black solid 1px;
+    background-color: black;
+    text-align: center;
+}
+
+#aboutUsBody {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background-color: #292929;
+}
+
+#aboutUsHtml {
+    box-sizing: border-box;
+}
+
+.aboutUsCol {
+    float: left;
+    width: 33.3%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
+
+.aboutUsCard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 40px;
+    background-color: #FFA31A;
+}
+
+.about-section {
+    padding: 50px;
+    text-align: center;
+    background-color: #474e5d;
+    color: white;
+}
+
+.aboutUsContainer {
+    padding: 0 16px;
+}
+
+.aboutUsContainer::after, .aboutUsRow::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.aboutUsTitle {
+    color: white;
+}
+
+.aboutUsBtn {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    color: white;
+    padding: 8px;
+    background-color: #808080;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+.aboutUsBtn:hover {
+    background-color: #555;
+}
+.textrow {
+    display: flex;
+    justify-content: center;
+}
+
+.textcolumn {
+    margin: 20px;
+}
+
+@media screen and (max-width: 800px) {
+    .aboutUsCol {
+        width: 100%;
+        display: block;
+    }
+}
