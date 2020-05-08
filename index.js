@@ -1,13 +1,11 @@
 const express = require("express");
-// const functions = require('firebase-functions');
 const path = require("path");
-
 const app = express();
+
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 // Firebase init
-
 
 //--new 
 var admin = require("firebase-admin");
@@ -23,17 +21,10 @@ admin.initializeApp({
 
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = admin.firestore();
-// Testing
-// let query = db.collection('stores').get()
-//    .then(snapshot => {});
 
-app.get("/a", (req, res) => {
-    console.log(query);
-});
-
+// QUERY BY ITEM LOGIC
 let itemStockBoolean = true;
 let storeInStock = [];
-
 function queryItem(targetItem) {
     storeInStock = [];
     let stores = db.collection('stores');
@@ -56,7 +47,7 @@ function queryItem(targetItem) {
 function snapshotAsync(snap) {
 
     //console.log(snap);
-     snap.forEach(doc => {
+    snap.forEach(doc => {
         //console.log(typeof(doc));
         //console.log(`the following stores contain ${targetItem} is at location: `)
         // let address = doc.get("Address");
@@ -65,44 +56,46 @@ function snapshotAsync(snap) {
         // inStock= new storeSummary(name, address, waitTime);
         // itemStockBoolean = true;
         // console.log(inStock);
-         storeInStock.push(new storeSummary(doc.get("Name"), doc.get("Address"), doc.get("WaitTime")))
+        storeInStock.push(new storeSummary(doc.get("Name"), doc.get("Address"), doc.get("WaitTime")))
     })
     //console.log(storeInStock)
 }
+
 function storeSummary(name, address, waitTime) {
     this.name = name;
     this.address = address;
     this.waitTime = waitTime;
 }
 
-
+// POST TO SEARCH INGREDIENTS
 app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
     // clear the list of stores, otherwise they will append all the stores to list
     queryItem(targetItem);
     // can't get async working here for query item so we're just gonna take a nap for 500 ms
-    setTimeout(function(){res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
+    setTimeout(function () {
+        res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
     }, 500)
 });
 
-
-// app.use(express.static(__dirname + "/public"));
-app.get("/", function (req, res) {
+// ROUTE TO FIREBASEUI LOGIN
+app.get("/fLogin", function (req, res) {
     res.sendFile(path.resolve("public/fireBase.html"));
 });
 
-
+// ROUTE TO SEARCH INGREDIENTS
 app.get("/search", (req, res) =>
-    res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean:itemStockBoolean}));
-    ;
+    res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean}));
 
 
+// ROUTE TO LANDING PAGE
+app.get("/", (req, res) => res.render("pages/landing"));
 
-app.get("/menu", (req, res)=> res.render("pages/menu"));
+//ROUTE TO MAIN MENU
+app.get("/menu", (req, res) => res.render("pages/menu"));
 
-app.get("/login", (req, res)=> res.render("pages/login"));
-
-app.get("/aboutUs", (req, res)=> res.render("pages/aboutUs"));
+// ROUTE TO ABOUT US
+app.get("/aboutUs", (req, res) => res.render("pages/aboutUs"));
 
 app.listen(process.env.PORT || 3000,
     () => console.log("Express function running"));
