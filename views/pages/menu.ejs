@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <style>
+        div.top{
+            margin-top: 80px;
+        }
+    div.main_btns {
+        text-align: center;
+        /* padding: 20px; */
+    }
+    div.main_btns {
+        margin-top: 30px;
+    }
+    button {
+        height: 70px;
+        background-color: #292929;
+        border-radius: 12px;
+        margin-top: 25px;
+    }
+    body {
+        background-color: #292929;
+        }
+    p {
+        color: white;
+    }
+
+    div #grey {
+      background-color: #808080;
+    }
+
+    div #cream {
+      background-color: #FFA31A;
+    }
+    #cream, #grey {
+    border: #FFA31A solid 0px;
+    font-weight: bold;
+    color: white;
+    }
+    div.paragraph {
+      text-align: center;
+    }
+    header {
+      border: black solid 1px;
+      background-color: black;
+      text-align: center;
+    }
+
+
+
+    </style>
+
+    <title>Search By Ingredients</title>
+</head>
+<body>
+<header><h3><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h3></header>
+
+    <div class="paragraph">
+        <p class="white">
+        <p>Welcome, User</p>
+        <p>You have 5 free searches left.</p>
+        <p>Please update a missing item or 
+        <p>report a lineup status to earn more searches</p>
+        </p>
+    </div>
+    <div class='main_btns'>
+      <div>
+        <button type="button" id="cream">Report Missing Item Wait Time</button>
+      </div>
+      <div>
+        <button id="grey" onclick="window.location='http://localhost:3000/searchByIngredients'" type="button" class="btn btn-primary">Search by Ingredient</button>
+      </div>
+      <div>
+        <button type="button" id="cream">Shopping List</button>
+      </div>
+      <div>
+        <button id="grey" type="button">Store Lineup near me</button>
+      </div>
+      <div>
+        <button type="button" onclick="window.location='http://localhost:3000/aboutUs'" id="cream">About Us</button>
+      </div>
+
+    </div>
+
+
+
+
+</body>
+</html>

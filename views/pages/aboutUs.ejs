@@ -1,0 +1,230 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<style>
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: #292929;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 40px;
+  background-color: #FFA31A;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: white;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  color: white;
+  padding: 8px;
+  background-color: #808080;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+.textrow {
+  display: flex;
+  justify-content: center;
+}
+
+.textcolumn {
+  margin: 20px;
+}
+
+
+@media screen and (max-width: 800px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+</style>
+
+
+
+
+</head>
+<body>
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        
+    <a class="navbar-brand" id='pepeGrocer'>
+        <div id="pepe" class="appBrand">pepe</div> <div id="grocer" class="appBrand" style="color: #FFA31A;">Grocer</div>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon navbar-light">
+        </span>
+    </button>
+
+    <div class="collapse navbar-collapse" id='navbarNav'>
+        <ul class="navbar-nav w-100 mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/underConstruction.html">Report Missing Items/Wait Time</a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link active">Search by Ingredients</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/underConstruction.html">Shopping List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/underConstruction.html">Store Lineup Near Me<span>
+                            <class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+              <p class="nav-link" >About Us<span>
+                        <class="sr-only">(current)</span></p>
+          </li>
+
+
+
+            <li class="nav-item">
+                <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary" type='button' id='signout'
+                   style='color:aliceblue'>Log Out</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="description" style="text-align:center; color: #FFA31A;">
+  <h1>Our Team</h1>
+    <div class="textrow">
+    <p class="textcolumn">
+      When you’re deciding,
+      <br>What to buy today?
+      <br>The best time to avoid lines?
+    </p>
+    <p class="textcolumn">
+      Minimize the spread<br>
+      Save that precious time shopping<br>
+      Social distancing
+    </p>
+    </div>
+</div>
+
+    <div class="row">
+  <div class="column">
+    <div class="card">
+      <img src="../../public/imgs/contributors/daniel.jpg" alt="Daniel" style="width:100%">
+      <div class="container">
+        <h2>Daniel Liu      </h2>
+        <p class="title">Backend Developer</p>
+        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+        <p>Github: </p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="../public/imgs/kevin.jpg" alt="Kevin" style="width:100%">
+      <div class="container">
+        <h2>Kevin Shih      </h2>
+        <p class="title">Backend Developer</p>
+        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+        <p>mike@example.com</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  
+    <div class="column">
+    <div class="card">
+      <img src="/contributors/sepehr.jfif" alt="Sepehr" style="width:100%">
+      <div class="container">
+        <h2>Sepehr Mansouri</h2>
+        <p class="title">Frontend Developer</p>
+        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+        <p>mike@example.com</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="column">
+    <div class="card">
+      <img src="/contributors/jay.jfif" alt="Jay" style="width:100%">
+      <div class="container">
+        <h2>Jay Sui      </h2>
+        <p class="title">Frontend Developer</p>
+        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+        <p>john@example.com</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bottom_page">
+
+
+
+
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+  
+</body>
+</html>

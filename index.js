@@ -90,5 +90,14 @@ app.get("/search", (req, res) =>
     res.render("pages/searchByIngredients", {notFound: " "}));
 
 
+
 app.listen(process.env.PORT || 3000,
     () => console.log("Express function running"));
+
+app.get("/menu", (req, res)=> res.render("pages/menu"));
+
+app.get("/login", (req, res)=> res.render("pages/login"));
+
+app.get("/aboutUs", (req, res)=> res.render("pages/aboutUs"));
+
+
