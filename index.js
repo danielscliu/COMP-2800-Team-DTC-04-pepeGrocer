@@ -23,16 +23,19 @@ admin.initializeApp({
 
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = admin.firestore();
-let query = db.collection('stores').get()
-    .then(snapshot => {});
+// Testing
+// let query = db.collection('stores').get()
+//    .then(snapshot => {});
 
 app.get("/a", (req, res) => {
     console.log(query);
-})
+});
 
 let itemStockBoolean = true;
 let storeInStock = [];
+
 function queryItem(targetItem) {
+    storeInStock = [];
     let stores = db.collection('stores');
     itemStockBoolean = false;
     stores.where(targetItem, '==', true).get()
@@ -43,21 +46,28 @@ function queryItem(targetItem) {
                 itemStockBoolean = false;
                 return;
             }
+            itemStockBoolean = true;
             await snapshotAsync(snapshot);
             // return storesInStock;
-        });
-
+        })
+        .then(console.log(storeInStock))
 }
+
 function snapshotAsync(snap) {
-    snap.forEach(doc => {
+
+    //console.log(snap);
+     snap.forEach(doc => {
+        //console.log(typeof(doc));
         //console.log(`the following stores contain ${targetItem} is at location: `)
-        let address = doc.get("Address");
-        let name = doc.get("Name");
-        let waitTime = doc.get("WaitTime");
-        let inStock = new storeSummary(name, address, waitTime);
-        itemStockBoolean = true;
-        storeInStock.push(inStock);
+        // let address = doc.get("Address");
+        // let name = doc.get("Name");
+        // let waitTime = doc.get("WaitTime");
+        // inStock= new storeSummary(name, address, waitTime);
+        // itemStockBoolean = true;
+        // console.log(inStock);
+         storeInStock.push(new storeSummary(doc.get("Name"), doc.get("Address"), doc.get("WaitTime")))
     })
+    //console.log(storeInStock)
 }
 function storeSummary(name, address, waitTime) {
     this.name = name;
@@ -68,15 +78,11 @@ function storeSummary(name, address, waitTime) {
 
 app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
+    // clear the list of stores, otherwise they will append all the stores to list
     queryItem(targetItem);
-
-    console.log(storeInStock);
-
-    if (itemObject) {
-        // console.log("return ed yes");
-    } else {
-        // console.log("returned none");
-    }
+    // can't get async working here for query item so we're just gonna take a nap for 500 ms
+    setTimeout(function(){res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
+    }, 500)
 });
 
 
@@ -87,7 +93,9 @@ app.get("/", function (req, res) {
 
 
 app.get("/search", (req, res) =>
-    res.render("pages/searchByIngredients", {notFound: " "}));
+    res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean:itemStockBoolean}));
+    ;
+
 
 
 app.get("/menu", (req, res)=> res.render("pages/menu"));
