@@ -101,13 +101,13 @@
 <div id='mainBlock' class="container vertical-align table-responsive searchByIngredientsContainer">
 
     <div id='enterItem'>
-    <h3 style="text-align: center">Enter an item to search</h3>
+    <h3 style="text-align: center">Enter an item to see what store carries it near you</h3>
     </div>
 
 
     <div class="row justify-content-center" id="search">
         <form action="/searchByIngredients" method="post">
-            <input type="text" name="ingredients"  value="Enter Item" id="inputBox" />
+            <input type="text" name="ingredients"  placeholder="Enter Item" id="inputBox" />
             <input type="submit" value="Search" id="submitBtn" />
         </form>
     </div>
@@ -119,16 +119,17 @@
         <div class="storeBox">
 
             <div id="notFound">
-                <h3><%= notFound%></h3>
+                <h3><%= itemStockBoolean? 'These are the stores for you':'oof we are having trouble find that item' %></h3>
             </div>
 
-            <div class="card storeCard">
+            <% stores.forEach(store => { %>
+            <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title">Store Name</h5>
-                            <h7 class="card-subtitle">Address</h7>
-                            <h6 class="card-text"style="padding-top: 3vh">Waiting Time</h6>
+                            <h5 class="card-title"><%= store["name"]%></h5>
+                            <h7 class="card-subtitle"><%=store["address"]%></h7>
+                            <h6 class="card-text"style="padding-top: 3vh"><%=store["waitTime"]%></h6>
                             <p class="card-text">Last Reported</p>
                         </div>
                         <div class="col">
@@ -137,54 +138,8 @@
                     </div>
                 </div>
             </div>
+            <% })%>
 
-            <div class="card storeCard">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title">Store Name</h5>
-                            <h7 class="card-subtitle">Address</h7>
-                            <h6 class="card-text"style="padding-top: 3vh">Waiting Time</h6>
-                            <p class="card-text">Last Reported</p>
-                        </div>
-                        <div class="col">
-                            <a href="https?placeholder.com"><img src="https://via.placeholder.com/128" class='images'></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card storeCard">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title">Store Name</h5>
-                            <h7 class="card-subtitle">Address</h7>
-                            <h6 class="card-text"style="padding-top: 3vh">Waiting Time</h6>
-                            <p class="card-text">Last Reported</p>
-                        </div>
-                        <div class="col">
-                            <a href="https?placeholder.com"><img src="https://via.placeholder.com/128" class='images'></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card storeCard">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title">Store Name</h5>
-                            <h7 class="card-subtitle">Address</h7>
-                            <h6 class="card-text"style="padding-top: 3vh">Waiting Time</h6>
-                            <p class="card-text">Last Reported</p>
-                        </div>
-                        <div class="col">
-                            <a href="https?placeholder.com"><img src="https://via.placeholder.com/128" class='images'></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>
