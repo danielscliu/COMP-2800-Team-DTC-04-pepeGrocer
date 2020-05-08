@@ -1,5 +1,4 @@
 const express = require("express");
-// const functions = require('firebase-functions');
 const path = require("path");
 
 const app = express();
@@ -23,13 +22,7 @@ admin.initializeApp({
 
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = admin.firestore();
-// Testing
-// let query = db.collection('stores').get()
-//    .then(snapshot => {});
 
-app.get("/a", (req, res) => {
-    console.log(query);
-});
 
 let itemStockBoolean = true;
 let storeInStock = [];
@@ -92,30 +85,24 @@ app.post("/searchByIngredients", (req, res) => {
     }
 });
 
-
-// app.use(express.static(__dirname + "/public"));
-app.get("/", function (req, res) {
+// ROUTE TO FIREBASEUI LOGIN
+app.get("/fLogin", function (req, res) {
     res.sendFile(path.resolve("public/fireBase.html"));
 });
 
-
+// ROUTE TO SEARCH INGREDIENTS
 app.get("/search", (req, res) =>
-    res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean:itemStockBoolean}));
-    ;
-    // Checking if UID is passed;
-app.post("/", (req ,res)=> {
-    console.log(req.body);
-});
+    res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean}));
 
-app.get("/menu", (req, res)=> res.render("pages/menu"));
 
-app.get("/login", (req, res)=> res.render("pages/login"));
+// ROUTE TO LANDING PAGE
+app.get("/", (req, res) => res.render("pages/landing"));
 
-app.get("/aboutUs", (req, res)=> res.render("pages/aboutUs"));
+//ROUTE TO MAIN MENU
+app.get("/menu", (req, res) => res.render("pages/menu"));
+
+// ROUTE TO ABOUT US
+app.get("/aboutUs", (req, res) => res.render("pages/aboutUs"));
 
 app.listen(process.env.PORT || 3000,
     () => console.log("Express function running"));
-
-
-
-
