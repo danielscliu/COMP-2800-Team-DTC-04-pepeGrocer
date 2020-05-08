@@ -1,17 +1,9 @@
-const express = require("express");
-// const functions = require('firebase-functions');
-const path = require("path");
-const cookieParser = require("cookie-parser");
-
-const app = express();
-app.use(express.urlencoded({extended: true}));
-app.use(express.static("public"));
-app.set("view engine", "ejs");
-// Firebase init
-
-
-//--new 
 var admin = require("firebase-admin");
+const express = require("express");
+const app = express();
+const path = require("path");
+
+// Firebase init
 
 // Fetch the service account key JSON file contents
 var serviceAccount = require("./firebaetest-6e21a-firebase-adminsdk-oiexo-d634330287.json");
@@ -25,26 +17,34 @@ admin.initializeApp({
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = admin.firestore();
 
-//Simple Read:
-// let storesRef = db.collection('stores');
-// let allStores = storesRef.get()
-//     .then(snapshot => {
-//         snapshot.forEach(doc =>{
-//             console.log(doc.id, "==>", doc.data());
-//         });
-//     })
-
-app.use(cookieParser());
-
 // app.use(express.static(__dirname + "/public"));
 app.get("/", function(req, res) {
-    res.sendFile(path.resolve("public/fireBase.html"));
+    res.sendFile(path.resolve("../public/fireBase.html"));
 })
 
+app.get("/test", function(req, res) {
+    res.sendFile(path.resolve("public/persistTest.html"));
+})
 
-app.get("/searchByIngredients", (req, res)=> res.render("pages/searchByIngredients"));
+app.post("/auth", function(req, res) {
+    console.log("successful post");
+    let uid = req.query.uid;
+    console.log(uid);
+})
+
+// function verifyIdentity(idToken) {
+//     // idToken comes from the client app
+//     admin.auth().verifyIdToken(idToken)
+//         .then(function(decodedToken) {
+//             let uid = decodedToken.uid;
+//             return true;
+//         }).catch(function(error) {
+//         console.log("Not signed in");
+//             return false;
+//     });
+// }
 
 // app.listen(8080);
 
-app.listen(process.env.PORT || 3000,
+app.listen(process.env.PORT || 8000,
     () => console.log("Express function running"));

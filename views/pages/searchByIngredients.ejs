@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css",
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/style.css">
+    <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
+    <title>Search By Ingredients</title>
+</head>
+
+<body id="searchByIngredientBody">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<!--################################################FIREBASE ZONE. DO NOT TOUCH ####################################-->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+
+
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
+
+
+<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+
+<!--firebase API config files-->
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyBqB5QHNRRquDJxd9OiXXa9c33dI4zDSDA",
+        authDomain: "firebaetest-6e21a.firebaseapp.com",
+        databaseURL: "https://firebaetest-6e21a.firebaseio.com",
+        projectId: "firebaetest-6e21a",
+        storageBucket: "firebaetest-6e21a.appspot.com",
+        messagingSenderId: "763860546362",
+        appId: "1:763860546362:web:35a3ed2ac35df4abd5d603",
+        measurementId: "G-V56860GVZL"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
+<!--################################################ END FIREBASE ZONE ####################################-->
+<!--CHECK PERSISTENCE-->
+<script>
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            console.log("Logged in OK");
+        } else {
+            console.log("NOPE not logged in");
+            window.location.href = "/";
+        }
+    });
+</script>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <a class="navbar-brand" id='pepeGrocer' href="/menu">
+            <span id="pepe">pepe</span><span id="grocer">Grocer</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon navbar-light">
+            </span>
+        </button>
+
+        <div class="collapse navbar-collapse" id='navbarNav'>
+            <ul class="navbar-nav w-100 mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/underConstruction.html">Report Missing Items/Wait Time</a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link active">Search by Ingredients</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/underConstruction.html">Shopping List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/underConstruction.html">Store Lineup Near Me<span
+                                class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/aboutUs">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary" type='button' id='signout'
+                       style='color:aliceblue'>Log Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"  style="background-color: orange">
+            <div class="modal-body">
+                <div class="container-fluid searchByIngredientsContainer">
+                    <div class="row">
+                        <h3>Are you sure you want to sign out?</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 offset-3">
+                            <div class="row justify-content-center" id="logOutBtn">
+                                <button type="button" id="confirmLogOut" class="btn btn-dark btn-block"> Log Out</button>
+                            </div>
+                            <div class="row justify-content-center" id="closeBtn">
+                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <img src="imgs/monkaS.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <hr>
+
+<div id='mainBlock' class="container vertical-align table-responsive searchByIngredientsContainer">
+
+    <div id='enterItem'>
+    <h3 style="text-align: center">Enter an item to see what store carries it near you</h3>
+    </div>
+
+
+    <div class="row justify-content-center" id="search">
+        <form action="/searchByIngredients" method="post">
+            <input type="text" name="ingredients"  placeholder="Enter Item" id="inputBox" />
+            <input type="submit" value="Search" id="submitBtn" />
+        </form>
+    </div>
+
+    <div id="stores" class="container vertical-align table-responsive searchByIngredientsContainer">
+        <div id='inStock'>
+            <h6 id='store'>Stores in stock</h6>
+        </div>
+        <div class="storeBox">
+
+            <div id="notFound">
+                <h3><%= itemStockBoolean? 'These are the stores for you':'oof we are having trouble find that item' %></h3>
+            </div>
+
+            <% stores.forEach(store => { %>
+            <div class="card storeCard">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title"><%= store["name"]%></h5>
+                            <h7 class="card-subtitle"><%=store["address"]%></h7>
+                            <h6 class="card-text"style="padding-top: 3vh"><%=store["waitTime"] %> minute wait</h6>
+<!--                            <p class="card-text">Last Reported</p>-->
+                        </div>
+                        <div class="col">
+                            <a href=<%=store["directions"]%>><img src="/imgs/googleMap.png" height="100px" width="100px" class='images'></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% })%>
+
+        </div>
+
+    </div>
+</div>
+</body>
+
+<!--LOGOUT SCRIPT-->
+<script>
+    const logout = document.querySelector("#confirmLogOut");
+    logout.addEventListener('click', function() {
+        firebase.auth().signOut();
+        console.log("user signed out");
+        window.location.href = "/";
+    });
+</script>
+</html>
