@@ -121,14 +121,14 @@ div #cream {
 
 .aboutUsCol {
     float: left;
-    width: 33.3%;
+    width: 25%;
     margin-bottom: 16px;
-    padding: 0 8px;
+    /*padding: 0 8px;*/
 }
 
 .aboutUsCard {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin: 40px;
+    margin: 15px;
     background-color: #FFA31A;
 }
 
@@ -182,4 +182,8 @@ div #cream {
         width: 100%;
         display: block;
     }
+}
+
+.nameTitle {
+    font-size: x-large;
 }

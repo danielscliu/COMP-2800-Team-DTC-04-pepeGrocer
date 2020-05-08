@@ -13,6 +13,45 @@
 
 
 </head>
+<!--################################################FIREBASE ZONE. DO NOT TOUCH ####################################-->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
+
+
+<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+
+<!--firebase API config files-->
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyBqB5QHNRRquDJxd9OiXXa9c33dI4zDSDA",
+        authDomain: "firebaetest-6e21a.firebaseapp.com",
+        databaseURL: "https://firebaetest-6e21a.firebaseio.com",
+        projectId: "firebaetest-6e21a",
+        storageBucket: "firebaetest-6e21a.appspot.com",
+        messagingSenderId: "763860546362",
+        appId: "1:763860546362:web:35a3ed2ac35df4abd5d603",
+        measurementId: "G-V56860GVZL"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
+<!--################################################ END FIREBASE ZONE ####################################-->
+<!--CHECK PERSISTENCE-->
+<script>
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            console.log("Logged in OK");
+        } else {
+            console.log("NOPE not logged in");
+            window.location.href = "/";
+        }
+    });
+</script>
 <body id="aboutUsBody">
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -74,7 +113,7 @@
                     <div class="row aboutUsRow">
                         <div class="col-6 offset-3">
                             <div class="row aboutUsRow justify-content-center" id="logOutBtn">
-                                <button type="button" class="btn btn-dark btn-block">Log Out</button>
+                                <button type="button" id="confirmLogOut" class="btn btn-dark btn-block">Log Out</button>
                             </div>
                             <div class="row aboutUsRow justify-content-center" id="closeBtn">
                                 <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
@@ -105,6 +144,8 @@
       Social distancing
     </p>
     </div>
+    <p>We are a team of students collaborating across a
+        great range of time-zones that quite work around the clock to bring you the solution to your shopping needs.</p>
 </div>
 
     <div class="row aboutUsRow">
@@ -112,10 +153,11 @@
     <div class="card aboutUsCard">
       <img src="/imgs/daniel.jpg" alt="Daniel" style="width:100%">
       <div class="container aboutUsContainer">
-        <h2>Daniel Liu      </h2>
+        <h2 class="nameTitle">Daniel Liu      </h2>
         <p class="aboutUsTitle">Backend Developer</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>Github: </p>
+
+        <p>The Man</p>
+          <spam>Github: <a href="https://github.com/danielscliu/">danielscliu</a></spam>
         <p><button class="aboutUsBtn">Contact</button></p>
       </div>
     </div>
@@ -125,10 +167,10 @@
     <div class="card aboutUsCard">
       <img src="/imgs/kevin.jpg" alt="Kevin" style="width:100%">
       <div class="container aboutUsContainer">
-        <h2>Kevin Shih      </h2>
+        <h2 class="nameTitle">Kevin Shih      </h2>
         <p class="aboutUsTitle">Backend Developer</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>mike@example.com</p>
+        <p>The Myth</p>
+        <spam>Github: <a href="https://github.com/shihkster1015/">shihkster1015</a></spam>
         <p><button class="aboutUsBtn">Contact</button></p>
       </div>
     </div>
@@ -138,10 +180,10 @@
     <div class="card aboutUsCard">
       <img src="/imgs/sepehr.jfif" alt="Sepehr" style="width:100%">
       <div class="container aboutUsContainer">
-        <h2>Sepehr Mansouri</h2>
+        <h2 class="nameTitle">Sephrman</h2>
         <p class="aboutUsTitle">Frontend Developer</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>mike@example.com</p>
+        <p>The Sepehrman</p>
+        <spam>Github: <a href="https://github.com/jsui5">sepehrman</a></spam>
         <p><button class="aboutUsBtn">Contact</button></p>
       </div>
     </div>
@@ -151,10 +193,10 @@
     <div class="card aboutUsCard">
       <img src="/imgs/jay.jfif" alt="Jay" style="width:100%">
       <div class="container aboutUsContainer">
-        <h2>Jay Sui      </h2>
+        <h2 class="nameTitle">Jay Sui      </h2>
         <p class="aboutUsTitle">Frontend Developer</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>john@example.com</p>
+        <p>The Legend</p>
+        <spam>Github: <a href="https://github.com/jsui5">jsui5</a></spam>
         <p><button class="aboutUsBtn">Contact</button></p>
       </div>
     </div>
@@ -167,16 +209,14 @@
 </div>
 </div>
 </body>
-</html>
 
-
-
-
-
-
-
-
-
-  
-</body>
+<!--LOGOUT SCRIPT-->
+<script>
+    const logout = document.querySelector("#confirmLogOut");
+    logout.addEventListener('click', function(){
+        firebase.auth().signOut();
+        console.log("user signed out");
+        window.location.href = "/";
+    });
+</script>
 </html>

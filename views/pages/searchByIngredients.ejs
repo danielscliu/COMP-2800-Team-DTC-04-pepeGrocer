@@ -24,9 +24,44 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+<!--################################################FIREBASE ZONE. DO NOT TOUCH ####################################-->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
 
 
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
 
+
+<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+
+<!--firebase API config files-->
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyBqB5QHNRRquDJxd9OiXXa9c33dI4zDSDA",
+        authDomain: "firebaetest-6e21a.firebaseapp.com",
+        databaseURL: "https://firebaetest-6e21a.firebaseio.com",
+        projectId: "firebaetest-6e21a",
+        storageBucket: "firebaetest-6e21a.appspot.com",
+        messagingSenderId: "763860546362",
+        appId: "1:763860546362:web:35a3ed2ac35df4abd5d603",
+        measurementId: "G-V56860GVZL"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
+<!--################################################ END FIREBASE ZONE ####################################-->
+<!--CHECK PERSISTENCE-->
+<script>
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            console.log("Logged in OK");
+        } else {
+            console.log("NOPE not logged in");
+            window.location.href = "/";
+        }
+    });
+</script>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
@@ -80,7 +115,7 @@
                     <div class="row">
                         <div class="col-6 offset-3">
                             <div class="row justify-content-center" id="logOutBtn">
-                                <button type="button" class="btn btn-dark btn-block">Log Out</button>
+                                <button type="button" id="confirmLogOut" class="btn btn-dark btn-block"> Log Out</button>
                             </div>
                             <div class="row justify-content-center" id="closeBtn">
                                 <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
@@ -129,11 +164,11 @@
                         <div class="col">
                             <h5 class="card-title"><%= store["name"]%></h5>
                             <h7 class="card-subtitle"><%=store["address"]%></h7>
-                            <h6 class="card-text"style="padding-top: 3vh"><%=store["waitTime"] %> minutes</h6>
-                            <p class="card-text">Last Reported</p>
+                            <h6 class="card-text"style="padding-top: 3vh"><%=store["waitTime"] %> minute wait</h6>
+<!--                            <p class="card-text">Last Reported</p>-->
                         </div>
                         <div class="col">
-                            <a href=<%=store["directions"]%>><img src="https://via.placeholder.com/128" class='images'></a>
+                            <a href=<%=store["directions"]%>><img src="/imgs/googleMap.png" height="100px" width="100px" class='images'></a>
                         </div>
                     </div>
                 </div>
@@ -145,4 +180,14 @@
     </div>
 </div>
 </body>
+
+<!--LOGOUT SCRIPT-->
+<script>
+    const logout = document.querySelector("#confirmLogOut");
+    logout.addEventListener('click', function() {
+        firebase.auth().signOut();
+        console.log("user signed out");
+        window.location.href = "/";
+    });
+</script>
 </html>

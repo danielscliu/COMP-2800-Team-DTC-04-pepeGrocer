@@ -74,14 +74,16 @@ app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
     if (targetItem === "")
     {
+
         res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean:itemStockBoolean})
     } else {
 
-    // clear the list of stores, otherwise they will append all the stores to list
-    queryItem(targetItem);
-    // can't get async working here for query item so we're just gonna take a nap for 500 ms
-    setTimeout(function(){res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
-    }, 500);
+        // clear the list of stores, otherwise they will append all the stores to list
+        queryItem(targetItem);
+        // can't get async working here for query item so we're just gonna take a nap for 500 ms
+        setTimeout(function () {
+            res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
+        }, 1000);
     }
 });
 
