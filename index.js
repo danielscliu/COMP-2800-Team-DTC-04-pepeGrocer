@@ -65,14 +65,15 @@ function snapshotAsync(snap) {
         // inStock= new storeSummary(name, address, waitTime);
         // itemStockBoolean = true;
         // console.log(inStock);
-         storeInStock.push(new storeSummary(doc.get("Name"), doc.get("Address"), doc.get("WaitTime")))
+         storeInStock.push(new storeSummary(doc.get("Name"), doc.get("Address"), doc.get("WaitTime"), doc.get("directions")))
     })
     //console.log(storeInStock)
 }
-function storeSummary(name, address, waitTime) {
+function storeSummary(name, address, waitTime, directions) {
     this.name = name;
     this.address = address;
     this.waitTime = waitTime;
+    this.directions = directions;
 }
 
 
