@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" ,
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css",
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/style.css">
@@ -13,60 +13,6 @@
 
     <title>Menu</title>
 </head>
-
-
-<!--################################################FIREBASE ZONE. DO NOT TOUCH ####################################-->
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
-
-
-<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
-<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
-
-<!--firebase API config files-->
-<script>
-    var firebaseConfig = {
-        apiKey: "AIzaSyBqB5QHNRRquDJxd9OiXXa9c33dI4zDSDA",
-        authDomain: "firebaetest-6e21a.firebaseapp.com",
-        databaseURL: "https://firebaetest-6e21a.firebaseio.com",
-        projectId: "firebaetest-6e21a",
-        storageBucket: "firebaetest-6e21a.appspot.com",
-        messagingSenderId: "763860546362",
-        appId: "1:763860546362:web:35a3ed2ac35df4abd5d603",
-        measurementId: "G-V56860GVZL"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-</script>
-<!--################################################ END FIREBASE ZONE ####################################-->
-
-<!--RETREIVE USER'S NAME-->
-<script>
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            document.getElementById("user").innerHTML = user.displayName;
-        } else {
-            console.log("error retreiving username");
-        }
-    })
-</script>
-
-<!--CHECK PERSISTENCE-->
-<script>
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            console.log("Logged in OK");
-        } else {
-            console.log("NOPE not logged in");
-            window.location.href = "/";
-        }
-    });
-</script>
-
 
 <body id="menuBody">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -85,26 +31,24 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         <span id="pepe">pepe</span><span id="grocer">Grocer</span>
     </a>
 
-    <!--    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"-->
-    <!--            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
-    <!--            <span class="navbar-toggler-icon navbar-light">-->
-    <!--            </span>-->
-    <!--    </button>-->
+<!--    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"-->
+<!--            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--            <span class="navbar-toggler-icon navbar-light">-->
+<!--            </span>-->
+<!--    </button>-->
 
-    <ul class="navbar-nav justify-content-end">
-        <li class="nav-item">
-            <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary" type='button'
-               id='signout'
-               style='color:aliceblue; width: 5em'>Log Out</a>
-        </li>
-    </ul>
+        <ul class="navbar-nav justify-content-end">
+            <li class="nav-item">
+                    <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary" type='button' id='signout'
+                       style='color:aliceblue; width: 5em'>Log Out</a>
+            </li>
+        </ul>
 </nav>
 
 <!-- Modal -->
-<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: orange">
+        <div class="modal-content"  style="background-color: orange">
             <div class="modal-body">
                 <div class="container-fluid searchByIngredientsContainer">
                     <div class="row">
@@ -113,11 +57,10 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                     <div class="row">
                         <div class="col-6 offset-3">
                             <div class="row justify-content-center" id="logOutBtn">
-                                <button type="button" id="confirmLogOut" class="btn btn-dark btn-block">Log Out</button>
+                                <button type="button" class="btn btn-dark btn-block">Log Out</button>
                             </div>
                             <div class="row justify-content-center" id="closeBtn">
-                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close
-                                </button>
+                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
@@ -136,56 +79,37 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 
     <div class="paragraph menuParagraph">
         <p class="white">
-        <p>Welcome, <span id="user"></span>.</p>
+        <p>Welcome, User</p>
         <p>You have 5 free searches left.</p>
-        <p>Please update a missing item or
+        <p>Please update a missing item or 
         <p>report a lineup status to earn more searches</p>
         </p>
     </div>
 
     <div class="container menuContainer">
-        <div class="row">
-            <div class="col-md-4 offset-md-4">
-                <div class="row">
-                    <button type="button" onclick="window.location='/underConstruction.html'" id="cream"
-                            class="btn-block menuBtn">Report Missing Item Wait Time
-                    </button>
-                </div>
-                <div class="row">
-                    <button id="grey" onclick="window.location='/search'" type="button" class="btn-block menuBtn">Search
-                        by Ingredient
-                    </button>
-                </div>
-                <div class="row">
-                    <button type="button" id="cream" onclick="window.location='/underConstruction.html'"
-                            class="btn-block menuBtn">Shopping List
-                    </button>
-                </div>
-                <div class="row">
-                    <button id="grey" type="button" onclick="window.location='/underConstruction.html'"
-                            class="btn-block menuBtn">Store Lineup near me
-                    </button>
-                </div>
-                <div class="row">
-                    <button type="button" onclick="window.location='/aboutUs'" id="cream" class="btn-block menuBtn">
-                        About Us
-                    </button>
-                </div>
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="row">
+                <button type="button" onclick="window.location='/underConstruction.html'" id="cream" class="btn-block menuBtn">Report Missing Item Wait Time</button>
+            </div>
+            <div class="row">
+                <button id="grey" onclick="window.location='/search'" type="button" class="btn-block menuBtn">Search by Ingredient</button>
+            </div>
+            <div class="row">
+                <button type="button" id="cream" onclick="window.location='/underConstruction.html'" class="btn-block menuBtn">Shopping List</button>
+            </div>
+            <div class="row">
+                <button id="grey" type="button" onclick="window.location='/underConstruction.html'" class="btn-block menuBtn">Store Lineup near me</button>
+            </div>
+            <div class="row">
+                <button type="button" onclick="window.location='/aboutUs'" id="cream" class="btn-block menuBtn">About Us</button>
             </div>
         </div>
+    </div>
 
     </div>
 
 </div>
 
 </body>
-<!--LOGOUT SCRIPT-->
-<script>
-    const logout = document.querySelector("#confirmLogOut");
-    logout.addEventListener('click', function(){
-        firebase.auth().signOut();
-        console.log("user signed out");
-        window.location.href = "/";
-    });
-</script>
 </html>
