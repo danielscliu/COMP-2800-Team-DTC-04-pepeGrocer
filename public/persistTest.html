@@ -6,6 +6,7 @@
 </head>
 <!--AJAX CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!--################################################FIREBASE ZONE. DO NOT TOUCH ####################################-->
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
 
@@ -32,7 +33,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 </script>
-
+<!--################################################ END FIREBASE ZONE ####################################-->
 <script>
     // firebase.auth().currentUser
     //     .getIdToken(forceRefresh)
@@ -63,12 +64,6 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         }
     });
 </script>
-
-
-<body>
-<a href="#"id="logoutButton">Logout</a>
-</body>
-<!--LOGOUT-->
 <script>
     const logout = document.querySelector("#logoutButton");
     logout.addEventListener('click', (e) => {
@@ -78,6 +73,12 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         window.location.href = "/";
     });
 </script>
+
+<body>
+<a href="#"id="logoutButton">Logout</a>
+</body>
+<!--LOGOUT-->
+
 <!--CHECK LOGIN-->
 
 
