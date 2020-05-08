@@ -42,6 +42,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 
 
 <body>
+<p>In Firebase login page</p>
 <div id="firebaseui-auth-container"></div>
 </body>
 
@@ -61,7 +62,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
     signInFlow: 'popup',
         credentialHelper: firebaseui.auth.CredentialHelper.NONE,
-        signInSuccessUrl: "/menu",
+        signInSuccessUrl: "/test", //TODO: redirect
         signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         firebase.auth.EmailAuthProvider.PROVIDER_ID,
