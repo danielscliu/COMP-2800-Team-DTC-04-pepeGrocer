@@ -74,6 +74,7 @@ app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
     if (targetItem === "")
     {
+
         res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean:itemStockBoolean})
     } else {
 
