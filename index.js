@@ -35,6 +35,7 @@ let itemStockBoolean = true;
 let storeInStock = [];
 
 function queryItem(targetItem) {
+    storeInStock = [];
     let stores = db.collection('stores');
     itemStockBoolean = false;
     stores.where(targetItem, '==', true).get()
@@ -48,7 +49,7 @@ function queryItem(targetItem) {
             await snapshotAsync(snapshot);
             // return storesInStock;
         })
-        .then(console.log(`${storeInStock} are the stores that carry your item`))
+        .then(console.log(storeInStock))
 }
 
 function snapshotAsync(snap) {
@@ -65,6 +66,7 @@ function snapshotAsync(snap) {
         // console.log(inStock);
          storeInStock.push(new storeSummary(doc.get("Name"), doc.get("Address"), doc.get("WaitTime")))
     })
+    //console.log(storeInStock)
 }
 function storeSummary(name, address, waitTime) {
     this.name = name;
@@ -77,13 +79,9 @@ app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
     // clear the list of stores, otherwise they will append all the stores to list
     queryItem(targetItem);
-    console.log(Object.values(storeInStock));
-
-    // if (itemObject) {
-    //      console.log("return ed yes");
-    // } else {
-    //      console.log("returned none");
-    // }
+    // can't get async working here for query item so we're just gonna take a nap for 500 ms
+    setTimeout(function(){res.render("pages/searchByIngredients", {stores: storeInStock})
+    }, 500)
 });
 
 
@@ -94,7 +92,9 @@ app.get("/", function (req, res) {
 
 
 app.get("/search", (req, res) =>
-    res.render("pages/searchByIngredients", {notFound: " "}));
+    res.render("pages/searchByIngredients", {stores: storeInStock}));
+    ;
+
 
 
 app.listen(process.env.PORT || 3000,
