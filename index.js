@@ -82,7 +82,7 @@ app.post("/searchByIngredients", (req, res) => {
         // can't get async working here for query item so we're just gonna take a nap for 500 ms
         setTimeout(function () {
             res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
-        }, 500);
+        }, 1000);
     }
 });
 
