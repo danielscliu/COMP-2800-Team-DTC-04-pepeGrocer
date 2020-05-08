@@ -79,11 +79,18 @@ function storeSummary(name, address, waitTime, directions) {
 
 app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
-    // clear the list of stores, otherwise they will append all the stores to list
-    queryItem(targetItem);
-    // can't get async working here for query item so we're just gonna take a nap for 500 ms
-    setTimeout(function(){res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
-    }, 500)
+    if (targetItem === "")
+    {
+        res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean:itemStockBoolean})
+    } else {
+
+        // clear the list of stores, otherwise they will append all the stores to list
+        queryItem(targetItem);
+        // can't get async working here for query item so we're just gonna take a nap for 500 ms
+        setTimeout(function () {
+            res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
+        }, 500);
+    }
 });
 
 
@@ -96,8 +103,10 @@ app.get("/", function (req, res) {
 app.get("/search", (req, res) =>
     res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean:itemStockBoolean}));
     ;
-
-
+    // Checking if UID is passed;
+app.post("/", (req ,res)=> {
+    console.log(req.body);
+});
 
 app.get("/menu", (req, res)=> res.render("pages/menu"));
 
