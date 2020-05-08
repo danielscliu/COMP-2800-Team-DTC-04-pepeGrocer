@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="/style.css">
 <style>
 
 body {
@@ -95,17 +96,26 @@ html {
 </head>
 <body>
 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
     <a class="navbar-brand" id='pepeGrocer'>
-        <div id="pepe" class="appBrand">pepe</div> <div id="grocer" class="appBrand" style="color: #FFA31A;">Grocer</div>
+        <div id="pepe" class="appBrand">pepe</div> <div id="grocer" class="appBrand">Grocer</div>
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon navbar-light">
-        </span>
+            <span class="navbar-toggler-icon navbar-light">
+            </span>
     </button>
 
     <div class="collapse navbar-collapse" id='navbarNav'>
@@ -114,23 +124,19 @@ html {
                 <a class="nav-link" href="/underConstruction.html">Report Missing Items/Wait Time</a>
             </li>
 
-            <li class="nav-item active">
-                <a class="nav-link active">Search by Ingredients</a>
+            <li class="nav-item">
+                <a class="nav-link" href="/search">Search by Ingredients</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/underConstruction.html">Shopping List</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/underConstruction.html">Store Lineup Near Me<span>
-                            <class="sr-only"></span></a>
+                <a class="nav-link" href="/underConstruction.html">Store Lineup Near Me<span
+                            class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-              <p class="nav-link" >About Us<span>
-                        <class="sr-only">(current)</span></p>
-          </li>
-
-
-
+            <li class="nav-item active">
+                <a class="nav-link active">About Us</a>
+            </li>
             <li class="nav-item">
                 <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary" type='button' id='signout'
                    style='color:aliceblue'>Log Out</a>
@@ -138,6 +144,33 @@ html {
         </ul>
     </div>
 </nav>
+<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"  style="background-color: orange">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <h3>Are you sure you want to sign out?</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 offset-3">
+                            <div class="row justify-content-center" id="logOutBtn">
+                                <button type="button" class="btn btn-dark btn-block">Log Out</button>
+                            </div>
+                            <div class="row justify-content-center" id="closeBtn">
+                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <img src="imgs/monkaS.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="description" style="text-align:center; color: #FFA31A;">
   <h1>Our Team</h1>
@@ -158,7 +191,7 @@ html {
     <div class="row">
   <div class="column">
     <div class="card">
-      <img src="../../public/imgs/contributors/daniel.jpg" alt="Daniel" style="width:100%">
+      <img src="/imgs/daniel.jpg" alt="Daniel" style="width:100%">
       <div class="container">
         <h2>Daniel Liu      </h2>
         <p class="title">Backend Developer</p>
@@ -171,7 +204,7 @@ html {
 
   <div class="column">
     <div class="card">
-      <img src="../public/imgs/kevin.jpg" alt="Kevin" style="width:100%">
+      <img src="/imgs/kevin.jpg" alt="Kevin" style="width:100%">
       <div class="container">
         <h2>Kevin Shih      </h2>
         <p class="title">Backend Developer</p>
@@ -184,7 +217,7 @@ html {
   
     <div class="column">
     <div class="card">
-      <img src="/contributors/sepehr.jfif" alt="Sepehr" style="width:100%">
+      <img src="/imgs/sepehr.jfif" alt="Sepehr" style="width:100%">
       <div class="container">
         <h2>Sepehr Mansouri</h2>
         <p class="title">Frontend Developer</p>
@@ -197,7 +230,7 @@ html {
   
   <div class="column">
     <div class="card">
-      <img src="/contributors/jay.jfif" alt="Jay" style="width:100%">
+      <img src="/imgs/jay.jfif" alt="Jay" style="width:100%">
       <div class="container">
         <h2>Jay Sui      </h2>
         <p class="title">Frontend Developer</p>
