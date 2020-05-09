@@ -25,10 +25,10 @@ var db = admin.firestore();
 
 
 let itemStockBoolean = true;
-let storeInStock = [];
+//let storeInStock = [];
 
 function queryItem(targetItem) {
-    storeInStock = [];
+     storeInStock = [];
     let stores = db.collection('stores');
     itemStockBoolean = false;
     stores.where(targetItem, '==', true).get()
@@ -40,27 +40,20 @@ function queryItem(targetItem) {
                 return;
             }
             itemStockBoolean = true;
-            await snapshotAsync(snapshot);
+            storeInStock = snapshotAsync(snapshot);
             // return storesInStock;
-        })
-        .then(console.log(storeInStock))
+        });
+    console.log(storeInStock);
+    return storeInStock
 }
 
 function snapshotAsync(snap) {
-
+    monkey = [];
     //console.log(snap);
      snap.forEach(doc => {
-        //console.log(typeof(doc));
-        //console.log(`the following stores contain ${targetItem} is at location: `)
-        // let address = doc.get("Address");
-        // let name = doc.get("Name");
-        // let waitTime = doc.get("WaitTime");
-        // inStock= new storeSummary(name, address, waitTime);
-        // itemStockBoolean = true;
-        // console.log(inStock);
-         storeInStock.push(new storeSummary(doc.get("Name"), doc.get("Address"), doc.get("WaitTime"), doc.get("directions")))
-    })
-    //console.log(storeInStock)
+         monkey.push(new storeSummary(doc.get("Name"), doc.get("Address"), doc.get("WaitTime"), doc.get("directions")))
+    });
+    return monkey
 }
 function storeSummary(name, address, waitTime, directions) {
     this.name = name;
@@ -74,7 +67,6 @@ app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
     if (targetItem === "")
     {
-
         res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean:itemStockBoolean})
     } else {
 
@@ -84,6 +76,7 @@ app.post("/searchByIngredients", (req, res) => {
         setTimeout(function () {
             res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
         }, 1000);
+
     }
 });
 
@@ -94,7 +87,7 @@ app.get("/fLogin", function (req, res) {
 
 // ROUTE TO SEARCH INGREDIENTS
 app.get("/search", (req, res) =>
-    res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean}));
+    res.render("pages/searchByIngredients", {stores: [], itemStockBoolean: itemStockBoolean}));
 
 
 // ROUTE TO LANDING PAGE
