@@ -99,5 +99,17 @@ app.get("/menu", (req, res) => res.render("pages/menu"));
 // ROUTE TO ABOUT US
 app.get("/aboutUs", (req, res) => res.render("pages/aboutUs"));
 
+app.get("/items", (req, res) => res.render("pages/itemAndWait"));
+
+
+app.post("/itemAndWait", (req, res) => {
+    if (req.body.stock === "inStock") {
+        console.log("In Stock");
+    } else if (req.body.stock === "notInStock") {
+        console.log("Not In Stock");
+    }
+    res.render("pages/itemAndWait");
+});
+
 app.listen(process.env.PORT || 3000,
     () => console.log("Express function running"));
