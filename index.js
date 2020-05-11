@@ -30,9 +30,9 @@ let itemStockBoolean = true;
 //<editor-fold desc="write to database w/ store address and object + objectData">
 
 async function addToDatabaseWithAddyItemAndBoolean(storeLocation, objectField, objectData) {
-
+    objectField = objectField.toLowerCase();
     let snapshotReturn;
-    db.collection('stores').where("Address", "==", storeLocation).get()
+    db.collection('stores').where("address", "==", storeLocation).get()
         .then(snapshot => {
             snapshotReturn = snapshot;
             findDocID(snapshotReturn, objectField, objectData);
@@ -78,7 +78,7 @@ function snapshotAsync(snap) {
     monkey = [];
     //console.log(snap);
      snap.forEach(doc => {
-         monkey.push(new storeSummary(doc.get("Name"), doc.get("Address"), doc.get("WaitTime"), doc.get("directions")))
+         monkey.push(new storeSummary(doc.get("name"), doc.get("address"), doc.get("waittime"), doc.get("directions")))
     });
     return monkey
 }
@@ -92,6 +92,7 @@ function storeSummary(name, address, waitTime, directions) {
 
 app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
+    targetItem = targetItem.toLowerCase();
     if (targetItem === "")
     {
         res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean:itemStockBoolean})
