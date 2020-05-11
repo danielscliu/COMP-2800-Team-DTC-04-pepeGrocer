@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-
 const app = express();
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
@@ -26,40 +25,33 @@ var db = admin.firestore();
 
 let itemStockBoolean = true;
 
-////////////////////////////////////////WRITE TO DATABASE GIVEN STORE ADDRESS AND ITEM //////////////////////////
-// WRITE TO DATABASE GIVEN STORE ADDRESS
-async function addToDatabaseGivenAddressAndItem () {
-    let storeLocation = "605 Expo Blvd, Vancouver, BC V6B 1V4"; //STORE LOCATION
-    let item = "Test Item"; // ITEM
-    let itemBoolean = true; // BOOLEAN FOR IN STOCK
+////////////////////////////////////////WRITE TO DATABASE GIVEN STORE ADDRESS AND object:objectData//////////////////
+///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
+//<editor-fold desc="write to database w/ store address and object + objectData">
 
-    queryDatabase(storeLocation, item, itemBoolean);
-}
-
-async function queryDatabase(storeLocation, item, itemBoolean) {
+async function addToDatabaseWithAddyItemAndBoolean(storeLocation, objectField, objectData) {
 
     let snapshotReturn;
     db.collection('stores').where("Address", "==", storeLocation).get()
         .then(snapshot => {
             snapshotReturn = snapshot;
-            findDocID(snapshotReturn, item, itemBoolean);
+            findDocID(snapshotReturn, objectField, objectData);
         });
 }
 
-async function findDocID(snapshot, item, itemBoolean) {
+async function findDocID(snapshot, objectField, objectData) {
     snapshot.forEach(doc =>{
         console.log(doc.id);
-        addWithDocID(doc.id, item, itemBoolean);
+        addWithDocID(doc.id, objectField, objectData);
     })
 }
 
-function addWithDocID(storeID, item, itemBoolean) {
+function addWithDocID(storeID, objectField, objectData) {
     db.collection('stores').doc(storeID).update( {
-        [item]:itemBoolean
+        [objectField]:objectData
     })
 }
-
-addToDatabaseGivenAddressAndItem();
+//</editor-fold>
 ////////////////////////////// END ADD TO DATABASE GIVEN STORE LOCATION AND ITEM /////////////////
 
 function queryItem(targetItem) {
