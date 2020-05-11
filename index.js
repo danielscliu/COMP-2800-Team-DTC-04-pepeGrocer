@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-
 const app = express();
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
@@ -25,7 +24,35 @@ var db = admin.firestore();
 
 
 let itemStockBoolean = true;
-//let storeInStock = [];
+
+////////////////////////////////////////WRITE TO DATABASE GIVEN STORE ADDRESS AND object:objectData//////////////////
+///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
+//<editor-fold desc="write to database w/ store address and object + objectData">
+
+async function addToDatabaseWithAddyItemAndBoolean(storeLocation, objectField, objectData) {
+
+    let snapshotReturn;
+    db.collection('stores').where("Address", "==", storeLocation).get()
+        .then(snapshot => {
+            snapshotReturn = snapshot;
+            findDocID(snapshotReturn, objectField, objectData);
+        });
+}
+
+async function findDocID(snapshot, objectField, objectData) {
+    snapshot.forEach(doc =>{
+        console.log(doc.id);
+        addWithDocID(doc.id, objectField, objectData);
+    })
+}
+
+function addWithDocID(storeID, objectField, objectData) {
+    db.collection('stores').doc(storeID).update( {
+        [objectField]:objectData
+    })
+}
+//</editor-fold>
+////////////////////////////// END ADD TO DATABASE GIVEN STORE LOCATION AND ITEM /////////////////
 
 function queryItem(targetItem) {
      storeInStock = [];
