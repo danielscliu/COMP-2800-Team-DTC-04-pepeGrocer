@@ -27,6 +27,38 @@ var db = admin.firestore();
 let itemStockBoolean = true;
 //let storeInStock = [];
 
+// WRITE TO DATABASE
+async function addToDatabase () {
+    let storeLocation = "605 Expo Blvd, Vancouver, BC V6B 1V4"; //STORE LOCATION
+    let item; // ITEM
+    let itemStock; // BOOLEAN FOR IN STOCK
+    let storeRef = db.collection('stores');
+
+    let storeDoc = await queryDatabase(storeLocation);
+    printstoreInfo(storeDoc);
+}
+
+async function queryDatabase(storeLocation) {
+    let snapshotReturn;
+    db.collection('stores').where("Address", "==", storeLocation).get()
+        .then(snapshot => {
+            snapshotReturn = snapshot;
+        });
+    console.log(snapshotReturn);
+    return snapshotReturn;
+
+}
+
+async function printstoreInfo(inputData) {
+    console.log(inputData);
+    // inputData.forEach(doc =>{
+    //     console.log(doc.name);
+    // })
+}
+
+addToDatabase();
+
+
 function queryItem(targetItem) {
      storeInStock = [];
     let stores = db.collection('stores');
