@@ -78,17 +78,22 @@ function snapshotAsync(snap) {
     monkey = [];
     //console.log(snap);
      snap.forEach(doc => {
-         monkey.push(new storeSummary(doc.get("name"), doc.get("address"), doc.get("waittime"), doc.get("directions")))
+         monkey.push(new storeSummary(doc.get("name"), doc.get("address"), doc.get("waittime")))
     });
     return monkey
 }
-function storeSummary(name, address, waitTime, directions) {
+function storeSummary(name, address, waitTime) {
     this.name = name;
     this.address = address;
     this.waitTime = waitTime;
-    this.directions = directions;
+    this.directions = makeGoogleMapsDirection(address);
 }
 
+function makeGoogleMapsDirection(address) {
+    address = address.replace(" ", "+");
+    address = "https://www.google.com/maps?saddr=Current+Location&daddr=" + address;
+    return address;
+}
 
 app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
