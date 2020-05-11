@@ -25,39 +25,42 @@ var db = admin.firestore();
 
 
 let itemStockBoolean = true;
-//let storeInStock = [];
 
-// WRITE TO DATABASE
-async function addToDatabase () {
+////////////////////////////////////////WRITE TO DATABASE GIVEN STORE ADDRESS AND ITEM //////////////////////////
+// WRITE TO DATABASE GIVEN STORE ADDRESS
+async function addToDatabaseGivenAddressAndItem () {
     let storeLocation = "605 Expo Blvd, Vancouver, BC V6B 1V4"; //STORE LOCATION
-    let item; // ITEM
-    let itemStock; // BOOLEAN FOR IN STOCK
-    let storeRef = db.collection('stores');
+    let item = "Test Item"; // ITEM
+    let itemBoolean = true; // BOOLEAN FOR IN STOCK
 
-    let storeDoc = await queryDatabase(storeLocation);
-    printstoreInfo(storeDoc);
+    queryDatabase(storeLocation, item, itemBoolean);
 }
 
-async function queryDatabase(storeLocation) {
+async function queryDatabase(storeLocation, item, itemBoolean) {
+
     let snapshotReturn;
     db.collection('stores').where("Address", "==", storeLocation).get()
         .then(snapshot => {
             snapshotReturn = snapshot;
+            findDocID(snapshotReturn, item, itemBoolean);
         });
-    console.log(snapshotReturn);
-    return snapshotReturn;
-
 }
 
-async function printstoreInfo(inputData) {
-    console.log(inputData);
-    // inputData.forEach(doc =>{
-    //     console.log(doc.name);
-    // })
+async function findDocID(snapshot, item, itemBoolean) {
+    snapshot.forEach(doc =>{
+        console.log(doc.id);
+        addWithDocID(doc.id, item, itemBoolean);
+    })
 }
 
-addToDatabase();
+function addWithDocID(storeID, item, itemBoolean) {
+    db.collection('stores').doc(storeID).update( {
+        [item]:itemBoolean
+    })
+}
 
+addToDatabaseGivenAddressAndItem();
+////////////////////////////// END ADD TO DATABASE GIVEN STORE LOCATION AND ITEM /////////////////
 
 function queryItem(targetItem) {
      storeInStock = [];
