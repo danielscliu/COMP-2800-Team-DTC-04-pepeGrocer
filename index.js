@@ -103,11 +103,9 @@ app.get("/items", (req, res) => res.render("pages/itemAndWait"));
 
 
 app.post("/itemAndWait", (req, res) => {
-    if (req.body.stock === "inStock") {
-        console.log("In Stock");
-    } else if (req.body.stock === "notInStock") {
-        console.log("Not In Stock");
-    }
+    console.log(req.body.stock);
+    console.log(req.body.waitingTime);
+    console.log(req.body.itemStatus);
     res.render("pages/itemAndWait");
 });
 
