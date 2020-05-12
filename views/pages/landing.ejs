@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="/style.css">
     <style>
         body {
-            background-color: #292929;
+            /*background-color: #292929;*/
+            background-color: black;
             overflow-y: hidden;
             overflow-x: hidden;
         }
@@ -124,11 +125,26 @@
         <a style="color: #FFA31A; left: 500px;" href="">Forgot Password?</a> -->
 
     </div>
-    <img id="pepe" src="/imgs/pepe.png"></img>
+    <img id="pepe easterEgg" src="/imgs/pepe.png"></img>
     <br><br>
 
 
 
 
 </body>
+
+<script>
+    var pepeLimit = 0;
+    document.getElementById('pepe easterEgg').addEventListener('click', myFunction);
+    function myFunction() {
+        console.log(pepeLimit);
+        if (pepeLimit === 5) {
+            document.getElementById('pepe easterEgg').setAttribute("src", "/imgs/tenor-1.gif");
+        } else {
+        }
+        console.log(pepeLimit);
+        pepeLimit++;
+    }
+
+</script>
 </html>
