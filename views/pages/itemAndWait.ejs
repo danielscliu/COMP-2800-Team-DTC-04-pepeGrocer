@@ -21,10 +21,37 @@
         .custom-control-input:checked~.custom-control-label::before {
             background-color: orange;
         }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 80%;
+            height: 2vh;
+            border-radius: 5vh;
+            background: white;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 2vw;
+            height: 3vh;
+            border-radius: 50%;
+            background: orange;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 5vw;
+            height: 5vh;
+            border-radius: 50%;
+            background: orange;
+            cursor: pointer;
+        }
     </style>
 
 </head>
-<body>
+<body id="missingItemBody">
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -36,26 +63,192 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <a class="navbar-brand" id='pepeGrocer' href="/menu">
+        <span id="pepe">pepe</span><span id="grocer">Grocer</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon navbar-light">
+            </span>
+    </button>
+
+    <div class="collapse navbar-collapse" id='navbarNav'>
+        <ul class="navbar-nav w-100 mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link active" href="/underConstruction.html">Report Missing Items/Wait Time</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link">Search by Ingredients</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/underConstruction.html">Shopping List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/underConstruction.html">Store Lineup Near Me<span
+                            class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/aboutUs">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary" type='button' id='signout'
+                   style='color:aliceblue'>Log Out</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"  style="background-color: orange">
+            <div class="modal-body">
+                <div class="container-fluid searchByIngredientsContainer">
+                    <div class="row">
+                        <h3>Are you sure you want to sign out?</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 offset-3">
+                            <div class="row justify-content-center" id="logOutBtn">
+                                <button type="button" id="confirmLogOut" class="btn btn-dark btn-block"> Log Out</button>
+                            </div>
+                            <div class="row justify-content-center" id="closeBtn">
+                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <img src="imgs/monkaS.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div id='mainBlock' class="container vertical-align table-responsive missingItemContainer">
+
+    <div id='storeNameMissingItem'>
+        <h3 style="text-align: center">Welcome to {Store Name}</h3>
+    </div>
+
+
 <form action='/itemAndWait' method='post'>
-    <div class="custom-control custom-radio custom-control-inline">
-            <input class="custom-control-input" id="hasStock" type="radio" name="stock" value="inStock">
-            <label class="custom-control-label" for="hasStock">
-                In Stock
-            </label>
+    <div class="card" style="background-color: orange">
+        <div class="card-body" style="background-color: #2e2b2e">
+            <div id="enterWaitTime">
+                <h6>Slide to select current wait time at the store:</h6>
+            </div>
+    <div class="row" id="waitTimeRow">
+        <div class="col-md-10 sliderCol">
+            <div class="form-group">
+                <div>
+                    <label for="waitTime" id="waitTimeTitle">Wait time input:</label>
+                </div>
+                <div>
+                    <input type="range" class="slider" name="waitingTime" min="0" max="120" step="1" value="0" id="waitTimeRange">
+                </div>
+
+                <div>
+                    <p id="waitTimeText">Wait Time: <span id="waitTimeValue"></span> Minutes</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-1 float-right">
+            <div class="form-check" id="submitMissingItem">
+                <input class="btn btn-secondary" type='submit'>
+            </div>
+        </div>
     </div>
 
-    <div class="custom-control custom-radio custom-control-inline">
-            <input class="custom-control-input" id="noStock" type="radio" name="stock" value="notInStock">
-            <label class="custom-control-label" for="noStock">
-                Not In Stock
-            </label>
+            <div class="row justify-content-center" id='storeNameMissingItem'>
+                <h7>Enter an item and its stock status:</h7>
+            </div>
+
+            <div class="row justify-content-center" id="search">
+                <input type="text" name="itemStatus"  placeholder="Enter Item" id="inputBox" />
+            </div>
+
+            <div class="row justify-content-center" id="stockRadio">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input class="custom-control-input" id="hasStock" type="radio" name="stock" value="inStock">
+                    <label class="custom-control-label" for="hasStock" style="color: white">
+                        In Stock
+                    </label>
+                </div>
+
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input class="custom-control-input" id="noStock" type="radio" name="stock" value="notInStock">
+                    <label class="custom-control-label" for="noStock" style="color: white">
+                        Not In Stock
+                    </label>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="form-check">
-            <input type='submit'>
-    </div>
+    <hr>
+
 </form>
 
+    <div id="stockItems" class="container vertical-align table-responsive searchByIngredientsContainer">
+        <div id='itemStock'>
+            <h6 id='itemStatus' style="color: white">Inputted Item Status</h6>
+        </div>
+        <div class="itemStockBox">
 
+                <div class="card stockCard">
+                    <div class="card-body">
+                        <div class="row">
+                                <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7>
+                        </div>
+                    </div>
+                </div>
+            <div class="card stockCard">
+                <div class="card-body">
+                    <div class="row">
+                        <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7>
+                    </div>
+                </div>
+            </div>
+            <div class="card stockCard">
+                <div class="card-body">
+                    <div class="row">
+                        <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7>
+                    </div>
+                </div>
+            </div>
+            <div class="card stockCard">
+                <div class="card-body">
+                    <div class="row">
+                        <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</div>
+<script>
+    let slider = document.getElementById("waitTimeRange");
+    let output = document.getElementById("waitTimeValue");
+    output.innerHTML = slider.value;
+
+    slider.oninput = function() {
+        output.innerHTML = this.value;
+    }
+</script>
 </body>
 </html>
