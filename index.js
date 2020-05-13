@@ -200,6 +200,9 @@ app.get("/items", (req, res) => res.render("pages/missingItems"));
 
 app.get("/time", (req, res) => res.render("pages/waitTime"));
 
+app.get("/lineup", (req, res) => res.render("pages/lineup"));
+
+
 app.post("/waitTime", (req, res) => {
     if (req.body.submitBtn === "Search") {
         console.log(req.body.address);
