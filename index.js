@@ -181,6 +181,7 @@ app.post("/waitTime", (req, res) => {
         console.log(req.body)
         console.log(req.body.latitude)
         console.log(req.body.longtitude)
+        map5Closest(req.body.latitude, req.body.longtitude);
         res.render("pages/waitTime");
     } else if (req.body.submitBtn === "Submit") {
         console.log(req.body.waitingTime);
