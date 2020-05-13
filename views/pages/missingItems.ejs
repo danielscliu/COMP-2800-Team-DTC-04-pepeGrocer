@@ -78,11 +78,11 @@
     <div class="collapse navbar-collapse" id='navbarNav'>
         <ul class="navbar-nav w-100 mr-auto">
             <li class="nav-item active">
-                <a class="nav-link active" href="/underConstruction.html">Report Missing Items/Wait Time</a>
+                <a class="nav-link active">Report Missing Items/Wait Time</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link">Search by Ingredients</a>
+                <a class="nav-link" href="/search">Search by Ingredients</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/underConstruction.html">Shopping List</a>
@@ -140,44 +140,18 @@
     </div>
 
 
-<form action='/itemAndWait' method='post'>
-    <div class="card" style="background-color: orange">
-        <div class="card-body" style="background-color: #2e2b2e">
-            <div id="enterWaitTime">
-                <h6>Slide to select current wait time at the store:</h6>
-            </div>
-    <div class="row" id="waitTimeRow">
-        <div class="col-md-10 sliderCol">
-            <div class="form-group">
-                <div>
-                    <label for="waitTime" id="waitTimeTitle">Wait time input:</label>
-                </div>
-                <div>
-                    <input type="range" class="slider" name="waitingTime" min="0" max="120" step="1" value="0" id="waitTimeRange">
-                </div>
-
-                <div>
-                    <p id="waitTimeText">Wait Time: <span id="waitTimeValue"></span> Minutes</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-1 float-right">
-            <div class="form-check" id="submitMissingItem">
-                <input class="btn btn-secondary" type='submit'>
-            </div>
-        </div>
-    </div>
+<form action='/missingItems' method='post'>
 
             <div class="row justify-content-center" id='storeNameMissingItem'>
                 <h7>Enter an item and its stock status:</h7>
             </div>
 
-            <div class="row justify-content-center" id="search">
-                <input type="text" name="itemStatus"  placeholder="Enter Item" id="inputBox" />
+            <div class="row justify-content-center" id="submitStock">
+                <input type="text" name="itemStatus"  placeholder="Enter Item" id="inputBox"/>
+                <input type="submit" value="Submit" id="submitStockBtn" />
             </div>
 
-            <div class="row justify-content-center" id="stockRadio">
+            <div class="row justify-content-center" id="stockRadio" style="padding-top: 3vh">
                 <div class="custom-control custom-radio custom-control-inline">
                     <input class="custom-control-input" id="hasStock" type="radio" name="stock" value="inStock">
                     <label class="custom-control-label" for="hasStock" style="color: white">
@@ -192,9 +166,6 @@
                     </label>
                 </div>
             </div>
-
-        </div>
-    </div>
 
     <hr>
 

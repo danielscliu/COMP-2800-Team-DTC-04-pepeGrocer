@@ -6,7 +6,13 @@
 
 .itemStockBox {
     overflow-y: auto;
-    height: 35vh;
+    height: 55vh;
+    background-color: orange;
+}
+
+.waitTimeBox {
+    overflow-y: auto;
+    height: 62vh;
     background-color: orange;
 }
 
@@ -31,6 +37,15 @@ div#mainBlock {
 }
 
 #missingItemBody{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #2e2b2e;
+}
+
+#nearMeRow {
+    padding-top: 2vh;
+}
+
+#waitTimeBody {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #2e2b2e;
 }
@@ -84,8 +99,6 @@ div#mainBlock {
 }
 
 #submitMissingItem {
-    padding-top: 4vh;
-    padding-right: 6vw;
     color: white;
 }
 
