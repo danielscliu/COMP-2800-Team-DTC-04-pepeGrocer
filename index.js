@@ -1,14 +1,47 @@
 const express = require("express");
 const path = require("path");
-
 const app = express();
+const request = require('request');
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+
+//////////////////////// map5Closest(lat, lon): RETURN TOP 5 GROCERY STORE CLOSEST TO LOCATION ///////////////////////
+//<editor-fold desc="map_top_5">
+function map5Closest(lat, lon) {
+    request('https://discover.search.hereapi.com/v1/' +
+        'discover' +
+        '?at='+lat +',' + lon +
+        '&limit=5' +
+        '&q=grocery' +
+        '&in=countryCode:can' +
+        '&apiKey=uxpiwh4lgSnnxBOklrdEVCdCaStR0ZQ_6DA1X-GGMu0', function (error, response, body) {
+        let listClosest = [];
+        let json = JSON.parse(body);
+        let obj = json.items;
+        for (i = 0; i < 5; i++) {
+            let name = obj[i].title;
+            let address = obj[i].address.label;
+            let identification = obj[i].id;
+            listClosest.push(new basicStoreInfoObjectCreator(name, address, identification));
+        }
+        console.log(listClosest);
+        return listClosest;
+
+    })
+}
+function basicStoreInfoObjectCreator(name, address, identification) {
+    this.name = name;
+    this.address = address;
+    this.identification = identification;
+}
+//</editor-fold>
+
 // Firebase init
 
 
-//--new 
+//<editor-fold desc="FIREBASE SETUP">
+//--new
 var admin = require("firebase-admin");
 
 // Fetch the service account key JSON file contents
@@ -22,10 +55,39 @@ admin.initializeApp({
 
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = admin.firestore();
+//</editor-fold>
 
+
+/////////////////////////////GENERIC WRITE TO DATABASE GIVEN STORE ADDRESS AND object:objectData//////////////////
+///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
+//<editor-fold desc="write to database w/ store address and object + objectData">
+
+async function addToDatabaseWithAddyItemAndBoolean(storeLocation, objectField, objectData) {
+    objectField = objectField.toLowerCase();
+    let snapshotReturn;
+    db.collection('stores').where("address", "==", storeLocation).get()
+        .then(snapshot => {
+            snapshotReturn = snapshot;
+            findDocID(snapshotReturn, objectField, objectData);
+        });
+}
+
+async function findDocID(snapshot, objectField, objectData) {
+    snapshot.forEach(doc => {
+        console.log(doc.id);
+        addWithDocID(doc.id, objectField, objectData);
+    })
+}
+
+function addWithDocID(storeID, objectField, objectData) {
+    db.collection('stores').doc(storeID).update({
+        [objectField]: objectData
+    })
+}
+
+//</editor-fold>
 
 let itemStockBoolean = true;
-let storeInStock = [];
 
 function queryItem(targetItem) {
     storeInStock = [];
@@ -40,42 +102,40 @@ function queryItem(targetItem) {
                 return;
             }
             itemStockBoolean = true;
-            await snapshotAsync(snapshot);
+            storeInStock = snapshotAsync(snapshot);
             // return storesInStock;
-        })
-        .then(console.log(storeInStock))
+        });
+    console.log(storeInStock);
+    return storeInStock
 }
 
 function snapshotAsync(snap) {
-
+    monkey = [];
     //console.log(snap);
-     snap.forEach(doc => {
-        //console.log(typeof(doc));
-        //console.log(`the following stores contain ${targetItem} is at location: `)
-        // let address = doc.get("Address");
-        // let name = doc.get("Name");
-        // let waitTime = doc.get("WaitTime");
-        // inStock= new storeSummary(name, address, waitTime);
-        // itemStockBoolean = true;
-        // console.log(inStock);
-         storeInStock.push(new storeSummary(doc.get("Name"), doc.get("Address"), doc.get("WaitTime"), doc.get("directions")))
-    })
-    //console.log(storeInStock)
+    snap.forEach(doc => {
+        monkey.push(new storeSummary(doc.get("name"), doc.get("address"), doc.get("waittime")))
+    });
+    return monkey
 }
-function storeSummary(name, address, waitTime, directions) {
+
+function storeSummary(name, address, waitTime) {
     this.name = name;
     this.address = address;
     this.waitTime = waitTime;
-    this.directions = directions;
+    this.directions = makeGoogleMapsDirection(address);
 }
 
+function makeGoogleMapsDirection(address) {
+    address = address.replace(" ", "+");
+    address = "https://www.google.com/maps?saddr=Current+Location&daddr=" + address;
+    return address;
+}
 
 app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
-    if (targetItem === "")
-    {
-
-        res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean:itemStockBoolean})
+    targetItem = targetItem.toLowerCase();
+    if (targetItem === "") {
+        res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
     } else {
 
         // clear the list of stores, otherwise they will append all the stores to list
@@ -84,6 +144,7 @@ app.post("/searchByIngredients", (req, res) => {
         setTimeout(function () {
             res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
         }, 1000);
+
     }
 });
 
@@ -94,7 +155,7 @@ app.get("/fLogin", function (req, res) {
 
 // ROUTE TO SEARCH INGREDIENTS
 app.get("/search", (req, res) =>
-    res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean}));
+    res.render("pages/searchByIngredients", {stores: [], itemStockBoolean: itemStockBoolean}));
 
 
 // ROUTE TO LANDING PAGE
@@ -105,6 +166,34 @@ app.get("/menu", (req, res) => res.render("pages/menu"));
 
 // ROUTE TO ABOUT US
 app.get("/aboutUs", (req, res) => res.render("pages/aboutUs"));
+
+app.get("/items", (req, res) => res.render("pages/missingItems"));
+
+app.get("/time", (req, res) => res.render("pages/waitTime"));
+
+app.post("/waitTime", (req, res) => {
+    if (req.body.submitBtn === "Search") {
+        console.log(req.body.address);
+        res.render("pages/waitTime");
+    } else if (req.body.submitBtn === "Near Me") {
+        console.log("GeoLocation");
+        
+        console.log(req.body)
+        console.log(req.body.latitude)
+        console.log(req.body.longtitude)
+        map5Closest(req.body.latitude, req.body.longtitude);
+        res.render("pages/waitTime");
+    } else if (req.body.submitBtn === "Submit") {
+        console.log(req.body.waitingTime);
+        res.render("pages/missingItems");
+    }
+});
+
+app.post("/missingItems", (req, res) => {
+    console.log(req.body.itemStatus);
+    console.log(req.body.stock);
+    res.render("pages/missingItems");
+});
 
 app.listen(process.env.PORT || 3000,
     () => console.log("Express function running"));
