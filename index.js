@@ -132,14 +132,27 @@ app.get("/menu", (req, res) => res.render("pages/menu"));
 // ROUTE TO ABOUT US
 app.get("/aboutUs", (req, res) => res.render("pages/aboutUs"));
 
-app.get("/items", (req, res) => res.render("pages/itemAndWait"));
+app.get("/items", (req, res) => res.render("pages/missingItems"));
 
+app.get("/time", (req, res) => res.render("pages/waitTime"));
 
-app.post("/itemAndWait", (req, res) => {
-    console.log(req.body.stock);
-    console.log(req.body.waitingTime);
+app.post("/waitTime", (req, res) => {
+    if (req.body.submitBtn === "Search") {
+        console.log(req.body.address);
+        res.render("pages/waitTime");
+    } else if (req.body.submitBtn === "Near Me") {
+        console.log("GeoLocation");
+        res.render("pages/waitTime");
+    } else if (req.body.submitBtn === "Submit") {
+        console.log(req.body.waitingTime);
+        res.render("pages/missingItems");
+    }
+});
+
+app.post("/missingItems", (req, res) => {
     console.log(req.body.itemStatus);
-    res.render("pages/itemAndWait");
+    console.log(req.body.stock);
+    res.render("pages/missingItems");
 });
 
 app.listen(process.env.PORT || 3000,
