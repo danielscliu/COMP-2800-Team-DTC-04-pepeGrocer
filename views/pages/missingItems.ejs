@@ -21,33 +21,6 @@
         .custom-control-input:checked~.custom-control-label::before {
             background-color: orange;
         }
-
-        .slider {
-            -webkit-appearance: none;
-            width: 80%;
-            height: 2vh;
-            border-radius: 5vh;
-            background: white;
-            outline: none;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 2vw;
-            height: 3vh;
-            border-radius: 50%;
-            background: orange;
-            cursor: pointer;
-        }
-
-        .slider::-moz-range-thumb {
-            width: 5vw;
-            height: 5vh;
-            border-radius: 50%;
-            background: orange;
-            cursor: pointer;
-        }
     </style>
 
 </head>
@@ -167,8 +140,11 @@
                 </div>
             </div>
 
-    <hr>
+    <div class="row justify-content-center" style="padding-top: 2vh">
+        <button type="button" class="btn btn-secondary" onclick="window.location='/time'">Back to wait time</button>
+    </div>
 
+    <hr>
 </form>
 
     <div id="stockItems" class="container vertical-align table-responsive searchByIngredientsContainer">
