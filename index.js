@@ -87,6 +87,35 @@ function addWithDocID(storeID, objectField, objectData) {
 
 //</editor-fold>
 
+/////////////////////////////GENERIC WRITE TO DATABASE GIVEN STORE ADDRESS AND object:objectData//////////////////
+///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
+//<editor-fold desc="write to database w/ store address and object + objectData">
+
+async function addToDatabaseWithAddyItemAndBoolean(storeLocation, objectField, objectData) {
+    objectField = objectField.toLowerCase();
+    let snapshotReturn;
+    db.collection('stores').where("address", "==", storeLocation).get()
+        .then(snapshot => {
+            snapshotReturn = snapshot;
+            findDocID(snapshotReturn, objectField, objectData);
+        });
+}
+
+async function findDocID(snapshot, objectField, objectData) {
+    snapshot.forEach(doc => {
+        console.log(doc.id);
+        addWithDocID(doc.id, objectField, objectData);
+    })
+}
+
+function addWithDocID(storeID, objectField, objectData) {
+    db.collection('stores').doc(storeID).update({
+        [objectField]: objectData
+    })
+}
+
+//</editor-fold>
+
 let itemStockBoolean = true;
 
 function queryItem(targetItem) {
