@@ -1,13 +1,48 @@
 const express = require("express");
 const path = require("path");
 const app = express();
+const request = require('request');
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+
+//////////////////////////// RETURN TOP 5 GROCERY STORE CLOSEST TO LOCATION ///////////////////////
+//<editor-fold desc="map_top_5">
+function testMapGet(lat, lon) {
+    request('https://discover.search.hereapi.com/v1/' +
+        'discover' +
+        '?at='+lat +',' + lon +
+        '&limit=5' +
+        '&q=grocery' +
+        '&in=countryCode:can' +
+        '&apiKey=uxpiwh4lgSnnxBOklrdEVCdCaStR0ZQ_6DA1X-GGMu0', function (error, response, body) {
+        let listClosest = [];
+        let json = JSON.parse(body);
+        let obj = json.items;
+        for (i = 0; i < 5; i++) {
+            let name = obj[i].title;
+            let address = obj[i].address.label;
+            let identification = obj[i].id;
+            listClosest.push(new basicStoreInfoObjectCreator(name, address, identification));
+        }
+        console.log(listClosest);
+        return listClosest;
+
+    })
+}
+function basicStoreInfoObjectCreator(name, address, identification) {
+    this.name = name;
+    this.address = address;
+    this.identification = identification;
+}
+//</editor-fold>
+
+testMapGet(49.17001, -123.13302);
 // Firebase init
 
 
-//--new 
+//<editor-fold desc="FIREBASE SETUP">
+//--new
 var admin = require("firebase-admin");
 
 // Fetch the service account key JSON file contents
@@ -21,9 +56,8 @@ admin.initializeApp({
 
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = admin.firestore();
+//</editor-fold>
 
-
-let itemStockBoolean = true;
 
 ////////////////////////////////////////WRITE TO DATABASE GIVEN STORE ADDRESS AND object:objectData//////////////////
 ///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
@@ -40,22 +74,24 @@ async function addToDatabaseWithAddyItemAndBoolean(storeLocation, objectField, o
 }
 
 async function findDocID(snapshot, objectField, objectData) {
-    snapshot.forEach(doc =>{
+    snapshot.forEach(doc => {
         console.log(doc.id);
         addWithDocID(doc.id, objectField, objectData);
     })
 }
 
 function addWithDocID(storeID, objectField, objectData) {
-    db.collection('stores').doc(storeID).update( {
-        [objectField]:objectData
+    db.collection('stores').doc(storeID).update({
+        [objectField]: objectData
     })
 }
+
 //</editor-fold>
-////////////////////////////// END ADD TO DATABASE GIVEN STORE LOCATION AND ITEM /////////////////
+
+let itemStockBoolean = true;
 
 function queryItem(targetItem) {
-     storeInStock = [];
+    storeInStock = [];
     let stores = db.collection('stores');
     itemStockBoolean = false;
     stores.where(targetItem, '==', true).get()
@@ -77,11 +113,12 @@ function queryItem(targetItem) {
 function snapshotAsync(snap) {
     monkey = [];
     //console.log(snap);
-     snap.forEach(doc => {
-         monkey.push(new storeSummary(doc.get("name"), doc.get("address"), doc.get("waittime")))
+    snap.forEach(doc => {
+        monkey.push(new storeSummary(doc.get("name"), doc.get("address"), doc.get("waittime")))
     });
     return monkey
 }
+
 function storeSummary(name, address, waitTime) {
     this.name = name;
     this.address = address;
@@ -98,9 +135,8 @@ function makeGoogleMapsDirection(address) {
 app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
     targetItem = targetItem.toLowerCase();
-    if (targetItem === "")
-    {
-        res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean:itemStockBoolean})
+    if (targetItem === "") {
+        res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
     } else {
 
         // clear the list of stores, otherwise they will append all the stores to list
