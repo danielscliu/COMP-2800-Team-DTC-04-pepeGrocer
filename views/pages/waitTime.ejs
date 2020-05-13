@@ -189,6 +189,11 @@
             <div class="row justify-content-center">
                 <input type="text" name="address"  placeholder="Enter an address" id="inputBox" />
                 <input type="submit" value="Search" id="submitBtn" name="submitBtn" />
+
+                <!-- This should not affect visually but need it to post values for lat lon; -->
+            <input id="coordinateLongitude" type="hidden" name="longitude" value=""></input>
+            <input id="coordinateLatitude" type="hidden" name="latitude" value=""></input>
+
             </div>
             <div class="row justify-content-center" id="nearMeRow">
                 <input type="submit" class="btn btn-secondary" value="Near Me" id="nearMeBtn" name="submitBtn" />
@@ -280,6 +285,7 @@
                     </div>
                 </div>
             </div>
+            
 
             <div class="card storeCard">
                 <div class="card-body">
@@ -309,6 +315,35 @@
     slider.oninput = function() {
         output.innerHTML = this.value;
     }
+
+
+
+
+
+window.onload = getLocation(); 
+
+coords = []
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  console.log("Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude);
+  coords.push(position.coords.latitude, position.coords.longitude);
+  console.log('my array coords are: ' + coords);
+  document.querySelector("#coordinateLongitude").value = position.coords.longitude;
+  document.querySelector("#coordinateLatitude").value = position.coords.latitude;
+
+  
+  return (position.coords.latitude, position.coords.longitude);
+}
+
 </script>
 </body>
 </html>
