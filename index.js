@@ -6,9 +6,9 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
-//////////////////////////// RETURN TOP 5 GROCERY STORE CLOSEST TO LOCATION ///////////////////////
+//////////////////////// map5Closest(lat, lon): RETURN TOP 5 GROCERY STORE CLOSEST TO LOCATION ///////////////////////
 //<editor-fold desc="map_top_5">
-function testMapGet(lat, lon) {
+function map5Closest(lat, lon) {
     request('https://discover.search.hereapi.com/v1/' +
         'discover' +
         '?at='+lat +',' + lon +
@@ -37,7 +37,6 @@ function basicStoreInfoObjectCreator(name, address, identification) {
 }
 //</editor-fold>
 
-testMapGet(49.17001, -123.13302);
 // Firebase init
 
 
@@ -59,7 +58,7 @@ var db = admin.firestore();
 //</editor-fold>
 
 
-////////////////////////////////////////WRITE TO DATABASE GIVEN STORE ADDRESS AND object:objectData//////////////////
+/////////////////////////////GENERIC WRITE TO DATABASE GIVEN STORE ADDRESS AND object:objectData//////////////////
 ///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
 //<editor-fold desc="write to database w/ store address and object + objectData">
 
