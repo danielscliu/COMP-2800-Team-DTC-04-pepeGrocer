@@ -7,7 +7,7 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 
-
+//////////////////IN PROGRESS ///////////////
 //<editor-fold desc="searchByAddress">
 function addressToLonLat(address) {
     var filteredAddress = address.replace(" ", "+");
@@ -98,7 +98,7 @@ var db = admin.firestore();
 //</editor-fold>
 
 
-/////////////////////////////GENERIC WRITE TO DATABASE GIVEN STORE ADDRESS AND object:objectData//////////////////
+
 ///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
 //<editor-fold desc="write to database w/ store address and object + objectData">
 
@@ -127,7 +127,6 @@ function addWithDocID(storeID, objectField, objectData) {
 
 //</editor-fold>
 
-/////////////////////////////GENERIC WRITE TO DATABASE GIVEN STORE ADDRESS AND object:objectData//////////////////
 ///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
 //<editor-fold desc="write to database w/ store address and object + objectData">
 
@@ -200,7 +199,6 @@ function makeGoogleMapsDirection(address) {
     address = "https://www.google.com/maps?saddr=Current+Location&daddr=" + address;
     return address;
 }
-//</editor-fold>
 
 app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
@@ -218,6 +216,9 @@ app.post("/searchByIngredients", (req, res) => {
 
     }
 });
+//</editor-fold>
+
+
 
 // ROUTE TO FIREBASEUI LOGIN
 app.get("/fLogin", function (req, res) {
