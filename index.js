@@ -289,7 +289,7 @@ app.get("/shop", (req, res) => res.render("pages/shoppingList"));
 
 app.get("/items", (req, res) => res.render("pages/missingItems"));
 
-app.get("/time", (req, res) => res.render("pages/waitTime"));
+app.get("/time", (req, res) => res.render("pages/waitTime", {stores:"none"}));
 
 app.get("/lineup", (req, res) => res.render("pages/lineup"));
 
@@ -306,10 +306,13 @@ app.post("/waitTime", (req, res) => {
         let lat = req.body.latitude;
         let lon = req.body.longitude;
         map5Closest(lat, lon)
-            .then((val) => {
-                    result = val;
-                    res.render("pages/waitTime", {storeList: result})
-                }
+            .then(result => 
+                res.render("pages/waitTime", {stores:result})
+                    
+                    //console.log(`here is a store : ${value["name"]}`);
+                    //res.render("/pages/waitTime", {stores: value})
+                    
+                
 
         )
 
