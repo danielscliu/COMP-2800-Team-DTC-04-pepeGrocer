@@ -5,6 +5,22 @@ const request = require('request');
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+//<editor-fold desc="FIREBASE SETUP">
+//--new
+var admin = require("firebase-admin");
+
+// Fetch the service account key JSON file contents
+var serviceAccount = require("./firebaetest-6e21a-firebase-adminsdk-oiexo-d634330287.json");
+
+// Initialize the app with a service account, granting admin privileges
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://firebaetest-6e21a.firebaseio.com"
+});
+
+// As an admin, the app has access to read and write all data, regardless of Security Rules
+var db = admin.firestore();
+//</editor-fold>
 
 
 //////////////////IN PROGRESS ///////////////
@@ -48,27 +64,35 @@ function asyncAddress(address) {
 
 //////////////////////// map5Closest(lat, lon): RETURN TOP 5 GROCERY STORE CLOSEST TO LOCATION ///////////////////////
 //<editor-fold desc="map_top_5">
-function map5Closest(lat, lon) {
-    request('https://discover.search.hereapi.com/v1/' +
-        'discover' +
-        '?at=' + lat + ',' + lon +
-        '&limit=5' +
-        '&q=grocery' +
-        '&in=countryCode:can' +
-        '&apiKey=uxpiwh4lgSnnxBOklrdEVCdCaStR0ZQ_6DA1X-GGMu0', function (error, response, body) {
-        let listClosest = [];
-        let json = JSON.parse(body);
-        let obj = json.items;
-        for (i = 0; i < 5; i++) {
-            let name = obj[i].title;
-            let address = obj[i].address.label;
-            let identification = obj[i].id;
-            listClosest.push(new basicStoreInfoObjectCreator(name, address, identification));
-        }
-        // console.log(listClosest);
-        return listClosest;
+async function map5Closest(lat, lon) {
+    return new Promise(function (res, rej) {
+        request('https://discover.search.hereapi.com/v1/' +
+            'discover' +
+            '?at=' + lat + ',' + lon +
+            '&limit=5' +
+            '&q=grocery' +
+            '&in=countryCode:can' +
+            '&apiKey=uxpiwh4lgSnnxBOklrdEVCdCaStR0ZQ_6DA1X-GGMu0', function (error, response, body) {
 
-    })
+            if (error) return rej(err);
+            try {
+                let listClosest = [];
+                let json = JSON.parse(body);
+                let obj = json.items;
+                for (i = 0; i < 5; i++) {
+                    let name = obj[i].title;
+                    let address = obj[i].address.label;
+                    let identification = obj[i].id;
+                    listClosest.push(new basicStoreInfoObjectCreator(name, address, identification));
+                }
+                res(listClosest);
+            } catch (e) {
+                rej(e);
+            }
+
+
+        })
+    }) // end promise
 }
 
 function basicStoreInfoObjectCreator(name, address, identification) {
@@ -81,52 +105,6 @@ function basicStoreInfoObjectCreator(name, address, identification) {
 
 // Firebase init
 
-
-//<editor-fold desc="FIREBASE SETUP">
-//--new
-var admin = require("firebase-admin");
-
-// Fetch the service account key JSON file contents
-var serviceAccount = require("./firebaetest-6e21a-firebase-adminsdk-oiexo-d634330287.json");
-
-// Initialize the app with a service account, granting admin privileges
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://firebaetest-6e21a.firebaseio.com"
-});
-
-// As an admin, the app has access to read and write all data, regardless of Security Rules
-var db = admin.firestore();
-//</editor-fold>
-
-
-///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
-//<editor-fold desc="write to database w/ store address and object + objectData">
-
-async function addToDatabaseWithAddyItemAndBoolean(storeLocation, objectField, objectData) {
-    objectField = objectField.toLowerCase();
-    let snapshotReturn;
-    db.collection('stores').where("address", "==", storeLocation).get()
-        .then(snapshot => {
-            snapshotReturn = snapshot;
-            findDocID(snapshotReturn, objectField, objectData);
-        });
-}
-
-async function findDocID(snapshot, objectField, objectData) {
-    snapshot.forEach(doc => {
-        console.log(doc.id);
-        addWithDocID(doc.id, objectField, objectData);
-    })
-}
-
-function addWithDocID(storeID, objectField, objectData) {
-    db.collection('stores').doc(storeID).update({
-        [objectField]: objectData
-    })
-}
-
-//</editor-fold>
 
 ///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
 //<editor-fold desc="write to database w/ store address and object + objectData">
@@ -317,6 +295,7 @@ app.get("/lineup", (req, res) => res.render("pages/lineup"));
 
 
 app.post("/waitTime", (req, res) => {
+    let result;
     if (req.body.submitBtn === "Search") {
         console.log(req.body.address);
         res.render("pages/waitTime");
@@ -326,8 +305,13 @@ app.post("/waitTime", (req, res) => {
         // console.log(req.body)
         let lat = req.body.latitude;
         let lon = req.body.longitude;
-        result = map5Closest(lat, lon);
-        console.log(`${result} is found`)
+        map5Closest(lat, lon)
+            .then((val) => {
+                    result = val;
+                    res.render("pages/waitTime", {storeList: result})
+                }
+
+        )
 
 
     } else if (req.body.submitBtn === "Submit") {
