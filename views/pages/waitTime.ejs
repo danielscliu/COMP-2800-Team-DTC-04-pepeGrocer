@@ -66,6 +66,44 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+<!--################################################FIREBASE ZONE. DO NOT TOUCH ####################################-->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+
+
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
+
+
+<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+
+<!--firebase API config files-->
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyBqB5QHNRRquDJxd9OiXXa9c33dI4zDSDA",
+        authDomain: "firebaetest-6e21a.firebaseapp.com",
+        databaseURL: "https://firebaetest-6e21a.firebaseio.com",
+        projectId: "firebaetest-6e21a",
+        storageBucket: "firebaetest-6e21a.appspot.com",
+        messagingSenderId: "763860546362",
+        appId: "1:763860546362:web:35a3ed2ac35df4abd5d603",
+        measurementId: "G-V56860GVZL"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
+<!--################################################ END FIREBASE ZONE ####################################-->
+<!--CHECK PERSISTENCE-->
+<script>
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            console.log("Logged in OK");
+        } else {
+            console.log("NOPE not logged in");
+            window.location.href = "/";
+        }
+    });
+</script>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
