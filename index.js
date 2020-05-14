@@ -105,6 +105,20 @@ function basicStoreInfoObjectCreator(name, address, identification) {
 
 // Firebase init
 
+///// STORE INTO FIREBASE STORE INFO
+function storeNewStoreInfo(storeID, storeAddress, storeName) {
+    db.collection('stores').doc(storeID).update({
+        address: storeAddress,
+        name: storeName
+    }).then(() => console.log("store info success"))
+        .catch((error) => console.log(error))
+}
+
+function storeWaitTime(storeID, waitTime) {
+    db.collection('stores').doc(storeID).update( {
+        waittime: waitTime
+    })
+}
 
 ///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
 //<editor-fold desc="write to database w/ store address and object + objectData">
@@ -234,7 +248,7 @@ function asyncReadUserShit(res, uid) {
         shoppingListArray = entries;
         console.log(shoppingListArray);
     }).then(() => {
-        res.render("pages/shoppingList", { list:shoppingListArray });
+        res.render("pages/shoppingList", {list: shoppingListArray});
     })
 }
 
@@ -266,8 +280,6 @@ app.get('/shoppinglist', (req, res) => {
 app.get("/fLogin", function (req, res) {
     res.sendFile(path.resolve("public/fireBase.html"));
 });
-
-
 
 
 // ROUTE TO SEARCH INGREDIENTS
@@ -310,8 +322,7 @@ app.post("/waitTime", (req, res) => {
                     result = val;
                     res.render("pages/waitTime", {storeList: result})
                 }
-
-        )
+            )
 
 
     } else if (req.body.submitBtn === "Submit") {
