@@ -209,14 +209,16 @@ app.post("/waitTime", (req, res) => {
         res.render("pages/waitTime");
     } else if (req.body.submitBtn === "Near Me") {
         console.log("GeoLocation");
-        
-        console.log(req.body)
-        console.log(req.body.latitude)
-        console.log(req.body.longtitude)
-        map5Closest(req.body.latitude, req.body.longtitude);
-        res.render("pages/waitTime");
+
+        // console.log(req.body)
+        let lat = req.body.latitude;
+        let lon = req.body.longitude;
+        result =map5Closest(lat, lon);
+        console.log(`${result} is found`)
+
+
     } else if (req.body.submitBtn === "Submit") {
-        console.log(req.body.waitingTime);
+
         res.render("pages/missingItems");
     }
 });
