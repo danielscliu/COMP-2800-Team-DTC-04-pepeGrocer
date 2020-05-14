@@ -6,6 +6,46 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
+
+
+//<editor-fold desc="searchByAddress">
+function addressToLonLat(address) {
+    var filteredAddress = address.replace(" ", "+");
+    return new Promise(function(res, rej) {
+        request('https://discover.search.hereapi.com/v1/' +
+            'geocode' +
+            '?q=' + filteredAddress +
+            '&apiKey=dXmHzMbOVAkqdex7o_440a8wmmMozdhTDxFO-hClAtU', function (error, response, body) {
+            if (error) return rej(err);
+            try {
+                res( JSON.parse(body))
+            } catch(e) {
+                rej(e);
+            }
+
+        })
+    }) // end promise
+}
+
+function asyncAddress(address) {
+addressToLonLat(address)
+    .then((val) => {
+        let geocode = [];
+        let json = val;
+        let jsonItems = json.items[0];
+        let lat = jsonItems.access[0].lat;
+        let lng = jsonItems.access[0].lng;
+        geocode.push(lat, lng);
+        let listClosest = map5Closest(geocode[0], geocode[1]);
+        return listClosest;
+    })
+}
+
+// let test = asyncAddress("9088 Dixon Ave Richmond");
+// console.log(test);
+//</editor-fold>
+
+
 //////////////////////// map5Closest(lat, lon): RETURN TOP 5 GROCERY STORE CLOSEST TO LOCATION ///////////////////////
 //<editor-fold desc="map_top_5">
 function map5Closest(lat, lon) {
@@ -25,7 +65,7 @@ function map5Closest(lat, lon) {
             let identification = obj[i].id;
             listClosest.push(new basicStoreInfoObjectCreator(name, address, identification));
         }
-        console.log(listClosest);
+        // console.log(listClosest);
         return listClosest;
 
     })
