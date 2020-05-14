@@ -36,7 +36,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 
 <!-- JS file for Firebase-UI and credentials initialisation-->
 <script>
-    // Initialize firebase widget
+    // Initilize firebase widget
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
 </script>
 
@@ -72,6 +72,5 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         privacyPolicyUrl: '<your-privacy-policy-url>'
     };
     // The start method will wait until the DOM is loaded.
-    ui.start('#firebaseui-auth-container', uiConfig);
-</script>
+    ui.start('#firebaseui-auth-container', uiConfig);</script>
 </html>

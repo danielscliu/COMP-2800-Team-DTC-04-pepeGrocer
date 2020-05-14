@@ -5,41 +5,6 @@ const request = require('request');
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-
-//////////////////////// map5Closest(lat, lon): RETURN TOP 5 GROCERY STORE CLOSEST TO LOCATION ///////////////////////
-//<editor-fold desc="map_top_5">
-function map5Closest(lat, lon) {
-    request('https://discover.search.hereapi.com/v1/' +
-        'discover' +
-        '?at='+lat +',' + lon +
-        '&limit=5' +
-        '&q=grocery' +
-        '&in=countryCode:can' +
-        '&apiKey=uxpiwh4lgSnnxBOklrdEVCdCaStR0ZQ_6DA1X-GGMu0', function (error, response, body) {
-        let listClosest = [];
-        let json = JSON.parse(body);
-        let obj = json.items;
-        for (i = 0; i < 5; i++) {
-            let name = obj[i].title;
-            let address = obj[i].address.label;
-            let identification = obj[i].id;
-            listClosest.push(new basicStoreInfoObjectCreator(name, address, identification));
-        }
-        console.log(listClosest);
-        return listClosest;
-
-    })
-}
-function basicStoreInfoObjectCreator(name, address, identification) {
-    this.name = name;
-    this.address = address;
-    this.identification = identification;
-}
-//</editor-fold>
-
-// Firebase init
-
-
 //<editor-fold desc="FIREBASE SETUP">
 //--new
 var admin = require("firebase-admin");
@@ -58,7 +23,89 @@ var db = admin.firestore();
 //</editor-fold>
 
 
-/////////////////////////////GENERIC WRITE TO DATABASE GIVEN STORE ADDRESS AND object:objectData//////////////////
+//////////////////IN PROGRESS ///////////////
+//<editor-fold desc="searchByAddress">
+function addressToLonLat(address) {
+    var filteredAddress = address.replace(" ", "+");
+    return new Promise(function (res, rej) {
+        request('https://discover.search.hereapi.com/v1/' +
+            'geocode' +
+            '?q=' + filteredAddress +
+            '&apiKey=dXmHzMbOVAkqdex7o_440a8wmmMozdhTDxFO-hClAtU', function (error, response, body) {
+            if (error) return rej(err);
+            try {
+                res(JSON.parse(body))
+            } catch (e) {
+                rej(e);
+            }
+
+        })
+    }) // end promise
+}
+
+function asyncAddress(address) {
+    addressToLonLat(address)
+        .then((val) => {
+            let geocode = [];
+            let json = val;
+            let jsonItems = json.items[0];
+            let lat = jsonItems.access[0].lat;
+            let lng = jsonItems.access[0].lng;
+            geocode.push(lat, lng);
+            let listClosest = map5Closest(geocode[0], geocode[1]);
+            return listClosest;
+        })
+}
+
+// let test = asyncAddress("9088 Dixon Ave Richmond");
+// console.log(test);
+//</editor-fold>
+
+
+//////////////////////// map5Closest(lat, lon): RETURN TOP 5 GROCERY STORE CLOSEST TO LOCATION ///////////////////////
+//<editor-fold desc="map_top_5">
+async function map5Closest(lat, lon) {
+    return new Promise(function (res, rej) {
+        request('https://discover.search.hereapi.com/v1/' +
+            'discover' +
+            '?at=' + lat + ',' + lon +
+            '&limit=5' +
+            '&q=grocery' +
+            '&in=countryCode:can' +
+            '&apiKey=uxpiwh4lgSnnxBOklrdEVCdCaStR0ZQ_6DA1X-GGMu0', function (error, response, body) {
+
+            if (error) return rej(err);
+            try {
+                let listClosest = [];
+                let json = JSON.parse(body);
+                let obj = json.items;
+                for (i = 0; i < 5; i++) {
+                    let name = obj[i].title;
+                    let address = obj[i].address.label;
+                    let identification = obj[i].id;
+                    listClosest.push(new basicStoreInfoObjectCreator(name, address, identification));
+                }
+                res(listClosest);
+            } catch (e) {
+                rej(e);
+            }
+
+
+        })
+    }) // end promise
+}
+
+function basicStoreInfoObjectCreator(name, address, identification) {
+    this.name = name;
+    this.address = address;
+    this.identification = identification;
+}
+
+//</editor-fold>
+
+// Firebase init
+
+
 ///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
 //<editor-fold desc="write to database w/ store address and object + objectData">
 
@@ -87,6 +134,8 @@ function addWithDocID(storeID, objectField, objectData) {
 
 //</editor-fold>
 
+
+//<editor-fold desc="query item">
 let itemStockBoolean = true;
 
 function queryItem(targetItem) {
@@ -147,11 +196,79 @@ app.post("/searchByIngredients", (req, res) => {
 
     }
 });
+//</editor-fold>
+
+
+/// USERDB SET DATA
+// db.collection('users').doc("1").collection('shoppingList')
+//     .doc("shoppingList").set({
+//     apple: true,
+//     banana: true,
+//     orange: false,
+//     mango: false
+// }).then(() => console.log("success"));
+
+//<editor-fold desc="shopping list functions">
+function readUserShit(uid) {
+    return new Promise(function (res, rej) {
+            db.collection('users').doc(uid).collection('shoppingList')
+                .doc("shoppingList").get()
+                .then(function (snapshot) {
+                    if (snapshot.exists) {
+                        console.log(snapshot.data())
+                        res(snapshot.data())
+                    } else {
+                        return;
+                    }
+                }).catch(error => console.log(error))
+        }
+    )
+}
+
+
+function asyncReadUserShit(res, uid) {
+    let shoppingListArray;
+    readUserShit(uid).then((val) => {
+        const entries = Object.entries(val);
+        console.log(entries.length);
+        shoppingListArray = entries;
+        console.log(shoppingListArray);
+    }).then(() => {
+        res.render("pages/shoppingList", { list:shoppingListArray });
+    })
+}
+
+function writeShoppingList(uid, dataObject) {
+    for (let i = 0; i < dataObject.length; i++) {
+        db.collection('users').doc(uid).collection('shoppingList')
+            .doc("shoppingList").set({
+            [dataObject[i][0]]: [dataObject[i][1]]
+        })
+
+    }
+}
+
+//</editor-fold>
+
+
+app.post("/shoppingListStartUid", function (req, res) {
+    console.log("inside Shopping List start UID POST");
+    let uid = req.body.uid;
+    asyncReadUserShit(res, uid);
+
+});
+
+app.get('/shoppinglist', (req, res) => {
+    res.render("pages/shoppingList", {list: []});
+})
 
 // ROUTE TO FIREBASEUI LOGIN
 app.get("/fLogin", function (req, res) {
     res.sendFile(path.resolve("public/fireBase.html"));
 });
+
+
+
 
 // ROUTE TO SEARCH INGREDIENTS
 app.get("/search", (req, res) =>
@@ -167,6 +284,9 @@ app.get("/menu", (req, res) => res.render("pages/menu"));
 // ROUTE TO ABOUT US
 app.get("/aboutUs", (req, res) => res.render("pages/aboutUs"));
 
+//ROUTE TO SHOPPING LIST
+app.get("/shop", (req, res) => res.render("pages/shoppingList"));
+
 app.get("/items", (req, res) => res.render("pages/missingItems"));
 
 app.get("/time", (req, res) => res.render("pages/waitTime"));
@@ -174,21 +294,28 @@ app.get("/time", (req, res) => res.render("pages/waitTime"));
 app.get("/lineup", (req, res) => res.render("pages/lineup"));
 
 
-
 app.post("/waitTime", (req, res) => {
+    let result;
     if (req.body.submitBtn === "Search") {
         console.log(req.body.address);
         res.render("pages/waitTime");
     } else if (req.body.submitBtn === "Near Me") {
         console.log("GeoLocation");
-        
-        console.log(req.body)
-        console.log(req.body.latitude)
-        console.log(req.body.longtitude)
-        map5Closest(req.body.latitude, req.body.longtitude);
-        res.render("pages/waitTime");
+
+        // console.log(req.body)
+        let lat = req.body.latitude;
+        let lon = req.body.longitude;
+        map5Closest(lat, lon)
+            .then((val) => {
+                    result = val;
+                    res.render("pages/waitTime", {storeList: result})
+                }
+
+        )
+
+
     } else if (req.body.submitBtn === "Submit") {
-        console.log(req.body.waitingTime);
+
         res.render("pages/missingItems");
     }
 });
