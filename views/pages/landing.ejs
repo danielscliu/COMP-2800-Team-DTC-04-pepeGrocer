@@ -66,7 +66,7 @@
         }
 
         img {
-            position:fixed;
+            position: fixed;
             bottom: 0;
             height: 40vh;
             width: auto;
@@ -91,26 +91,27 @@
     <div class="row justify-content-center">
         <h3><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h3>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" style="padding-top: 3vh">
         <h5 style="font-weight: bold;color: #AF640C;">Don’t troll yourself waiting in line</h5>
-
+    </div>
+    <div class="row justify-content-center" style="padding-top: 3vh">
         <p style="color: white;">This app is in its early stages of development</p>
         <p style="color: white;">Don't become a meme using this app irresponsibly</p>
         <p style="color: white;">For now, You will get to experience the very basics of what this app has to offer</p>
     </div>
-        <div class="row justify-content-center userlog">
-            <!-- <h3 >Login:</h3><input class="box" type="text" name="username">
-            <h3>Password: </h3><input class="box" type="password" name="password"><br> -->
-            <button onclick="window.location='/fLogin'" id="login" type="submit" name="submit"><h4
-                        style="color: white;">Start</h4></button>
-<!--</form>-->
+    <div class="row justify-content-center userlog">
+        <!-- <h3 >Login:</h3><input class="box" type="text" name="username">
+        <h3>Password: </h3><input class="box" type="password" name="password"><br> -->
+        <button onclick="window.location='/fLogin'" id="login" type="submit" name="submit"><h4
+                    style="color: white;">Start</h4></button>
+        <!--</form>-->
 
-        </div>
-<!--    <div style="height: 100px" class="access">-->
-<!--        &lt;!&ndash; <span style="color: white; margin-right: 10px;">First Time? <a href="../../public/fireBase.html" style="color: #FFA31A;">Sign Up</a></span></span><br>-->
-<!--        <a style="color: #FFA31A; left: 500px;" href="">Forgot Password?</a> &ndash;&gt;-->
+    </div>
+    <!--    <div style="height: 100px" class="access">-->
+    <!--        &lt;!&ndash; <span style="color: white; margin-right: 10px;">First Time? <a href="../../public/fireBase.html" style="color: #FFA31A;">Sign Up</a></span></span><br>-->
+    <!--        <a style="color: #FFA31A; left: 500px;" href="">Forgot Password?</a> &ndash;&gt;-->
 
-<!--    </div>-->
+    <!--    </div>-->
     <div class="row justify-content-center" id="pepeImg">
         <img id="pepe " src="/imgs/pepe.png"></img>
     </div>
@@ -118,14 +119,12 @@
 </div>
 
 
-
-
-
 </body>
 
 <script>
     var pepeLimit = 0;
     document.getElementById('pepe ').addEventListener('click', myFunction);
+
     function myFunction() {
         console.log(pepeLimit);
         if (pepeLimit === 4) {
