@@ -21,6 +21,12 @@
         .custom-control-input:checked~.custom-control-label::before {
             background-color: orange;
         }
+        .itemStockBox {
+            height: 400px;
+        }
+        .card{
+            height: 100px;
+        }
     </style>
 
 </head>
@@ -117,7 +123,7 @@
             <form action='/waitTime' method='post'>
                 <div class="row justify-content-center">
                     <input type="text" name="address"  placeholder="Enter an address" id="inputBox" />
-                    <input type="submit" value="Search" id="submitBtn" name="submitBtn" />
+                    <input type="button" value="Search" id="submitBtn" name="submitBtn" />
     
                     <!-- This should not affect visually but need it to post values for lat lon; -->
                 <input id="coordinateLongitude" type="hidden" name="longitude" value=""></input>
@@ -128,41 +134,49 @@
         </div>
     
     </div>
-
+    <br>
     <div id="stockItems" class="container vertical-align table-responsive searchByIngredientsContainer">
         <div id='itemStock'>
-            <h6 id='itemStatus' style="color: white">Inputted Item Status</h6>
+            <h6 id='itemStatus' style="color: white">Store Lineups and their Wait times</h6>
         </div>
         <div class="itemStockBox">
 
                 <div class="card stockCard">
                     <div class="card-body">
                         <div class="row">
-                                <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7>
+                                <h7>Store: {Store Name}<br>
+                                    Estimated Lineup Wait Time: {Given}
+                                </h7>
                         </div>
                     </div>
                 </div>
-            <div class="card stockCard">
-                <div class="card-body">
-                    <div class="row">
-                        <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7>
+                <div class="card stockCard">
+                    <div class="card-body">
+                        <div class="row">
+                                <h7>Store: {Store Name}<br>
+                                    Estimated Lineup Wait Time: {Given}
+                                </h7>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card stockCard">
-                <div class="card-body">
-                    <div class="row">
-                        <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7>
+                <div class="card stockCard">
+                    <div class="card-body">
+                        <div class="row">
+                                <h7>Store: {Store Name}<br>
+                                    Estimated Lineup Wait Time: {Given}
+                                </h7>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card stockCard">
-                <div class="card-body">
-                    <div class="row">
-                        <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7>
+                <div class="card stockCard">
+                    <div class="card-body">
+                        <div class="row">
+                                <h7>Store: {Store Name}<br>
+                                    Estimated Lineup Wait Time: {Given}
+                                </h7>
+                        </div>
                     </div>
                 </div>
-            </div>
         </div>
 
     </div>
