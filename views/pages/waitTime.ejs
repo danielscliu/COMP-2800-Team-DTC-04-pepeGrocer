@@ -240,7 +240,7 @@
                                         <h6 class="card-text btn btn-secondary" data-toggle="modal"
                                             id= <%= stores[index]["identification"] %>
                                             data-target="#waitTimeModal"
-                                        onclick="editHiddenID('<%= stores[index]["identification"] %>','<%= stores[index]["address"] %> ')">Report wait time and missing items</h6>
+                                        onclick="editHiddenID('<%= stores[index]["identification"] %>','<%= stores[index]["address"] %>', '<%= stores[index]["name"] %>')">Report wait time and missing items</h6>
                                     </div>
 
 
@@ -267,12 +267,15 @@
 <span type="hidden" id="storeIDRequested" ></span>;
 <span type="hidden" id="inputval" >0</span>;
 <span type="hidden" id="storeAddressRequested" ></span>;
+<span type="hidden" id="storeNameRequested" ></span>;
+
 
 <script>
-    function editHiddenID(thisID, address) {
+    function editHiddenID(thisID, address, name) {
         console.log(address);
-        document.getElementById("storeIDRequested").innerHTML =thisID;
-        document.getElementById("storeAddressRequested").innerHTML =address;
+        document.getElementById("storeIDRequested").innerHTML = thisID;
+        document.getElementById("storeAddressRequested").innerHTML = address;
+        document.getElementById("storeNameRequested").innerHTML = name;
 
     }
 </script>
@@ -286,7 +289,8 @@
             data: {
                 storeID : document.getElementById("storeIDRequested").innerHTML,
                 waitTimeValue : document.getElementById("inputval").innerHTML,
-                storeAddress : document.getElementById("storeAddressRequested").innerHTML
+                storeAddress : document.getElementById("storeAddressRequested").innerHTML,
+                storeName : document.getElementById("storeNameRequested").innerHTML
             }
         })
     })
