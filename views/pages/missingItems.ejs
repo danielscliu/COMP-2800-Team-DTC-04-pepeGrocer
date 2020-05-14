@@ -196,6 +196,13 @@
     slider.oninput = function() {
         output.innerHTML = this.value;
     }
+
+    const logout = document.querySelector("#confirmLogOut");
+    logout.addEventListener('click', function () {
+        firebase.auth().signOut();
+        console.log("user signed out");
+        window.location.href = "/";
+    });
 </script>
 </body>
 </html>
