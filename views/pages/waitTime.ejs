@@ -240,7 +240,7 @@
                                         <h6 class="card-text btn btn-secondary" data-toggle="modal"
                                             id= <%= stores[index]["identification"] %>
                                             data-target="#waitTimeModal"
-                                        onclick="editHiddenID('<%= stores[index]["identification"] %>')">Report wait time and missing items</h6>
+                                        onclick="editHiddenID('<%= stores[index]["identification"] %>','<%= stores[index]["address"] %> ')">Report wait time and missing items</h6>
                                     </div>
 
 
@@ -265,12 +265,15 @@
 
 
 <span type="hidden" id="storeIDRequested" ></span>;
-<span type="hidden" id="inputval" ></span>;
+<span type="hidden" id="inputval" >0</span>;
+<span type="hidden" id="storeAddressRequested" ></span>;
 
 <script>
-    function editHiddenID(thisID) {
-        console.log("success")
+    function editHiddenID(thisID, address) {
+        console.log(address);
         document.getElementById("storeIDRequested").innerHTML =thisID;
+        document.getElementById("storeAddressRequested").innerHTML =address;
+
     }
 </script>
 
@@ -281,8 +284,9 @@
             type: "POST",
             url: "/waitTimeSubmit",
             data: {
-                storeIDRequested : document.getElementById("storeIDRequested").innerHTML,
-                waitTimeValue : document.getElementById("inputval").innerHTML
+                storeID : document.getElementById("storeIDRequested").innerHTML,
+                waitTimeValue : document.getElementById("inputval").innerHTML,
+                storeAddress : document.getElementById("storeAddressRequested").innerHTML
             }
         })
     })

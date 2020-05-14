@@ -5,6 +5,7 @@ const request = require('request');
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+
 //<editor-fold desc="FIREBASE SETUP">
 //--new
 var admin = require("firebase-admin");
@@ -320,9 +321,16 @@ app.post("/waitTime", (req, res) => {
 
 app.post("/waitTimeSubmit", (req, res) => {
     console.log(req.body.waitTimeValue);
-    console.log(req.body.storeIDRequested);
-// res.render("pages/missingItems");
+    console.log(req.body.storeID);
+    console.log(req.body.storeAddress)
+
+
+    // res.render("pages/missingItems");
 })
+
+
+///update database with store
+
 
 
 app.post("/missingItems", (req, res) => {
