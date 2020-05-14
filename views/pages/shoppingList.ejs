@@ -17,8 +17,6 @@
     <title>Shopping List</title>
 </head>
 <style>
-
-
     .custom-control-input:checked~.custom-control-label::before {
         color: white;
         border-color: black;
@@ -31,16 +29,16 @@
     .itemStockBox {
         height: 400px;
     }
+
     .custom-control {
         left: 20px;
         top: 20px;
         margin: 20px;
     }
+
     .itemStockBox {
         overflow-x: hidden;
     }
-
-
 </style>
 
 
@@ -186,7 +184,7 @@
                     <form action='/waitTime' method='post'>
                         <div class="row justify-content-center">
                             <input type="text" name="address" placeholder="Enter an item" id="inputBox" />
-                            <input type="button" value="Add" id="add" name="add"/>
+                            <input type="button" value="Add" id="add" name="add" />
 
                             <!-- This should not affect visually but need it to post values for lat lon; -->
                             <input id="coordinateLongitude" type="hidden" name="longitude" value=""></input>
@@ -195,10 +193,10 @@
                         </div>
                     </form>
                 </div>
-            <br>
-            <div style="text-align: center;">
-                <input  type="submit" value="Submit List" id="submit" name="submit"/>
-            </div>
+                <br>
+                <div style="text-align: center;">
+                    <input type="submit" value="Submit List" id="submit" name="submit" />
+                </div>
             </div>
             <br>
             <div id="stockItems" class="container vertical-align table-responsive searchByIngredientsContainer">
@@ -206,12 +204,7 @@
                     <h6 id='itemStatus' style="color: white">Shopping Checklist</h6>
                 </div>
                 <form class="itemStockBox" method="post">
-                
 
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                        <label style='color: white;' class="custom-control-label" for="customCheck1"><h5>{Grocery Item}</h5></label>
-                    </div>
 
                 </form>
 
@@ -231,36 +224,10 @@
         <% }; %>
 
         <!-- ###############Add buttons by jquery -->
-        <script>
-            $(document).ready(function () {
-                var itemNum = 1;
-                var description = document.getElementById("inputBox").value;
-
-                var shopList = `<div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label style='color: white;' class="custom-control-label" for="${itemNum}"><h5>${description}</h5></label>
-                    </div>`
-
-                $("#add").on("click", function () {
-                    console.log(description)
-                    $(".itemStockBox").append(shopList)
-                    itemNum++;
-                    document.getElementById('inputBox').value= '';
-                });
-
-                console.log(itemNum);
-            });
-
-
-
-
-        </script>
-
-
-
-
 
         <script>
+
+    var itemNum = 1;
             $(document).ready(function () {
                 // COMMENTED OUT SECTION GOOD FOR TESTING
                 // $.ajax({
@@ -270,6 +237,26 @@
                 //     },
                 //     url: '/shoppingListStartUid'
                 // })
+
+
+
+
+                $("#add").on("click", function () {
+                var description = document.getElementById("inputBox").value;
+
+                var shopList = `<div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
+        <label style='color: white;' class="custom-control-label" for="customCheck${itemNum}"><h5>${description}</h5></label>
+        </div>`
+                    console.log(description)
+                    $(".itemStockBox").append(shopList)
+                    itemNum++;
+                    document.getElementById('inputBox').value = '';
+                });
+
+
+                console.log(itemNum);
+
                 firebase.auth().onAuthStateChanged(function (user) {
                     if (user) {
                         console.log("loggedin");
