@@ -156,8 +156,9 @@ function addWithDocID(storeID, objectField, objectData) {
 
 //</editor-fold>
 
-let itemStockBoolean = true;
 
+//<editor-fold desc="query item">
+let itemStockBoolean = true;
 function queryItem(targetItem) {
     storeInStock = [];
     let stores = db.collection('stores');
@@ -199,6 +200,7 @@ function makeGoogleMapsDirection(address) {
     address = "https://www.google.com/maps?saddr=Current+Location&daddr=" + address;
     return address;
 }
+//</editor-fold>
 
 app.post("/searchByIngredients", (req, res) => {
     let targetItem = req.body.ingredients;
