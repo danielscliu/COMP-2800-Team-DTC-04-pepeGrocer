@@ -83,7 +83,8 @@ async function map5Closest(lat, lon) {
                     let name = obj[i].title;
                     let address = obj[i].address.label;
                     let identification = obj[i].id;
-                    listClosest.push(new basicStoreInfoObjectCreator(name, address, identification));
+                    let direction = makeGoogleMapsDirection(address);
+                    listClosest.push(new basicStoreInfoObjectCreator(name, address, identification, direction));
                 }
                 res(listClosest);
             } catch (e) {
@@ -95,10 +96,11 @@ async function map5Closest(lat, lon) {
     }) // end promise
 }
 
-function basicStoreInfoObjectCreator(name, address, identification) {
+function basicStoreInfoObjectCreator(name, address, identification, direction) {
     this.name = name;
     this.address = address;
     this.identification = identification;
+    this.directions = direction;
 }
 
 //</editor-fold>
