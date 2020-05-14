@@ -288,6 +288,9 @@ app.get("/fLogin", function (req, res) {
     res.sendFile(path.resolve("public/fireBase.html"));
 });
 
+
+
+
 // ROUTE TO SEARCH INGREDIENTS
 app.get("/search", (req, res) =>
     res.render("pages/searchByIngredients", {stores: [], itemStockBoolean: itemStockBoolean}));
@@ -310,6 +313,7 @@ app.get("/lineup", (req, res) => res.render("pages/lineup"));
 
 
 app.post("/waitTime", (req, res) => {
+    let result;
     if (req.body.submitBtn === "Search") {
         console.log(req.body.address);
         res.render("pages/waitTime");
