@@ -48,6 +48,14 @@
 
 <body>
 
+<!--FRONT END: PAGE WILL AUTOMATICALLY RETREIVE LIST (SHOPPING LIST ARRAY [[APPLE: TRUE], [BANANA:FALSE]]) -->
+<!--FROM SERVER. FIND A WAY TO SHOW ITEMS (TRUE FOR BOUGHT, FALSE FOR NEED TO BUY)-->
+
+<!--CREATE BUTTON TO ADD TO THIS LIST-->
+<!--CREATE BUTTON TO WRITE TO SERVER. -->
+<!--WHEN WRITING, SEND DATA THE SAME AS RECEIVED. [[APPLE: FALSE], [BANANA:TRUE]]-->
+<!--AJAX CODE WILL BE PROVIDED-->
+
 <% list.forEach(dict => {%>
     <%console.log(dict)%>
 <!--<span><%= dict[0] %></span>-->
@@ -58,27 +66,28 @@
 
 <script>
     $(document).ready(function () {
-        $.ajax({
-            type: 'POST',
-            data: {
-                "uid": 1 //user.uid
-            },
-            url: '/shoppingListStartUid'
-        })
-        // firebase.auth().onAuthStateChanged(function (user) {
-        //     if (user) {
-        //         console.log("loggedin");
-        //         $.ajax({
-        //             type: 'POST',
-        //             data: {
-        //                 "uid": 1 //user.uid
-        //             },
-        //             url: '/shoppingListStartUid'
-        //         })
-        //     } else {
-        //         console.log("NOPE not logged in");
-        //     }
+        // COMMENTED OUT SECTION GOOD FOR TESTING
+        // $.ajax({
+        //     type: 'POST',
+        //     data: {
+        //         "uid": 1 //user.uid
+        //     },
+        //     url: '/shoppingListStartUid'
         // })
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                console.log("loggedin");
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        "uid": user.uid
+                    },
+                    url: '/shoppingListStartUid'
+                })
+            } else {
+                console.log("NOPE not logged in");
+            }
+        })
     })
 </script>
 
