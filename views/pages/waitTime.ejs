@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css",
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" ,
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/style.css">
@@ -13,25 +13,50 @@
     <title>Wait Time and Missing Item</title>
 
     <style>
-        .custom-control-input:checked~.custom-control-label::before {
+        .custom-control-input:checked ~ .custom-control-label::before {
             color: white;
             border-color: black;
         }
 
-        .custom-control-input:checked~.custom-control-label::before {
+        .custom-control-input:checked ~ .custom-control-label::before {
             background-color: orange;
         }
-        .itemStockBox {
-            height: 400px;
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 2vh;
+            border-radius: 5vh;
+            background: white;
+            outline: none;
         }
-        .card{
-            height: 140px;
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 2vw;
+            height: 3vh;
+            border-radius: 50%;
+            background: orange;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 5vw;
+            height: 5vh;
+            border-radius: 50%;
+            background: orange;
+            cursor: pointer;
+        }
+
+        .custom-btn {
+            background-color: orange;
         }
     </style>
-
 </head>
-<body id="missingItemBody">
 
+
+<body id="waitTimeBody">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -56,34 +81,38 @@
 
     <div class="collapse navbar-collapse" id='navbarNav'>
         <ul class="navbar-nav w-100 mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/time">Report Missing Items/Wait Time</a>
+            <li class="nav-item active">
+                <a class="nav-link active">Report Missing Items/Wait Time</a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="/search">Search by Ingredients</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/underConstruction.html">Shopping List</a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link active">Store Lineup Near Me</a>
+            <li class="nav-item">
+                <a class="nav-link" href="/lineup">Store Lineup Near Me<span
+                            class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/aboutUs">About Us</a>
             </li>
             <li class="nav-item">
-                <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary" type='button' id='signout'
+                <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary" type='button'
+                   id='signout'
                    style='color:aliceblue'>Log Out</a>
             </li>
         </ul>
     </div>
 </nav>
 
+<!-- Modal Log Out-->
 <!-- Modal -->
-<!-- Modal -->
-<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content"  style="background-color: orange">
+        <div class="modal-content" style="background-color: orange">
             <div class="modal-body">
                 <div class="container-fluid searchByIngredientsContainer">
                     <div class="row">
@@ -92,10 +121,12 @@
                     <div class="row">
                         <div class="col-6 offset-3">
                             <div class="row justify-content-center" id="logOutBtn">
-                                <button type="button" id="confirmLogOut" class="btn btn-dark btn-block"> Log Out</button>
+                                <button type="button" id="confirmLogOut" class="btn btn-dark btn-block"> Log Out
+                                </button>
                             </div>
                             <div class="row justify-content-center" id="closeBtn">
-                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -108,76 +139,226 @@
     </div>
 </div>
 
-<hr>
+<!-- Modal Enter Wait Time-->
+<!-- Modal -->
 
-<div id='mainBlock' class="container vertical-align table-responsive missingItemContainer">
-
-
-
-    <div id='mainBlock' class="container vertical-align table-responsive waitTimeContainer">
-        <div class="row justify-content-center" id='waitTime'>
-            <h3 style="color: white">Store Lineup Near Me</h3>
-        </div>
-    
-        <div class="row justify-content-center" id="addressInput">
-            <form action='/lineup' method='post'>
-                <div class="row justify-content-center">
-                    <input type="text" name="address"  placeholder="Enter an address" id="inputBox" />
-                    <input type="button" value="Search" id="submitBtn" name="submitBtn" />
-    
-                    <!-- This should not affect visually but need it to post values for lat lon; -->
-                <input id="coordinateLongitude" type="hidden" name="longitude" value=""></input>
-                <input id="coordinateLatitude" type="hidden" name="latitude" value=""></input>
-    
-                </div>
-            </form>
-        </div>
-    
-    </div>
-
-    <hr>
-
-    <div id="stores" class="container vertical-align table-responsive searchByIngredientsContainer">
-        <div id='inStock'>
-            <h6 id='store'>Stores wait list near me:</h6>
-        </div>
-        <div class="storeBox">
-
-<!--            <div id="notFound">-->
-<!--                <h3> itemStockBoolean? 'These are the stores for you':'oof we are having trouble finding that item'</h3>-->
-<!--            </div>-->
-
-                <div class="card storeCard">
-                    <div class="card-body">
-                        <div class="row">
+<div class="modal fade" id="waitTimeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #2e2b2e">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form action='/waitTime' method='post'>
+                        <div class="row" id="waitTimeRow">
                             <div class="col">
-                                <h5 class="card-title">store["name"]</h5>
-                                <h7 class="card-subtitle">store["address"]</h7>
-                                <h6 class="card-text"style="padding-top: 3vh">store["waitTime"] minute wait</h6>
-<!--                                <p class="card-text">Last Reported</p>-->
-                            </div>
-                            <div class="col">
-                                <a href=store["directions"]><img src="/imgs/googleMap.png" height="100px" width="100px" class='images'></a>
+                                <div class="form-group">
+                                    <div>
+                                        <label for="waitTime" id="waitTimeTitle">Wait time input:</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="range" class="slider" name="waitingTime" min="0" max="120" step="1"
+                                               value="0" id="waitTimeRange">
+                                    </div>
+
+                                    <div>
+                                        <p id="waitTimeText">Wait Time: <span id="waitTimeValue"></span> Minutes</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="row justify-content-center">
+                            <input class="btn custom-btn" style="color: white" type='submit' value="Submit"
+                                   name="submitBtn">
+                        </div>
+
+                        <div class="row justify-content-center" style="padding-top: 2vh">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </form>
                 </div>
-
+            </div>
         </div>
-
     </div>
 </div>
 
+<hr>
 
+<div id='mainBlock' class="container vertical-align table-responsive waitTimeContainer">
+    <div class="row justify-content-center" id='waitTime'>
+        <h3 style="color: white">Report Missing Items/Wait Time</h3>
+    </div>
+
+    <div class="row justify-content-center" id="addressInput">
+        <form action='/waitTime' method='post'>
+            <div class="row justify-content-center">
+                <input type="text" name="address" placeholder="Enter an address" id="inputBox"/>
+                <input type="submit" value="Search" id="submitBtn" name="submitBtn"/>
+
+                <!-- This should not affect visually but need it to post values for lat lon; -->
+                <input id="coordinateLongitude" type="hidden" name="longitude" value=""></input>
+                <input id="coordinateLatitude" type="hidden" name="latitude" value=""></input>
+
+            </div>
+            <div class="row justify-content-center" id="nearMeRow">
+                <input type="submit" class="btn btn-secondary" value="Near Me" id="nearMeBtn" name="submitBtn"/>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<div id='mainBlock' class="container vertical-align table-responsive searchByIngredientsContainer">
+
+    <div id="stores" class="container vertical-align table-responsive searchByIngredientsContainer">
+        <div id='waitTimeArea'>
+            <h6 id='store' style="color: white">Stores:</h6>
+        </div>
+        <div class="waitTimeBox">
+            <div class="card storeCard">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">store["name"]</h5>
+                            <h7 class="card-subtitle">store["address"]</h7>
+                            <div style="padding-top: 3vh">
+                                <h6 class="card-text btn btn-secondary" data-toggle="modal"
+                                    data-target="#waitTimeModal">Report wait time and missing items</h6>
+                            </div>
+
+                            <!--                            <p class="card-text">Last Reported</p>-->
+                        </div>
+                        <div class="col">
+                            <a href=store["directions"]><img src="/imgs/googleMap.png" height="100px" width="100px"
+                                                             class='images'></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card storeCard">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">store["name"]</h5>
+                            <h7 class="card-subtitle">store["address"]</h7>
+                            <div style="padding-top: 3vh">
+                                <h6 class="card-text btn btn-secondary" data-toggle="modal"
+                                    data-target="#waitTimeModal">Report wait time and missing items</h6>
+                            </div>
+
+                            <!--                            <p class="card-text">Last Reported</p>-->
+                        </div>
+                        <div class="col">
+                            <a href=store["directions"]><img src="/imgs/googleMap.png" height="100px" width="100px"
+                                                             class='images'></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card storeCard">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">store["name"]</h5>
+                            <h7 class="card-subtitle">store["address"]</h7>
+                            <div style="padding-top: 3vh">
+                                <h6 class="card-text btn btn-secondary" data-toggle="modal"
+                                    data-target="#waitTimeModal">Report wait time and missing items</h6>
+                            </div>
+
+                            <!--                            <p class="card-text">Last Reported</p>-->
+                        </div>
+                        <div class="col">
+                            <a href=store["directions"]><img src="/imgs/googleMap.png" height="100px" width="100px"
+                                                             class='images'></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card storeCard">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">store["name"]</h5>
+                            <h7 class="card-subtitle">store["address"]</h7>
+                            <div style="padding-top: 3vh">
+                                <h6 class="card-text btn btn-secondary" data-toggle="modal"
+                                    data-target="#waitTimeModal">Report wait time and missing items</h6>
+                            </div>
+
+                            <!--                            <p class="card-text">Last Reported</p>-->
+                        </div>
+                        <div class="col">
+                            <a href=store["directions"]><img src="/imgs/googleMap.png" height="100px" width="100px"
+                                                             class='images'></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card storeCard">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">store["name"]</h5>
+                            <h7 class="card-subtitle">store["address"]</h7>
+                            <div style="padding-top: 3vh">
+                                <h6 class="card-text btn btn-secondary" data-toggle="modal"
+                                    data-target="#waitTimeModal">Report wait time and missing items</h6>
+                            </div>
+
+                            <!--                            <p class="card-text">Last Reported</p>-->
+                        </div>
+                        <div class="col">
+                            <a href=store["directions"]><img src="/imgs/googleMap.png" height="100px" width="100px"
+                                                             class='images'></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     let slider = document.getElementById("waitTimeRange");
     let output = document.getElementById("waitTimeValue");
     output.innerHTML = slider.value;
 
-    slider.oninput = function() {
+    slider.oninput = function () {
         output.innerHTML = this.value;
     }
+
+
+    window.onload = getLocation();
+
+    coords = []
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        console.log("Latitude: " + position.coords.latitude +
+            "<br>Longitude: " + position.coords.longitude);
+        coords.push(position.coords.latitude, position.coords.longitude);
+        console.log('my array coords are: ' + coords);
+        document.querySelector("#coordinateLongitude").value = position.coords.longitude;
+        document.querySelector("#coordinateLatitude").value = position.coords.latitude;
+
+
+        return (position.coords.latitude, position.coords.longitude);
+    }
+
 </script>
 </body>
 </html>
