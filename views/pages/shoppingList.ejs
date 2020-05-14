@@ -142,14 +142,14 @@
     
         <div id='mainBlock' class="container vertical-align table-responsive waitTimeContainer">
             <div class="row justify-content-center" id='waitTime'>
-                <h3 style="color: white">Enter an address to display the appropriate store Lineup</h3>
+                <h3 style="color: white">Enter an item to add to the list</h3>
             </div>
         
             <div class="row justify-content-center" id="addressInput">
                 <form action='/waitTime' method='post'>
                     <div class="row justify-content-center">
-                        <input type="text" name="address"  placeholder="Enter an address" id="inputBox" />
-                        <input type="button" value="Search" id="submitBtn" name="submitBtn" />
+                        <input type="text" name="address"  placeholder="Enter an item" id="inputBox" />
+                        <input type="button" value="Add Item" id="submitBtn" name="submitBtn" />
         
                         <!-- This should not affect visually but need it to post values for lat lon; -->
                     <input id="coordinateLongitude" type="hidden" name="longitude" value=""></input>
@@ -163,7 +163,7 @@
         <br>
         <div id="stockItems" class="container vertical-align table-responsive searchByIngredientsContainer">
             <div id='itemStock'>
-                <h6 id='itemStatus' style="color: white">Store Lineups and their Wait times</h6>
+                <h6 id='itemStatus' style="color: white">Shopping Checklist</h6>
             </div>
             <div class="itemStockBox">
     
@@ -172,9 +172,6 @@
                             <div class="row">
                                     <h7>Store: {Store Name}<br>
                                         Estimated Lineup Wait Time: {Given}
-                                        <div style="padding-top: 3vh">
-                                            <h6 class="card-text btn btn-secondary" data-toggle="modal" data-target="#waitTimeModal">Check Lineup</h6>
-                                        </div>
                                     </h7>
                             </div>
                         </div>
@@ -184,9 +181,6 @@
                             <div class="row">
                                     <h7>Store: {Store Name}<br>
                                         Estimated Lineup Wait Time: {Given}
-                                        <div style="padding-top: 3vh">
-                                            <h6 class="card-text btn btn-secondary" data-toggle="modal" data-target="#waitTimeModal">Check Lineup</h6>
-                                        </div>
                                     </h7>
                             </div>
                         </div>
@@ -196,9 +190,6 @@
                             <div class="row">
                                     <h7>Store: {Store Name}<br>
                                         Estimated Lineup Wait Time: {Given}
-                                        <div style="padding-top: 3vh">
-                                            <h6 class="card-text btn btn-secondary" data-toggle="modal" data-target="#waitTimeModal">Check Lineup</h6>
-                                        </div>
                                     </h7>
                             </div>
                         </div>
@@ -208,9 +199,6 @@
                             <div class="row">
                                     <h7>Store: {Store Name}<br>
                                         Estimated Lineup Wait Time: {Given}
-                                        <div style="padding-top: 3vh">
-                                            <h6 class="card-text btn btn-secondary" data-toggle="modal" data-target="#waitTimeModal">Check Lineup</h6>
-                                        </div>
                                     </h7>
                             </div>
                         </div>
