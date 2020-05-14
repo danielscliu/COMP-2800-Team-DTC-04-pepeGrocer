@@ -254,9 +254,8 @@ function asyncReadUserShit(res, uid) {
         const entries = Object.entries(val);
         console.log(entries.length);
         shoppingListArray = entries;
-        console.log(shoppingListArray);
     }).then(() => {
-        res.render("pages/shoppingList", { list:shoppingListArray });
+        res.render("pages/shoppingList", {list: shoppingListArray});
     })
 }
 
@@ -289,9 +288,6 @@ app.get("/fLogin", function (req, res) {
     res.sendFile(path.resolve("public/fireBase.html"));
 });
 
-
-
-
 // ROUTE TO SEARCH INGREDIENTS
 app.get("/search", (req, res) =>
     res.render("pages/searchByIngredients", {stores: [], itemStockBoolean: itemStockBoolean}));
@@ -305,9 +301,6 @@ app.get("/menu", (req, res) => res.render("pages/menu"));
 
 // ROUTE TO ABOUT US
 app.get("/aboutUs", (req, res) => res.render("pages/aboutUs"));
-
-//ROUTE TO SHOPPING LIST
-app.get("/shop", (req, res) => res.render("pages/shoppingList"));
 
 app.get("/items", (req, res) => res.render("pages/missingItems"));
 
