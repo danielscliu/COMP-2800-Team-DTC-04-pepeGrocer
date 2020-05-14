@@ -310,20 +310,20 @@ app.post("/waitTime", (req, res) => {
         map5Closest(lat, lon)
             .then(result => 
                 res.render("pages/waitTime", {stores:result})
-                    
-                    //console.log(`here is a store : ${value["name"]}`);
-                    //res.render("/pages/waitTime", {stores: value})
-                    
-                
 
         )
-
-
     } else if (req.body.submitBtn === "Submit") {
+        //SUBMIT HAS BEEN MOVED TO POST waitTimeSubmit AJAX
 
-        res.render("pages/missingItems");
     }
 });
+
+app.post("/waitTimeSubmit", (req, res) => {
+    console.log(req.body.waitTimeValue);
+    console.log(req.body.storeIDRequested);
+// res.render("pages/missingItems");
+})
+
 
 app.post("/missingItems", (req, res) => {
     console.log(req.body.itemStatus);

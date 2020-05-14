@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" ,
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -11,6 +10,8 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
     <title>Wait Time and Missing Item</title>
+
+
 
     <style>
         .custom-control-input:checked ~ .custom-control-label::before {
@@ -58,8 +59,9 @@
 
 <body id="waitTimeBody">
 <!--<editor-fold desc="IMPORTS">-->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+<script
+        src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -153,7 +155,7 @@
         <div class="modal-content" style="background-color: #2e2b2e">
             <div class="modal-body">
                 <div class="container-fluid">
-                    <form action='/waitTime' method='post'>
+<!--                    <form>-->
                         <div class="row" id="waitTimeRow">
                             <div class="col">
                                 <div class="form-group">
@@ -172,17 +174,18 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row justify-content-center">
                             <input class="btn custom-btn" style="color: white" type='submit' value="Submit"
-                                   name="submitBtn">
+                                   id="submitWaitTime" name="submitWaitTime">
                         </div>
+
+
 
                         <div class="row justify-content-center" style="padding-top: 2vh">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
 
-                    </form>
+<!--                    </form>-->
                 </div>
             </div>
         </div>
@@ -190,7 +193,6 @@
 </div>
 <!--</editor-fold>-->
 <hr>
-
 <!--<editor-fold desc="BUTTONS TOP ">-->
 <div id='mainBlock' class="container vertical-align table-responsive waitTimeContainer">
     <div class="row justify-content-center" id='waitTime'>
@@ -215,57 +217,86 @@
     </div>
 </div>
 <!--</editor-fold>-->
+<!--<editor-fold desc="EJS repeat ">-->
+    <div id='mainBlock' class="container vertical-align table-responsive searchByIngredientsContainer">
 
-<div id='mainBlock' class="container vertical-align table-responsive searchByIngredientsContainer">
+        <div id="stores" class="container vertical-align table-responsive searchByIngredientsContainer">
+            <div id='waitTimeArea'>
+                <h6 id='store' style="color: white">Stores:</h6>
+            </div>
+            <div class="waitTimeBox">
 
-    <div id="stores" class="container vertical-align table-responsive searchByIngredientsContainer">
-        <div id='waitTimeArea'>
-            <h6 id='store' style="color: white">Stores:</h6>
-        </div>
-        <div class="waitTimeBox">
+                <% for( let index = 0; index < stores.length; index++ ) { %>
 
-            <% for( let index = 0; index < stores.length; index++ ) { %>
-            
-             
-          
-            <div class="card storeCard">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title"><%= stores[index]["name"]%></h5>
-                            <h7 class="card-subtitle"><%= stores[index]["address"]%></h7>
-                            <div style="padding-top: 3vh">
-                                <h6 class="card-text btn btn-secondary" data-toggle="modal"
-                                    id = <%= stores[index]["identification"] %>
-                                    data-target="#waitTimeModal">Report wait time and missing items</h6>
+
+
+                    <div class="card storeCard">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title"><%= stores[index]["name"] %></h5>
+                                    <h7 class="card-subtitle"><%= stores[index]["address"] %></h7>
+                                    <div style="padding-top: 3vh">
+                                        <h6 class="card-text btn btn-secondary" data-toggle="modal"
+                                            id= <%= stores[index]["identification"] %>
+                                            data-target="#waitTimeModal"
+                                        onclick="editHiddenID('<%= stores[index]["identification"] %>')">Report wait time and missing items</h6>
+                                    </div>
+
+
+                                    <!--                            <p class="card-text">Last Reported</p>-->
+                                </div>
+                                <div class="col">
+                                    <a href=<%= stores[index]["directions"] %>><img src="/imgs/googleMap.png"
+                                                                                    height="100px" width="100px"
+                                                                                    class='images'></a>
+                                </div>
                             </div>
-                           
-
-                            <!--                            <p class="card-text">Last Reported</p>-->
-                        </div>
-                        <div class="col">
-                            <a href=<%= stores[index]["directions"]%> ><img src="/imgs/googleMap.png" height="100px" width="100px"
-                                                             class='images'></a>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <% } %>
-         
 
-            
+                <% } %>
+
+            </div>
         </div>
     </div>
-</div>
+<!--</editor-fold>-->
+
+
+
+<span type="hidden" id="storeIDRequested" ></span>;
+<span type="hidden" id="inputval" ></span>;
+
+<script>
+    function editHiddenID(thisID) {
+        console.log("success")
+        document.getElementById("storeIDRequested").innerHTML =thisID;
+    }
+</script>
+
+<script>
+    $('#submitWaitTime').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/waitTimeSubmit",
+            data: {
+                storeIDRequested : document.getElementById("storeIDRequested").innerHTML,
+                waitTimeValue : document.getElementById("inputval").innerHTML
+            }
+        })
+    })
+</script>
 
 <script>
     let slider = document.getElementById("waitTimeRange");
     let output = document.getElementById("waitTimeValue");
+    let hiddenID = document.getElementById("inputval");
     output.innerHTML = slider.value;
 
     slider.oninput = function () {
         output.innerHTML = this.value;
+        hiddenID.innerHTML = this.value;
     }
 
 
