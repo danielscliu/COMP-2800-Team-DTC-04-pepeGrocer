@@ -11,15 +11,15 @@ app.set("view engine", "ejs");
 //<editor-fold desc="searchByAddress">
 function addressToLonLat(address) {
     var filteredAddress = address.replace(" ", "+");
-    return new Promise(function(res, rej) {
+    return new Promise(function (res, rej) {
         request('https://discover.search.hereapi.com/v1/' +
             'geocode' +
             '?q=' + filteredAddress +
             '&apiKey=dXmHzMbOVAkqdex7o_440a8wmmMozdhTDxFO-hClAtU', function (error, response, body) {
             if (error) return rej(err);
             try {
-                res( JSON.parse(body))
-            } catch(e) {
+                res(JSON.parse(body))
+            } catch (e) {
                 rej(e);
             }
 
@@ -28,17 +28,17 @@ function addressToLonLat(address) {
 }
 
 function asyncAddress(address) {
-addressToLonLat(address)
-    .then((val) => {
-        let geocode = [];
-        let json = val;
-        let jsonItems = json.items[0];
-        let lat = jsonItems.access[0].lat;
-        let lng = jsonItems.access[0].lng;
-        geocode.push(lat, lng);
-        let listClosest = map5Closest(geocode[0], geocode[1]);
-        return listClosest;
-    })
+    addressToLonLat(address)
+        .then((val) => {
+            let geocode = [];
+            let json = val;
+            let jsonItems = json.items[0];
+            let lat = jsonItems.access[0].lat;
+            let lng = jsonItems.access[0].lng;
+            geocode.push(lat, lng);
+            let listClosest = map5Closest(geocode[0], geocode[1]);
+            return listClosest;
+        })
 }
 
 // let test = asyncAddress("9088 Dixon Ave Richmond");
@@ -51,7 +51,7 @@ addressToLonLat(address)
 function map5Closest(lat, lon) {
     request('https://discover.search.hereapi.com/v1/' +
         'discover' +
-        '?at='+lat +',' + lon +
+        '?at=' + lat + ',' + lon +
         '&limit=5' +
         '&q=grocery' +
         '&in=countryCode:can' +
@@ -70,11 +70,13 @@ function map5Closest(lat, lon) {
 
     })
 }
+
 function basicStoreInfoObjectCreator(name, address, identification) {
     this.name = name;
     this.address = address;
     this.identification = identification;
 }
+
 //</editor-fold>
 
 // Firebase init
@@ -96,7 +98,6 @@ admin.initializeApp({
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 var db = admin.firestore();
 //</editor-fold>
-
 
 
 ///// USE BY CALLING addToDatabaseWithAddyItemAndBoolean(storeLocation, object, objectData)
@@ -158,6 +159,7 @@ function addWithDocID(storeID, objectField, objectData) {
 
 //<editor-fold desc="query item">
 let itemStockBoolean = true;
+
 function queryItem(targetItem) {
     storeInStock = [];
     let stores = db.collection('stores');
@@ -219,6 +221,47 @@ app.post("/searchByIngredients", (req, res) => {
 //</editor-fold>
 
 
+/// USERDB SET DATA
+// db.collection('users').doc("1").set({
+//     apple: true,
+//     banana: true,
+//     orange: false
+// }).then(() => console.log("success"));
+
+function readUserShit(uid) {
+    return new Promise(function (res, rej) {
+            db.collection('users').doc(uid).get()
+                .then(function (snapshot) {
+                    if(snapshot.exists) {
+                        res(snapshot.data())
+                    } else {
+                        return;
+                    }
+                }).catch(error => console.log(error))
+        }
+    )
+}
+
+
+function asyncReadUserShit(res, uid) {
+    let shoppingListArray;
+    readUserShit(uid).then((val) => {
+        const entries = Object.entries(val.data());
+        console.log(entries.length);
+        shoppingListArray = entries;
+    }).then(() => {
+        res.render("pages/shoppingList", {list: shoppingListArray});
+    })
+}
+
+
+app.post("/shoppingListStartUid", function (req, res) {
+    console.log("inside Shopping List start UID POST");
+    let uid = req.body.uid;
+    asyncReadUserShit(res, uid);
+
+});
+
 
 // ROUTE TO FIREBASEUI LOGIN
 app.get("/fLogin", function (req, res) {
@@ -256,7 +299,7 @@ app.post("/waitTime", (req, res) => {
         // console.log(req.body)
         let lat = req.body.latitude;
         let lon = req.body.longitude;
-        result =map5Closest(lat, lon);
+        result = map5Closest(lat, lon);
         console.log(`${result} is found`)
 
 
