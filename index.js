@@ -255,8 +255,11 @@ app.post("/shoppingListStartUid", function (req, res) {
     console.log("inside Shopping List start UID POST");
     let uid = req.body.uid;
     asyncReadUserShit(res, uid);
-
 });
+
+// app.post('/shoppinglist')
+
+
 
 app.get('/shoppinglist', (req, res) => {
     res.render("pages/shoppingList", {list: []});
@@ -283,9 +286,6 @@ app.get("/menu", (req, res) => res.render("pages/menu"));
 
 // ROUTE TO ABOUT US
 app.get("/aboutUs", (req, res) => res.render("pages/aboutUs"));
-
-//ROUTE TO SHOPPING LIST
-app.get("/shop", (req, res) => res.render("pages/shoppingList"));
 
 app.get("/items", (req, res) => res.render("pages/missingItems"));
 
