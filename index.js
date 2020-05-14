@@ -222,17 +222,22 @@ app.post("/searchByIngredients", (req, res) => {
 
 
 /// USERDB SET DATA
-// db.collection('users').doc("1").set({
+// db.collection('users').doc("1").collection('shoppingList')
+//     .doc("shoppingList").set({
 //     apple: true,
 //     banana: true,
-//     orange: false
+//     orange: false,
+//     mango: false
 // }).then(() => console.log("success"));
 
+//<editor-fold desc="shopping list functions">
 function readUserShit(uid) {
     return new Promise(function (res, rej) {
-            db.collection('users').doc(uid).get()
+            db.collection('users').doc(uid).collection('shoppingList')
+                .doc("shoppingList").get()
                 .then(function (snapshot) {
-                    if(snapshot.exists) {
+                    if (snapshot.exists) {
+                        console.log(snapshot.data())
                         res(snapshot.data())
                     } else {
                         return;
@@ -246,13 +251,25 @@ function readUserShit(uid) {
 function asyncReadUserShit(res, uid) {
     let shoppingListArray;
     readUserShit(uid).then((val) => {
-        const entries = Object.entries(val.data());
+        const entries = Object.entries(val);
         console.log(entries.length);
         shoppingListArray = entries;
     }).then(() => {
         res.render("pages/shoppingList", {list: shoppingListArray});
     })
 }
+
+function writeShoppingList(uid, dataObject) {
+    for (let i = 0; i < dataObject.length; i++) {
+        db.collection('users').doc(uid).collection('shoppingList')
+            .doc("shoppingList").set({
+            [dataObject[i][0]]: [dataObject[i][1]]
+        })
+
+    }
+}
+
+//</editor-fold>
 
 
 app.post("/shoppingListStartUid", function (req, res) {
@@ -262,6 +279,9 @@ app.post("/shoppingListStartUid", function (req, res) {
 
 });
 
+app.get('/shoppinglist', (req, res) => {
+    res.render("pages/shoppingList", {list: []});
+})
 
 // ROUTE TO FIREBASEUI LOGIN
 app.get("/fLogin", function (req, res) {
