@@ -257,10 +257,10 @@ function asyncReacUserShoppingList(res, uid) {
             shoppingListArray.push(newList);
         }
 
-        console.log(shoppingListArray[1]["leFruit"]);
+        // console.log(shoppingListArray[1]["leFruit"]);
 
     }).then(() => {
-        console.log(shoppingListArray);
+        // console.log(shoppingListArray);
         res.render("pages/shoppingList", {list: shoppingListArray});
     })
 }
@@ -284,12 +284,23 @@ app.get('/shoppinglist', (req, res) => {
     res.render("pages/shoppingList", {list: []});
 });
 
+app.post('/writeShoppingListToDatabase', (req, res) =>{
+    // console.log("success receive post from shoppinglist.ejs");
+    let uid = req.body.uid;
+    let array = req.body.array;
+    console.log(array);
+    writeShoppingList(uid, array);
+})
+
+
 function writeShoppingList(uid, dataObject) {
+    console.log("yup writing");
     for (let i = 0; i < dataObject.length; i++) {
         db.collection('users').doc(uid).collection('shoppingList')
-            .doc("shoppingList").set({
+            .doc("shoppingList").update({
             [dataObject[i]]: true
-        })
+        }).then(() => console.log("success write shopping list to database"))
+            .catch((err) => console.log(err))
 
     }
 }

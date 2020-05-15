@@ -38,8 +38,9 @@
 
     <title>Shopping List</title>
 </head>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+<script
+        src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -48,33 +49,31 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <!--################################################FIREBASE ZONE. DO NOT TOUCH ####################################-->
-<firebase>
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
 
 
-    <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
 
 
-    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
 
-    <!--firebase API config files-->
-    <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyBqB5QHNRRquDJxd9OiXXa9c33dI4zDSDA",
-            authDomain: "firebaetest-6e21a.firebaseapp.com",
-            databaseURL: "https://firebaetest-6e21a.firebaseio.com",
-            projectId: "firebaetest-6e21a",
-            storageBucket: "firebaetest-6e21a.appspot.com",
-            messagingSenderId: "763860546362",
-            appId: "1:763860546362:web:35a3ed2ac35df4abd5d603",
-            measurementId: "G-V56860GVZL"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-    </script>
-</firebase>
+<!--firebase API config files-->
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyBqB5QHNRRquDJxd9OiXXa9c33dI4zDSDA",
+        authDomain: "firebaetest-6e21a.firebaseapp.com",
+        databaseURL: "https://firebaetest-6e21a.firebaseio.com",
+        projectId: "firebaetest-6e21a",
+        storageBucket: "firebaetest-6e21a.appspot.com",
+        messagingSenderId: "763860546362",
+        appId: "1:763860546362:web:35a3ed2ac35df4abd5d603",
+        measurementId: "G-V56860GVZL"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
 <!--################################################ END FIREBASE ZONE ####################################-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body id="shoppingListBody">
@@ -86,45 +85,43 @@
 <!--CREATE BUTTON TO WRITE TO SERVER. -->
 <!--WHEN WRITING, SEND DATA THE SAME AS RECEIVED. [[APPLE: FALSE], [BANANA:TRUE]]-->
 <!--AJAX CODE WILL BE PROVIDED-->
-<tag>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-        <a class="navbar-brand" id='pepeGrocer' href="/menu">
-            <span id="pepe">pepe</span><span id="grocer">Grocer</span>
-        </a>
+    <a class="navbar-brand" id='pepeGrocer' href="/menu">
+        <span id="pepe">pepe</span><span id="grocer">Grocer</span>
+    </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon navbar-light">
                 </span>
-        </button>
+    </button>
 
-        <div class="collapse navbar-collapse" id='navbarNav'>
-            <ul class="navbar-nav w-100 mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/time">Report Missing Items/Wait Time</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/search">Search by Ingredients</a>
-                </li>
+    <div class="collapse navbar-collapse" id='navbarNav'>
+        <ul class="navbar-nav w-100 mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/time">Report Missing Items/Wait Time</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/search">Search by Ingredients</a>
+            </li>
 
-                <li class="nav-item active">
-                    <a class="nav-link active">Shopping List</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/lineup">Store Lineup Near Me</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/aboutUs">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary"
-                       type='button' id='signout' style='color:aliceblue'>Log Out</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</tag>
+            <li class="nav-item active">
+                <a class="nav-link active">Shopping List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/lineup">Store Lineup Near Me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/aboutUs">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary"
+                   type='button' id='signout' style='color:aliceblue'>Log Out</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 <!-- Modal -->
 
@@ -187,7 +184,7 @@
         </div>
         <br>
         <div style="text-align: center;">
-            <input type="submit" value="Submit List" id="submit"/>
+            <button type="submit" value="Submit List" id="submitListBtn">Submit List</button>
         </div>
     </div>
     <br>
@@ -208,44 +205,46 @@
 
 
 <!-- ###############Add buttons by jquery -->
-<span><%=console.log("in EJS: " + list.length);%></span>
+<span><%= console.log("in EJS: " + list.length); %></span>
 
-<script> 
+</body>
+<script>
     var foodItemsList = [];
 
 
-// ################## Array of the items On-click of submit #########################
+    // ################## Array of the items On-click of submit #########################
 
     $(document).ready(function () {
         // COMMENTED OUT SECTION GOOD FOR TESTING
+        $.ajax({
+            type: 'POST',
+            data: {
+                "uid": 1
+            },
+            url: '/shoppingListStartUid'
+        })
 
-    
-        $('#submit').on('click', function() {
+        $('#submitListBtn').on('click', function (e) {
+            e.preventDefault();
             var totalCountItems = $('form').find('section').length;
             console.log(totalCountItems);
-            for(let i = 1; 1 <= totalCountItems; i++) {
+            for (let i = 1; i <= totalCountItems; i++) {
                 var itemValues = document.getElementById(i).innerHTML;
                 console.log((itemValues));
                 foodItemsList.push(itemValues);
                 console.log(foodItemsList);
-                Array.from(foodItemsList)
+                Array.from(foodItemsList);
             }
-            
 
-                $.ajax({
+            $.ajax({
                 type: 'POST',
                 data: {
-                    
-
-                    // "uid": 1 //user.uid
+                    "uid": 1,
+                    "array": foodItemsList
                 },
-                url: '/shoppingListStartUid'
+                url: '/writeShoppingListToDatabase'
             })
-
-
         });
-
-
     });
 
 
@@ -254,7 +253,7 @@
     var itemNum = 1;
 
     $("#add").on("click", function () {
-        
+
         var description = document.getElementById("inputBox").value;
 
         var shopList = `<section class="custom-control custom-checkbox name='items'">
@@ -295,5 +294,4 @@
     });
 
 </script>
-</body>
 </html>
