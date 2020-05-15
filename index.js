@@ -367,9 +367,10 @@ app.get("/lineup", (req, res) => res.render("pages/lineup", {stores: "none"}));
 
 // This post endpoint comes from the /waitTime url when you type in an item and press "submit to server"//
 app.post("/updateMissingItems", (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     updateStoreItem(req.body.id, req.body.name, req.body.stock)
-        .then(res.render("pages/waitTime"))
+        // .then(res.render("pages/missingItems"))
+        .then(res.send(200, "success post"))
 
 })
 
@@ -488,6 +489,7 @@ function updateStoreItem(storeID, item, status) {
                     ref.doc(storeID).update({
                         [item]: Boolean(status),
                     }).then(() => {
+                        console.log("stored as: " + status)
                         console.log("newitem!");
                         res();
                     })
@@ -498,11 +500,11 @@ function updateStoreItem(storeID, item, status) {
 }
 
 
-app.post("/missingItems", (req, res) => {
-    console.log(req.body.itemStatus);
-    console.log(req.body.stock);
-    res.render("pages/missingItems");
-});
+// app.post("/missingItems", (req, res) => {
+//     console.log(req.body.itemStatus);
+//     console.log(req.body.stock);
+//     res.render("pages/missingItems");
+// });
 
 app.listen(process.env.PORT || 3000,
     () => console.log("Express function running"));
