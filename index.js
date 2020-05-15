@@ -254,6 +254,26 @@ function asyncReadUserShit(res, uid) {
     })
 }
 
+// ############### All shopping list ##########################
+let food = []
+
+
+app.post("/shoppingListStartUid", function (req, res) {
+    console.log("inside Shopping List start UID POST");
+    let uid = req.body.uid;
+    asyncReadUserShit(res, uid);
+});
+
+app.post('/shoppinglist', (req, res) => {
+    let shopping = req.body.items;
+    console.log(shopping);
+    res.render("pages/shoppingList", {shopping});
+});
+
+app.get('/shoppinglist', (req, res) => {
+    res.render("pages/shoppingList", {list: []});
+});
+
 function writeShoppingList(uid, dataObject) {
     for (let i = 0; i < dataObject.length; i++) {
         db.collection('users').doc(uid).collection('shoppingList')
@@ -267,23 +287,6 @@ function writeShoppingList(uid, dataObject) {
 //</editor-fold>
 
 
-app.post("/shoppingListStartUid", function (req, res) {
-    console.log("inside Shopping List start UID POST");
-    let uid = req.body.uid;
-    asyncReadUserShit(res, uid);
-
-});
-
-
-app.post('/shoppinglist', (req, res) => {
-    let shopping = req.body.items;
-    console.log(shopping);
-    res.render("pages/shoppingList", {shopping});
-});
-
-app.get('/shoppinglist', (req, res) => {
-    res.render("pages/shoppingList", {list: []});
-});
 
 
 // ROUTE TO FIREBASEUI LOGIN

@@ -173,7 +173,7 @@
 
         <div class="row justify-content-center" id="addressInput">
             <!-- action='/shoppingList' -->
-            <form action="/shoppingList" method='post'>
+            <form id='form' action="/shoppingList" method='post'>
                 <div class="row justify-content-center">
                     <input type="text" name="items" placeholder="Enter an item" id="inputBox"/>
                     <input type="button" value="Add" id="add"/>
@@ -209,30 +209,58 @@
 
 <!-- ###############Add buttons by jquery -->
 <span><%=console.log("in EJS: " + list.length);%></span>
-<script>
+
+<script> 
+    var foodItemsList = [];
+
+
+// ################## Array of the items On-click of submit #########################
+
     $(document).ready(function () {
         // COMMENTED OUT SECTION GOOD FOR TESTING
-        $.ajax({
-            type: 'POST',
-            data: {
-                "uid": 1 //user.uid
-            },
-            url: '/shoppingListStartUid'
-        })
-    })
-</script>
 
+    
+        $('#submit').on('click', function() {
+            var totalCountItems = $('form').find('section').length;
+            console.log(totalCountItems);
+            for(let i = 1; 1 <= totalCountItems; i++) {
+                var itemValues = document.getElementById(i).innerHTML;
+                console.log((itemValues));
+                foodItemsList.push(itemValues);
+                console.log(foodItemsList);
+                Array.from(foodItemsList)
+            }
+            
+
+                $.ajax({
+                type: 'POST',
+                data: {
+                    
+
+                    // "uid": 1 //user.uid
+                },
+                url: '/shoppingListStartUid'
+            })
+
+
+        });
+
+
+    });
+
+
+</script>
 <script>
-    // var itemNum = 1;
+    var itemNum = 1;
 
     $("#add").on("click", function () {
+        
         var description = document.getElementById("inputBox").value;
 
-        var shopList = `<div class="custom-control custom-checkbox name='items'">
+        var shopList = `<section class="custom-control custom-checkbox name='items'">
         <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
-        <label style='color: white;' class="custom-control-label" for="customCheck${itemNum}"><h5>${description}</h5></label>
-        </div>`
-        console.log(description)
+        <h5><label id='${itemNum}' style='color: white;' class="custom-control-label" for="customCheck${itemNum}">${description}</label></h5>
+        </section>`
         $(".itemStockBox").append(shopList)
         itemNum++;
         document.getElementById('inputBox').value = '';
