@@ -310,31 +310,32 @@ app.post("/waitTime", (req, res) => {
             .then(result =>
                 res.render("pages/waitTime", {stores: result})
             )
-            return
-            // .then(result => res.redirect("./items"))
+        // return
+        // .then(result => res.redirect("./items"))
     } else if (req.body.submitBtn === "Submit") {
-        //SUBMIT HAS BEEN MOVED TO POST waitTimeSubmit AJAX
-
+        console.log("yes bitch");
+        let waitTimeValue = req.body.waitTimeValue;
+        let storeID = req.body.storeID;
+        let address = req.body.storeAddress;
+        let name = req.body.storeName;
+        console.log(waitTimeValue);
+        updateStoreWaitTime(storeID, name, address, waitTimeValue)
+            .then(() => {
+                console.log("then complete");
+                res.render("pages/missingItems");
+                console.log("render complete");
+            })
     }
 });
 
 
+// app.post("/waitTimeSubmit", (req, res) => {
+//     let waitTimeValue = req.body.waitTimeValue;
+//     let storeID = req.body.storeID;
+//     let address = req.body.storeAddress;
+//     let name = req.body.storeName;
+//     // console.log(waitTimeValue, storeID, address, name);
 
-app.post("/waitTimeSubmit", (req, res) => {
-    let waitTimeValue = req.body.waitTimeValue;
-    let storeID = req.body.storeID;
-    let address = req.body.storeAddress;
-    let name = req.body.storeName;
-    console.log(waitTimeValue, storeID, address, name)
-
-    updateStoreWaitTime(storeID, name, address, waitTimeValue)
-        .then(() => {
-            console.log("then complete");
-            res.render("pages/missingItems");
-            console.log("render complete");
-        })
-        
-})
 
 ///update database with store
 function updateStoreWaitTime(storeID, name, address, waitTimeValue) {
