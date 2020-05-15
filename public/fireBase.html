@@ -3,6 +3,13 @@
 <head>
     <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" ,
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/style.css">
+
 
     <title>FireBase Test</title>
 </head>
@@ -41,8 +48,33 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 </script>
 
 
-<body>
-<div id="firebaseui-auth-container"></div>
+<body id="loginBody">
+<div id='mainBlock' class="container vertical-align table-responsive">
+    <div class="row justify-content-center">
+        <h1><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h1>
+    </div>
+    <hr>
+
+<div class="row justify-content-center">
+    <h4 style="color:white; text-align: center">
+        Enter your existing email and click on <span style="color: orange">Next</span> to log in
+    <hr>
+
+    </h4>
+</div>
+    <div class="row justify-content-center">
+        <div class="col-md-6 justify-content-center">
+            <h5 style="text-align: center; color: white">
+                Don't have an account with us? Enter your preferred email and click on <span style="color: orange">Next</span> to sign up
+            </h5>
+        </div>
+
+    </div>
+<div class="row justify-content-center" id="firebaseui-auth-container" style="padding-top: 5vh"></div>
+    <div class="row justify-content-center" id="pepeImg" style="padding-top: 5vh">
+        <img id="pepeHypers" src="/imgs/pepeHype.png"></img>
+    </div>
+</div>
 </body>
 
 <script>
