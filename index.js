@@ -271,9 +271,23 @@ app.post("/shoppingListStartUid", function (req, res) {
 
 });
 
+
+app.post('/shoppinglist', (req, res) => {
+    let shopping = req.body.items;
+    console.log(shopping);
+    res.render("pages/shoppingList", {shopping});
+});
+
 app.get('/shoppinglist', (req, res) => {
-    res.render("pages/shoppingList", {list: []});
-})
+    res.render("pages/shoppingList");
+});
+
+
+
+
+
+
+
 
 // ROUTE TO FIREBASEUI LOGIN
 app.get("/fLogin", function (req, res) {

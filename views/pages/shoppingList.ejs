@@ -180,10 +180,11 @@
                 </div>
 
                 <div class="row justify-content-center" id="addressInput">
-                    <form action='/waitTime' method='post'>
+                    <!-- action='/shoppingList' -->
+                    <form  method='post'>
                         <div class="row justify-content-center">
-                            <input type="text" name="address" placeholder="Enter an item" id="inputBox" />
-                            <input type="button" value="Add" id="add" name="add" />
+                            <input type="text" name="items" placeholder="Enter an item" id="inputBox" />
+                            <input type="button" value="Add" id="add" />
 
                             <!-- This should not affect visually but need it to post values for lat lon; -->
                             <input id="coordinateLongitude" type="hidden" name="longitude" value=""></input>
@@ -194,7 +195,7 @@
                 </div>
                 <br>
                 <div style="text-align: center;">
-                    <input type="submit" value="Submit List" id="submit" name="submit" />
+                    <input type="submit" value="Submit List" id="submit"/>
                 </div>
             </div>
             <br>
@@ -215,12 +216,6 @@
 
 
 
-
-        <% for(let i= 0; i < list.length; i++) { %>
-        <% console.log(list[i])%>
-        <!--<span><%= dict[0] %></span>-->
-        <!--<p><%= dict[1] %></p>-->
-        <% }; %>
 
         <!-- ###############Add buttons by jquery -->
 
@@ -243,7 +238,7 @@
                 $("#add").on("click", function () {
                 var description = document.getElementById("inputBox").value;
 
-                var shopList = `<div class="custom-control custom-checkbox">
+                var shopList = `<div class="custom-control custom-checkbox name='items'">
         <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
         <label style='color: white;' class="custom-control-label" for="customCheck${itemNum}"><h5>${description}</h5></label>
         </div>`
