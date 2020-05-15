@@ -267,7 +267,6 @@ function asyncReacUserShoppingList(res, uid) {
 let food = []
 
 
-
 //SHOW SAVED LIST BUTTON FORM
 app.post("/showSavedList", function (req, res) {
     let uid = req.body.hiddenUID;
@@ -287,9 +286,21 @@ app.post('/shoppinglist', (req, res) => {
 });
 
 app.get('/shoppinglist', (req, res) => {
-    // create user
+    // create user if does not exist
+// DANIEL THEN .THEN RES.RENDER BELOW
     res.render("pages/shoppingList", {list: []});
 });
+
+
+// DANIEL WORK ON THIS PLEASE
+// CHECK IF COLLECTION > DOC(UID) <- IF THIS EXISTS
+// IF YES, .THEN => RES(); TO RESOLVE
+function createUserShoppingList(uid) {
+    return new Promise((function (res, rej) {
+            let ref = db.collection('users');
+        })
+    )
+}
 
 app.post('/writeShoppingListToDatabase', (req, res) => {
     // console.log("success receive post from shoppinglist.ejs");
@@ -299,7 +310,7 @@ app.post('/writeShoppingListToDatabase', (req, res) => {
     writeShoppingList(uid, array);
 })
 
-
+// DANIEL SHOPPINGLIST PATH IS HERE. NOTE IT'S COLLECTION > DOC(UID) > SHOPPINGLIST > SHOPPINGLIST
 function writeShoppingList(uid, dataObject) {
     console.log("yup writing");
     //clear shopping list database first before storing
@@ -350,10 +361,10 @@ app.get("/time", (req, res) => res.render("pages/waitTime", {stores: "none"}));
 app.get("/lineup", (req, res) => res.render("pages/lineup"));
 
 // This post endpoint comes from the /waitTime url when you type in an item and press "submit to server"//
-app.post("/updateMissingItems", (req, res) =>{
+app.post("/updateMissingItems", (req, res) => {
     console.log(req.body)
     updateStoreItem(req.body.id, req.body.name, req.body.stock)
-    .then(res.render("pages/waitTime"))
+        .then(res.render("pages/waitTime"))
 
 })
 
@@ -399,7 +410,7 @@ app.post("/waitTime", (req, res) => {
 //     let name = req.body.storeName;
 //     // console.log(waitTimeValue, storeID, address, name);
 
-
+// DANIEL LOGIC IS HERE
 ///update database with store
 function updateStoreWaitTime(storeID, name, address, waitTimeValue) {
     return new Promise(function (res, rej) {
@@ -437,18 +448,16 @@ function updateStoreItem(storeID, item, status) {
             .then(() => {
 
                     ref.doc(storeID).update({
-                        [item] : Boolean(status),
+                        [item]: Boolean(status),
                     }).then(() => {
                         console.log("newitem!");
                         res();
                     })
                         .catch((err) => console.log(err));
                 }
-            )})}
-
-
-
-
+            )
+    })
+}
 
 
 app.post("/missingItems", (req, res) => {
