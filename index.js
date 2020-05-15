@@ -382,7 +382,7 @@ function updateStoreItem(storeID, item, status) {
             .then(() => {
                 
                     ref.doc(storeID).update({
-                        [item] : status
+                        [item] : Boolean(status),
                     }).then(() => {
                         console.log("newitem!");
                         res();

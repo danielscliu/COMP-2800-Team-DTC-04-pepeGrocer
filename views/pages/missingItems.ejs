@@ -231,6 +231,7 @@
     
 
     function ajaxPost() {
+        
         if (document.querySelector("#inputBox").value === ""){
             alert("please enter in an item before submitting")
         }else {
@@ -240,7 +241,7 @@
                     data: {
                         id: store_id,
                         name: document.querySelector("#inputBox").value,
-                        stock: Boolean(document.getElementById("hasStock").checked),
+                        stock: document.getElementById("hasStock").checked,
                         storeName: document.querySelector("#storeName").innerHTML
                         },
                     
