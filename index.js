@@ -265,6 +265,23 @@ app.post("/shoppingListStartUid", function (req, res) {
     asyncReacUserShoppingList(res, uid);
 });
 
+function clearShoppingListDatabase(uid) {
+    return new Promise(function (res, rej) {
+        db.collection("users").doc(uid).collection('shoppingList').doc('shoppingList').set({})
+            .then(() => {
+                console.log("clear shopping list success");
+                res();
+            })
+            .catch(() => console.log("clear shopping list failed"))
+    })
+}
+// FORM CLEAR SHOPPING LIST
+app.get('/clearShoppingList', (req, res) => {
+    let uid = req.body.hiddenUID2;
+    clearShoppingListDatabase(uid)
+        .then(() => res.render("pages/shoppingList", {list: []}))
+})
+
 app.post('/shoppinglist', (req, res) => {
     // let shopping = req.body.items;
     console.log(req.body);
