@@ -78,17 +78,17 @@
         <div class="collapse navbar-collapse" id='navbarNav'>
             <ul class="navbar-nav w-100 mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/time">Report Missing Items/Wait Time</a>
+                    <a class="nav-link" href="/underConstruction.html">Report Missing Items/Wait Time</a>
                 </li>
 
                 <li class="nav-item active">
                     <a class="nav-link active">Search by Ingredients</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/shoppinglist">Shopping List</a>
+                    <a class="nav-link" href="/underConstruction.html">Shopping List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/lineup">Store Lineup Near Me<span
+                    <a class="nav-link" href="/underConstruction.html">Store Lineup Near Me<span
                                 class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
@@ -136,13 +136,13 @@
 <div id='mainBlock' class="container vertical-align table-responsive searchByIngredientsContainer">
 
     <div id='enterItem'>
-    <h3 style="text-align: center">Search by Ingredients</h3>
+    <h3 style="text-align: center">Enter an item to see what store carries it near you</h3>
     </div>
 
 
     <div class="row justify-content-center" id="search">
         <form action="/searchByIngredients" method="post">
-            <input type="text" name="ingredients"  placeholder="Enter an ingredient" id="inputBox" />
+            <input type="text" name="ingredients"  placeholder="Enter Item" id="inputBox" />
             <input type="submit" value="Search" id="submitBtn" />
         </form>
     </div>
@@ -154,7 +154,7 @@
         <div class="storeBox">
 
             <div id="notFound">
-                <h3><%= itemStockBoolean? 'These are the stores for you':'oof we are having trouble finding that item' %></h3>
+                <h3><%= itemStockBoolean? 'These are the stores for you':'oof we are having trouble find that item' %></h3>
             </div>
 
             <% stores.forEach(store => { %>
