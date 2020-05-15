@@ -275,8 +275,8 @@ app.post("/shoppingListStartUid", function (req, res) {
 });
 
 app.post('/shoppinglist', (req, res) => {
-    let shopping = req.body.items;
-    console.log(shopping);
+    // let shopping = req.body.items;
+    console.log(req.body);
     res.render("pages/shoppingList", {shopping});
 });
 
