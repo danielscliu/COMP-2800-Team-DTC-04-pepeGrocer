@@ -367,7 +367,8 @@ app.get("/lineup", (req, res) => res.render("pages/lineup", {stores: "none"}));
 
 // This post endpoint comes from the /waitTime url when you type in an item and press "submit to server"//
 app.post("/updateMissingItems", (req, res) => {
-    // console.log(req.body)
+    console.log("received post from item update")
+    console.log(req.body)
     updateStoreItem(req.body.id, req.body.name, req.body.stock)
         // .then(res.render("pages/missingItems"))
         .then(res.send(200, "success post"))
@@ -485,15 +486,27 @@ function updateStoreItem(storeID, item, status) {
         let ref = db.collection('stores');
         ref.doc(storeID).get()
             .then(() => {
+                if (status === "true"){
 
                     ref.doc(storeID).update({
-                        [item]: Boolean(status),
+                        [item]: true,
                     }).then(() => {
-                        console.log("stored as: " + status)
+                        console.log("stored as: " + true)
                         console.log("newitem!");
                         res();
                     })
                         .catch((err) => console.log(err));
+                }
+                else {
+                    ref.doc(storeID).update({
+                        [item]: false,
+                    }).then(() => {
+                        console.log("stored as: " + false)
+                        console.log("newitem!");
+                        res();
+                    })
+                }
+
                 }
             )
     })
