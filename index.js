@@ -226,13 +226,13 @@ app.post("/searchByIngredients", (req, res) => {
 // }).then(() => console.log("success"));
 
 //<editor-fold desc="shopping list functions">
-function readUserShit(uid) {
+function getUserShoppingListDatabase(uid) {
     return new Promise(function (res, rej) {
             db.collection('users').doc(uid).collection('shoppingList')
                 .doc("shoppingList").get()
                 .then(function (snapshot) {
                     if (snapshot.exists) {
-                        console.log(snapshot.data())
+                        // console.log(snapshot.data())
                         res(snapshot.data())
                     } else {
                         return;
@@ -242,14 +242,25 @@ function readUserShit(uid) {
     )
 }
 
+function shoppinglistObjectCreator(k1, k2) {
+    this.leFruit = k1;
+    this.leBool = k2;
+}
 
-function asyncReadUserShit(res, uid) {
-    let shoppingListArray;
-    readUserShit(uid).then((val) => {
-        const entries = Object.entries(val);
-        // console.log(entries.length);
-        shoppingListArray = entries;
+
+function asyncReacUserShoppingList(res, uid) {
+    let shoppingListArray = [];
+    getUserShoppingListDatabase(uid).then((val) => {
+
+        for (let key of Object.entries(val)) {
+            let newList = new shoppinglistObjectCreator(key[0], key[1]);
+            shoppingListArray.push(newList);
+        }
+
+        console.log(shoppingListArray[1]["leFruit"]);
+
     }).then(() => {
+        console.log(shoppingListArray);
         res.render("pages/shoppingList", {list: shoppingListArray});
     })
 }
@@ -259,9 +270,8 @@ let food = []
 
 
 app.post("/shoppingListStartUid", function (req, res) {
-    console.log("inside Shopping List start UID POST");
     let uid = req.body.uid;
-    asyncReadUserShit(res, uid);
+    asyncReacUserShoppingList(res, uid);
 });
 
 app.post('/shoppinglist', (req, res) => {
@@ -278,7 +288,7 @@ function writeShoppingList(uid, dataObject) {
     for (let i = 0; i < dataObject.length; i++) {
         db.collection('users').doc(uid).collection('shoppingList')
             .doc("shoppingList").set({
-            [dataObject[i][0]]: [dataObject[i][1]]
+            [dataObject[i]]: true
         })
 
     }
