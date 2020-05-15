@@ -118,7 +118,7 @@ function storeNewStoreInfo(storeID, storeAddress, storeName) {
 }
 
 function storeWaitTime(storeID, waitTime) {
-    db.collection('stores').doc(storeID).update( {
+    db.collection('stores').doc(storeID).update({
         waittime: waitTime
     })
 }
@@ -284,7 +284,7 @@ app.get('/shoppinglist', (req, res) => {
     res.render("pages/shoppingList", {list: []});
 });
 
-app.post('/writeShoppingListToDatabase', (req, res) =>{
+app.post('/writeShoppingListToDatabase', (req, res) => {
     // console.log("success receive post from shoppinglist.ejs");
     let uid = req.body.uid;
     let array = req.body.array;
@@ -295,19 +295,25 @@ app.post('/writeShoppingListToDatabase', (req, res) =>{
 
 function writeShoppingList(uid, dataObject) {
     console.log("yup writing");
-    for (let i = 0; i < dataObject.length; i++) {
-        db.collection('users').doc(uid).collection('shoppingList')
-            .doc("shoppingList").update({
-            [dataObject[i]]: true
-        }).then(() => console.log("success write shopping list to database"))
-            .catch((err) => console.log(err))
+    //clear shopping list database first before storing
+    db.collection('users').doc(uid).collection('shoppingList')
+        .doc('shoppingList').set({})
+        .then(() => {
+            console.log("shopping list succcesfully cleared for storing")
+            for (let i = 0; i < dataObject.length; i++) {
+                db.collection('users').doc(uid).collection('shoppingList')
+                    .doc("shoppingList").update({
+                    [dataObject[i]]: true
+                }).then(() => console.log("success write shopping list to database"))
+                    .catch((err) => console.log(err))
 
-    }
+            }
+        })
+        .catch((err) => console.log(err))
+
 }
 
 //</editor-fold>
-
-
 
 
 // ROUTE TO FIREBASEUI LOGIN
@@ -352,14 +358,13 @@ app.post("/waitTime", (req, res) => {
             .then(result =>
                 res.render("pages/waitTime", {stores: result})
             )
-            return
-            // .then(result => res.redirect("./items"))
+        return
+        // .then(result => res.redirect("./items"))
     } else if (req.body.submitBtn === "Submit") {
         //SUBMIT HAS BEEN MOVED TO POST waitTimeSubmit AJAX
 
     }
 });
-
 
 
 app.post("/waitTimeSubmit", (req, res) => {
@@ -375,7 +380,7 @@ app.post("/waitTimeSubmit", (req, res) => {
             res.render("pages/missingItems");
             console.log("render complete");
         })
-        
+
 })
 
 ///update database with store
