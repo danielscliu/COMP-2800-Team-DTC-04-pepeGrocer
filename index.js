@@ -258,8 +258,8 @@ app.post("/showSavedList", function (req, res) {
     let uid = req.body.hiddenUID;
     console.log(uid);
     asyncReacUserShoppingList(res, uid);
-
 })
+
 app.post("/shoppingListStartUid", function (req, res) {
     let uid = req.body.uid;
     asyncReacUserShoppingList(res, uid);
@@ -284,8 +284,9 @@ app.get('/clearShoppingList', (req, res) => {
 
 app.post('/shoppinglist', (req, res) => {
     // let shopping = req.body.items;
-    console.log(req.body);
-    res.render("pages/shoppingList", {shopping});
+    // console.log(req.body);
+    
+    res.render("pages/shoppingList", {list: []});
 });
 
 app.get('/shoppinglist', (req, res) => {
