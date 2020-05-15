@@ -286,12 +286,6 @@ app.get('/shoppinglist', (req, res) => {
 });
 
 
-
-
-
-
-
-
 // ROUTE TO FIREBASEUI LOGIN
 app.get("/fLogin", function (req, res) {
     res.sendFile(path.resolve("public/fireBase.html"));

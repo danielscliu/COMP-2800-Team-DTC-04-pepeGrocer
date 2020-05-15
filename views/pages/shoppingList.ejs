@@ -4,48 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" ,
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/style.css">
     <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
 
+    <style>
+        .custom-control-input:checked ~ .custom-control-label::before {
+            color: white;
+            border-color: black;
+        }
+
+        .custom-control-input:checked ~ .custom-control-label::before {
+            background-color: orange;
+        }
+
+        .itemStockBox {
+            height: 400px;
+        }
+
+        .custom-control {
+            left: 20px;
+            top: 20px;
+            margin: 20px;
+        }
+
+        .itemStockBox {
+            overflow-x: hidden;
+        }
+    </style>
+
     <title>Shopping List</title>
 </head>
-<style>
-    .custom-control-input:checked~.custom-control-label::before {
-        color: white;
-        border-color: black;
-    }
-
-    .custom-control-input:checked~.custom-control-label::before {
-        background-color: orange;
-    }
-
-    .itemStockBox {
-        height: 400px;
-    }
-
-    .custom-control {
-        left: 20px;
-        top: 20px;
-        margin: 20px;
-    }
-
-    .itemStockBox {
-        overflow-x: hidden;
-    }
-</style>
-
-
-
-
-
-
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <!--################################################FIREBASE ZONE. DO NOT TOUCH ####################################-->
 <firebase>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -56,7 +57,7 @@
 
 
     <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
 
     <!--firebase API config files-->
     <script>
@@ -75,198 +76,190 @@
     </script>
 </firebase>
 <!--################################################ END FIREBASE ZONE ####################################-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<body id="shoppingListBody">
 
-<body>
+<!--FRONT END: PAGE WILL AUTOMATICALLY RETREIVE LIST (SHOPPING LIST ARRAY [[APPLE: TRUE], [BANANA:FALSE]]) -->
+<!--FROM SERVER. FIND A WAY TO SHOW ITEMS (TRUE FOR BOUGHT, FALSE FOR NEED TO BUY)-->
 
-    <!--FRONT END: PAGE WILL AUTOMATICALLY RETREIVE LIST (SHOPPING LIST ARRAY [[APPLE: TRUE], [BANANA:FALSE]]) -->
-    <!--FROM SERVER. FIND A WAY TO SHOW ITEMS (TRUE FOR BOUGHT, FALSE FOR NEED TO BUY)-->
+<!--CREATE BUTTON TO ADD TO THIS LIST-->
+<!--CREATE BUTTON TO WRITE TO SERVER. -->
+<!--WHEN WRITING, SEND DATA THE SAME AS RECEIVED. [[APPLE: FALSE], [BANANA:TRUE]]-->
+<!--AJAX CODE WILL BE PROVIDED-->
 
-    <!--CREATE BUTTON TO ADD TO THIS LIST-->
-    <!--CREATE BUTTON TO WRITE TO SERVER. -->
-    <!--WHEN WRITING, SEND DATA THE SAME AS RECEIVED. [[APPLE: FALSE], [BANANA:TRUE]]-->
-    <!--AJAX CODE WILL BE PROVIDED-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-    <body id="missingItemBody">
+    <a class="navbar-brand" id='pepeGrocer' href="/menu">
+        <span id="pepe">pepe</span><span id="grocer">Grocer</span>
+    </a>
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-            <a class="navbar-brand" id='pepeGrocer' href="/menu">
-                <span id="pepe">pepe</span><span id="grocer">Grocer</span>
-            </a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon navbar-light">
                 </span>
-            </button>
+    </button>
 
-            <div class="collapse navbar-collapse" id='navbarNav'>
-                <ul class="navbar-nav w-100 mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/time">Report Missing Items/Wait Time</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/search">Search by Ingredients</a>
-                    </li>
+    <div class="collapse navbar-collapse" id='navbarNav'>
+        <ul class="navbar-nav w-100 mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/time">Report Missing Items/Wait Time</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/search">Search by Ingredients</a>
+            </li>
 
-                    <li class="nav-item active">
-                        <a class="nav-link active">Shopping List</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/lineup">Store Lineup Near Me</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/aboutUs">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary"
-                            type='button' id='signout' style='color:aliceblue'>Log Out</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+            <li class="nav-item active">
+                <a class="nav-link active">Shopping List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/lineup">Store Lineup Near Me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/aboutUs">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary"
+                   type='button' id='signout' style='color:aliceblue'>Log Out</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-        <!-- Modal -->
-        <!-- Modal -->
-        <div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content" style="background-color: orange">
-                    <div class="modal-body">
-                        <div class="container-fluid searchByIngredientsContainer">
-                            <div class="row">
-                                <h3>Are you sure you want to sign out?</h3>
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: orange">
+            <div class="modal-body">
+                <div class="container-fluid searchByIngredientsContainer">
+                    <div class="row">
+                        <h3>Are you sure you want to sign out?</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 offset-3">
+                            <div class="row justify-content-center" id="logOutBtn">
+                                <button type="button" id="confirmLogOut" class="btn btn-dark btn-block"> Log
+                                    Out
+                                </button>
                             </div>
-                            <div class="row">
-                                <div class="col-6 offset-3">
-                                    <div class="row justify-content-center" id="logOutBtn">
-                                        <button type="button" id="confirmLogOut" class="btn btn-dark btn-block"> Log
-                                            Out</button>
-                                    </div>
-                                    <div class="row justify-content-center" id="closeBtn">
-                                        <button type="button" class="btn btn-secondary btn-block"
-                                            data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <img src="imgs/monkaS.png">
+                            <div class="row justify-content-center" id="closeBtn">
+                                <button type="button" class="btn btn-secondary btn-block"
+                                        data-dismiss="modal">Close
+                                </button>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <img src="imgs/monkaS.png">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <hr>
+<hr>
 
-        <div id='mainBlock' class="container vertical-align table-responsive missingItemContainer">
-
-
-
-            <div id='mainBlock' class="container vertical-align table-responsive waitTimeContainer">
-                <div class="row justify-content-center" id='waitTime'>
-                    <h3 style="color: white">Enter an item to add to the list</h3>
-                </div>
-
-                <div class="row justify-content-center" id="addressInput">
-                    <!-- action='/shoppingList' -->
-                    <form  method='post'>
-                        <div class="row justify-content-center">
-                            <input type="text" name="items" placeholder="Enter an item" id="inputBox" />
-                            <input type="button" value="Add" id="add" />
-
-                            <!-- This should not affect visually but need it to post values for lat lon; -->
-                            <input id="coordinateLongitude" type="hidden" name="longitude" value=""></input>
-                            <input id="coordinateLatitude" type="hidden" name="latitude" value=""></input>
-
-                        </div>
-                    </form>
-                </div>
-                <br>
-                <div style="text-align: center;">
-                    <input type="submit" value="Submit List" id="submit"/>
-                </div>
-            </div>
-            <br>
-            <div id="stockItems" class="container vertical-align table-responsive searchByIngredientsContainer">
-                <div id='itemStock'>
-                    <h6 id='itemStatus' style="color: white">Shopping Checklist</h6>
-                </div>
-                <form class="itemStockBox" method="post">
+<div id='mainBlock' class="container vertical-align table-responsive missingItemContainer">
 
 
-                </form>
-
-            </div>
+    <div id='mainBlock' class="container vertical-align table-responsive waitTimeContainer">
+        <div class="row justify-content-center" id='waitTime'>
+            <h3 style="color: white">Enter an item to add to the list</h3>
         </div>
 
+        <div class="row justify-content-center" id="addressInput">
+            <!-- action='/shoppingList' -->
+            <form action="/shoppingList" method='post'>
+                <div class="row justify-content-center">
+                    <input type="text" name="items" placeholder="Enter an item" id="inputBox"/>
+                    <input type="button" value="Add" id="add"/>
 
+                    <!-- This should not affect visually but need it to post values for lat lon; -->
+                    <input id="coordinateLongitude" type="hidden" name="longitude" value=""></input>
+                    <input id="coordinateLatitude" type="hidden" name="latitude" value=""></input>
+
+                </div>
+            </form>
         </div>
+        <br>
+        <div style="text-align: center;">
+            <input type="submit" value="Submit List" id="submit"/>
+        </div>
+    </div>
+    <br>
+    <div id="stockItems" class="container vertical-align table-responsive searchByIngredientsContainer">
+        <div id='itemStock'>
+            <h6 id='itemStatus' style="color: white">Shopping Checklist</h6>
+        </div>
+        <form class="itemStockBox" method="post">
 
 
+        </form>
+
+    </div>
+</div>
 
 
-        <!-- ###############Add buttons by jquery -->
+</div>
 
-        <script>
+
+<!-- ###############Add buttons by jquery -->
+
+<script>
 
     var itemNum = 1;
-            $(document).ready(function () {
-                // COMMENTED OUT SECTION GOOD FOR TESTING
-                // $.ajax({
-                //     type: 'POST',
-                //     data: {
-                //         "uid": 1 //user.uid
-                //     },
-                //     url: '/shoppingListStartUid'
-                // })
+    $(document).ready(function () {
+        // COMMENTED OUT SECTION GOOD FOR TESTING
+        // $.ajax({
+        //     type: 'POST',
+        //     data: {
+        //         "uid": 1 //user.uid
+        //     },
+        //     url: '/shoppingListStartUid'
+        // })
 
 
+        $("#add").on("click", function () {
+            var description = document.getElementById("inputBox").value;
 
-
-                $("#add").on("click", function () {
-                var description = document.getElementById("inputBox").value;
-
-                var shopList = `<div class="custom-control custom-checkbox name='items'">
+            var shopList = `<div class="custom-control custom-checkbox name='items'">
         <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
         <label style='color: white;' class="custom-control-label" for="customCheck${itemNum}"><h5>${description}</h5></label>
         </div>`
-                    console.log(description)
-                    $(".itemStockBox").append(shopList)
-                    itemNum++;
-                    document.getElementById('inputBox').value = '';
-                });
+            console.log(description)
+            $(".itemStockBox").append(shopList)
+            itemNum++;
+            document.getElementById('inputBox').value = '';
+        });
 
 
-                console.log(itemNum);
+        console.log(itemNum);
 
-                firebase.auth().onAuthStateChanged(function (user) {
-                    if (user) {
-                        console.log("loggedin");
-                        $.ajax({
-                            type: 'POST',
-                            data: {
-                                "uid": user.uid
-                            },
-                            url: '/shoppingListStartUid'
-                        })
-                    } else {
-                        console.log("NOPE not logged in");
-                    }
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                console.log("loggedin");
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        "uid": user.uid
+                    },
+                    url: '/shoppingListStartUid'
                 })
-            })
-        </script>
+            } else {
+                console.log("NOPE not logged in");
+            }
+        })
+    })
 
+    const logout = document.querySelector("#confirmLogOut");
+    logout.addEventListener('click', function () {
+        firebase.auth().signOut();
+        console.log("user signed out");
+        window.location.href = "/";
+    });
 
+</script>
+</body>
 </html>
