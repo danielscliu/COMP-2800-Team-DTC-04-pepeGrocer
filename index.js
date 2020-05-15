@@ -311,7 +311,7 @@ app.post('/writeShoppingListToDatabase', (req, res) => {
     // console.log("success receive post from shoppinglist.ejs");
     let uid = req.body.uid;
     let array = req.body.array;
-    console.log(array);
+    console.log("uid: " + uid);
     writeShoppingList(uid, array);
 })
 
