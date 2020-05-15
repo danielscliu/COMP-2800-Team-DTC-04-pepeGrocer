@@ -108,10 +108,16 @@
 
 <div id='mainBlock' class="container vertical-align table-responsive missingItemContainer">
 
+    <!--We are wrapping this in a form to send it off to server-->
+<form>
     <div id='storeNameMissingItem'>
-        <h3 style="text-align: center">Welcome to {Store Name}</h3>
+        <h3 id="storeName" style="text-align: center">Welcome to <%=storeName %></h3>
+        <input class="" type= "hidden" id = "storeID" name= <%= storeID %> >
+        <input class="" type = "hidden" name ="">    
     </div>
+</form>
 
+<button id = "updateItemButton" >+</button>
 
 <form action='/missingItems' method='post'>
 
@@ -197,5 +203,33 @@
         output.innerHTML = this.value;
     }
 </script>
+
+<script>
+    inStockItems = []
+    outStockItems = [] 
+
+    document.getElementById("updateItemButton").addEventListener("click", addItem)
+    function addItem() {
+        itemToAdd = document.getElementById("inputBox").value
+        if (document.getElementById("hasStock").checked){
+            inStockItems[itemToAdd] = "inStock"
+        } else if (document.getElementById("noStock").checked) {
+            outStockItems[itemToAdd] = "Out of Stock"
+        } else {
+            alert("Please check off either In Stock or Not in Stock")
+        
+        }
+        console.log(inStockItems)
+        console.log(outStockItems)
+        return inStockItems, outStockItems
+    }
+
+
+
+
+</script>
+
+
+
 </body>
 </html>

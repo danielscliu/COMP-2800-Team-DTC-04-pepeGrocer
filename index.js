@@ -322,7 +322,7 @@ app.post("/waitTime", (req, res) => {
         updateStoreWaitTime(storeID, name, address, waitTimeValue)
             .then(() => {
                 console.log("then complete");
-                res.render("pages/missingItems");
+                res.render("pages/missingItems", {storeName: name, storeID: storeID});
                 console.log("render complete");
             })
     }
