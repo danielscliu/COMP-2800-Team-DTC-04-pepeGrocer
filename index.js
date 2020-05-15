@@ -257,10 +257,8 @@ function asyncReacUserShoppingList(res, uid) {
             shoppingListArray.push(newList);
         }
 
-        // console.log(shoppingListArray[1]["leFruit"]);
-
     }).then(() => {
-        // console.log(shoppingListArray);
+        console.log("ok");
         res.render("pages/shoppingList", {list: shoppingListArray});
     })
 }
@@ -269,6 +267,14 @@ function asyncReacUserShoppingList(res, uid) {
 let food = []
 
 
+
+//SHOW SAVED LIST BUTTON FORM
+app.post("/showSavedList", function (req, res) {
+    let uid = req.body.hiddenUID;
+    console.log(uid);
+    asyncReacUserShoppingList(res, uid);
+
+})
 app.post("/shoppingListStartUid", function (req, res) {
     let uid = req.body.uid;
     asyncReacUserShoppingList(res, uid);
@@ -281,6 +287,7 @@ app.post('/shoppinglist', (req, res) => {
 });
 
 app.get('/shoppinglist', (req, res) => {
+    // create user
     res.render("pages/shoppingList", {list: []});
 });
 
