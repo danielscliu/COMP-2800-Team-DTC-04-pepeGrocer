@@ -86,47 +86,49 @@
 <!--CREATE BUTTON TO WRITE TO SERVER. -->
 <!--WHEN WRITING, SEND DATA THE SAME AS RECEIVED. [[APPLE: FALSE], [BANANA:TRUE]]-->
 <!--AJAX CODE WILL BE PROVIDED-->
+<tag>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" id='pepeGrocer' href="/menu">
+            <span id="pepe">pepe</span><span id="grocer">Grocer</span>
+        </a>
 
-    <a class="navbar-brand" id='pepeGrocer' href="/menu">
-        <span id="pepe">pepe</span><span id="grocer">Grocer</span>
-    </a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon navbar-light">
                 </span>
-    </button>
+        </button>
 
-    <div class="collapse navbar-collapse" id='navbarNav'>
-        <ul class="navbar-nav w-100 mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/time">Report Missing Items/Wait Time</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/search">Search by Ingredients</a>
-            </li>
+        <div class="collapse navbar-collapse" id='navbarNav'>
+            <ul class="navbar-nav w-100 mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/time">Report Missing Items/Wait Time</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/search">Search by Ingredients</a>
+                </li>
 
-            <li class="nav-item active">
-                <a class="nav-link active">Shopping List</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/lineup">Store Lineup Near Me</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/aboutUs">About Us</a>
-            </li>
-            <li class="nav-item">
-                <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary"
-                   type='button' id='signout' style='color:aliceblue'>Log Out</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+                <li class="nav-item active">
+                    <a class="nav-link active">Shopping List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/lineup">Store Lineup Near Me</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/aboutUs">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary"
+                       type='button' id='signout' style='color:aliceblue'>Log Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</tag>
 
 <!-- Modal -->
-<!-- Modal -->
+
+<!-- Modal: logout -->
 <div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -206,53 +208,57 @@
 
 
 <!-- ###############Add buttons by jquery -->
-
+<span><%=console.log("in EJS: " + list.length);%></span>
 <script>
-
-    var itemNum = 1;
     $(document).ready(function () {
         // COMMENTED OUT SECTION GOOD FOR TESTING
-        // $.ajax({
-        //     type: 'POST',
-        //     data: {
-        //         "uid": 1 //user.uid
-        //     },
-        //     url: '/shoppingListStartUid'
-        // })
+        $.ajax({
+            type: 'POST',
+            data: {
+                "uid": 1 //user.uid
+            },
+            url: '/shoppingListStartUid'
+        })
+    })
+</script>
 
+<script>
+    // var itemNum = 1;
 
-        $("#add").on("click", function () {
-            var description = document.getElementById("inputBox").value;
+    $("#add").on("click", function () {
+        var description = document.getElementById("inputBox").value;
 
-            var shopList = `<div class="custom-control custom-checkbox name='items'">
+        var shopList = `<div class="custom-control custom-checkbox name='items'">
         <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
         <label style='color: white;' class="custom-control-label" for="customCheck${itemNum}"><h5>${description}</h5></label>
         </div>`
-            console.log(description)
-            $(".itemStockBox").append(shopList)
-            itemNum++;
-            document.getElementById('inputBox').value = '';
-        });
+        console.log(description)
+        $(".itemStockBox").append(shopList)
+        itemNum++;
+        document.getElementById('inputBox').value = '';
+    });
+</script>
 
-
-        console.log(itemNum);
-
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-                console.log("loggedin");
-                $.ajax({
-                    type: 'POST',
-                    data: {
-                        "uid": user.uid
-                    },
-                    url: '/shoppingListStartUid'
-                })
-            } else {
-                console.log("NOPE not logged in");
-            }
-        })
+<script>
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            console.log("loggedin");
+            $.ajax({
+                type: 'POST',
+                data: {
+                    "uid": user.uid
+                },
+                url: '/shoppingListStartUid'
+            })
+        } else {
+            console.log("NOPE not logged in");
+        }
     })
 
+
+</script>
+
+<script>
     const logout = document.querySelector("#confirmLogOut");
     logout.addEventListener('click', function () {
         firebase.auth().signOut();

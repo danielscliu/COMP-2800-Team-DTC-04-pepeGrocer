@@ -247,7 +247,7 @@ function asyncReadUserShit(res, uid) {
     let shoppingListArray;
     readUserShit(uid).then((val) => {
         const entries = Object.entries(val);
-        console.log(entries.length);
+        // console.log(entries.length);
         shoppingListArray = entries;
     }).then(() => {
         res.render("pages/shoppingList", {list: shoppingListArray});
@@ -282,7 +282,7 @@ app.post('/shoppinglist', (req, res) => {
 });
 
 app.get('/shoppinglist', (req, res) => {
-    res.render("pages/shoppingList");
+    res.render("pages/shoppingList", {list: []});
 });
 
 
