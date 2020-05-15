@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MapTest</title>
+</head>
+
+<!--HEREMAP MODULES-->
+<script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"
+        type="text/javascript" charset="utf-8"></script>
+
+
+<!--<editor-fold desc="GET LOCATION">-->
+<script>
+    var x = document.getElementById("demo");
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        x.innerHTML = "Latitude: " + position.coords.latitude +
+            "<br>Longitude: " + position.coords.longitude;
+    }
+</script>
+<!--</editor-fold>-->
+
+<!--APIKEY-JAVASCript 3YGafiRrEzHCYluMeO7Zhf31OaxyEvx9PTaCB3RswRU-->
+<!--APIKEY-RESTFUL   dXmHzMbOVAkqdex7o_440a8wmmMozdhTDxFO-hClAtU-->
+
+<!--COMMUNICATE WITH BACKEND-->
+<script>
+    var platform = new H.service.Platform({
+        'apikey': '3YGafiRrEzHCYluMeO7Zhf31OaxyEvx9PTaCB3RswRU'
+    });
+</script>
+
+
+<body>
+<button onclick="getLocation()">Try It</button>
+
+<p id="demo"></p>
+
+
+</body>
+</html>

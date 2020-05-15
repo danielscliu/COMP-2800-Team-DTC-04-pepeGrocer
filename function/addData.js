@@ -31,11 +31,16 @@ var db = admin.firestore();
 //1 CUSTOM STORE ID
 let storesRef = db.collection("stores");
 
-// let set1 = storesRef.doc("Costco Downtown").set({
-//     Name: "Costco Downtown",
-//     Address: "605 Expo Blvd, Vancouver, BC V6B 1V4",
-//     WaitTime: 5
-// });
+let set1 = storesRef.doc("Costco Downtown").set({
+    Name: "Costco Downtown",
+    Address: "605 Expo Blvd, Vancouver, BC V6B 1V4",
+    WaitTime: 5,
+    "Banana": true,
+    "Apple": true,
+    "Cheese": true,
+    "cheese": true,
+    "banana": true
+});
 // let set2 = storesRef.doc("Costco Willingdon").set({
 //     Name: "Costco Willingdon",
 //     Address: "4500 Still Creek RD, Burnaby, BC V5C 0B5",
@@ -57,12 +62,12 @@ let storesRef = db.collection("stores");
 //     WaitTime: 5
 // });
 
-let set5 = storesRef.doc("Osaka Supermarket").set({
-    Name: "Osaka Supermarket",
-    Address: "605 Expo Blvd, Vancouver, BC V6B 1V4",
-    WaitTime: 5,
-    "test set": "test space ok"
-});
+// let set5 = storesRef.doc("Osaka Supermarket").set({
+//     Name: "Osaka Supermarket",
+//     Address: "605 Expo Blvd, Vancouver, BC V6B 1V4",
+//     WaitTime: 5,
+//     "test set": "test space ok"
+// });
 // 2 AUTO GENERATE STORE ID
 // let storesRef = db.collection("stores");
 
