@@ -24,11 +24,15 @@
     </style>
 
 </head>
+
+
+
 <body id="missingItemBody">
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -109,15 +113,13 @@
 <div id='mainBlock' class="container vertical-align table-responsive missingItemContainer">
 
     <!--We are wrapping this in a form to send it off to server-->
-<form>
+<!-- <form> -->
     <div id='storeNameMissingItem'>
-        <h3 id="storeName" style="text-align: center">Welcome to <%=storeName %></h3>
+        <h3 id="storeName"  style="text-align: center"><%=storeName %></h3>
         <input class="" type= "hidden" id = "storeID" name= <%= storeID %> >
         <input class="" type = "hidden" name ="">    
     </div>
-</form>
-
-<button id = "updateItemButton" >+</button>
+<!-- </form> -->
 
 <form action='/missingItems' method='post'>
 
@@ -127,7 +129,11 @@
 
             <div class="row justify-content-center" id="submitStock">
                 <input type="text" name="itemStatus"  placeholder="Enter Item" id="inputBox"/>
-                <input type="submit" value="Submit" id="submitStockBtn" />
+                
+            <!-- No use for this button anymore, if we click it it will render the page again without being given param StoreName-->
+                <input type="hidden" value="Submit" id="submitStockBtn" />
+
+                <button type = "button" onclick="ajaxPost()" value ="">Submit To Server</button>
             </div>
 
             <div class="row justify-content-center" id="stockRadio" style="padding-top: 3vh">
@@ -153,6 +159,7 @@
     <hr>
 </form>
 
+
     <div id="stockItems" class="container vertical-align table-responsive searchByIngredientsContainer">
         <div id='itemStock'>
             <h6 id='itemStatus' style="color: white">Inputted Item Status</h6>
@@ -161,32 +168,21 @@
 
                 <div class="card stockCard">
                     <div class="card-body">
-                        <div class="row">
-                                <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7>
+                        <div id="listOfItems" class="row">
+                          
+                                <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7> 
+                             
+
+                                 
+                             
+                         
+                                
+
+
                         </div>
                     </div>
                 </div>
-            <div class="card stockCard">
-                <div class="card-body">
-                    <div class="row">
-                        <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7>
-                    </div>
-                </div>
-            </div>
-            <div class="card stockCard">
-                <div class="card-body">
-                    <div class="row">
-                        <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7>
-                    </div>
-                </div>
-            </div>
-            <div class="card stockCard">
-                <div class="card-body">
-                    <div class="row">
-                        <h7>{Item Name}: {In Stock} || {Out Of Stock}</h7>
-                    </div>
-                </div>
-            </div>
+            
         </div>
 
     </div>
@@ -194,6 +190,7 @@
 
 
 </div>
+
 <script>
     let slider = document.getElementById("waitTimeRange");
     let output = document.getElementById("waitTimeValue");
@@ -204,32 +201,65 @@
     }
 </script>
 
+
+<!-- Yes I need the script at the top otherwise EJS will give an placeholder to render pages-->
 <script>
-    inStockItems = []
-    outStockItems = [] 
+    items = [] 
 
     document.getElementById("updateItemButton").addEventListener("click", addItem)
     function addItem() {
         itemToAdd = document.getElementById("inputBox").value
         if (document.getElementById("hasStock").checked){
-            inStockItems[itemToAdd] = "inStock"
+            items[itemToAdd] = true
         } else if (document.getElementById("noStock").checked) {
-            outStockItems[itemToAdd] = "Out of Stock"
+            items[itemToAdd] = false
         } else {
             alert("Please check off either In Stock or Not in Stock")
         
         }
-        console.log(inStockItems)
-        console.log(outStockItems)
-        return inStockItems, outStockItems
+    
     }
-
-
 
 
 </script>
 
 
+<script>
+    store_id = document.getElementById("storeID").name
+    item = document.querySelector("#inputBox").value
+    // returns itemStatus as a boolean 
+    itemStatus = document.getElementById("hasStock").checked
+
+    function ajaxPost() {
+        if (document.querySelector("#inputBox").value === ""){
+            alert("please enter in an item before submitting")
+        }else {
+
+            $.ajax({
+                    type: 'POST',
+                    data: {
+                        id: store_id,
+                        name: document.querySelector("#inputBox").value,
+                        stock: itemStatus,
+                        storeName: document.querySelector("#storeName").innerHTML
+                        },
+                    
+                    url: '/updateMissingItems'
+                })
+            }
+            text_node = document.createElement("h6")
+            text_node.innerHTML = item
+            document.getElementsByClassName("itemStockBox").append(text_node);
+
+            
+            }
+</script>
+
+
+
+
 
 </body>
 </html>
+
+
