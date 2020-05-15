@@ -276,10 +276,11 @@ function clearShoppingListDatabase(uid) {
     })
 }
 // FORM CLEAR SHOPPING LIST
-app.get('/clearShoppingList', (req, res) => {
+app.post('/clearShoppingList', (req, res) => {
     let uid = req.body.hiddenUID2;
     clearShoppingListDatabase(uid)
         .then(() => res.render("pages/shoppingList", {list: []}))
+        .catch((err) => console.log(err))
 })
 
 app.post('/shoppinglist', (req, res) => {
