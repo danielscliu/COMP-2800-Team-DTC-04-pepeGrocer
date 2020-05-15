@@ -358,7 +358,7 @@ app.get("/items", (req, res) => res.render("pages/missingItems"));
 
 app.get("/time", (req, res) => res.render("pages/waitTime", {stores: "none"}));
 
-app.get("/lineup", (req, res) => res.render("pages/lineup"));
+app.get("/lineup", (req, res) => res.render("pages/lineup", {stores: "none"}));
 
 // This post endpoint comes from the /waitTime url when you type in an item and press "submit to server"//
 app.post("/updateMissingItems", (req, res) => {
@@ -368,6 +368,14 @@ app.post("/updateMissingItems", (req, res) => {
 
 })
 
+app.post("/lineUpNearMeQuery", (req, res) => {
+    let lat = req.body.latitude;
+    let lon = req.body.longitude;
+    map5Closest(lat, lon)
+        .then(result =>
+            res.render("pages/lineup", {stores: result})
+        )
+})
 
 app.post("/waitTime", (req, res) => {
     let result;
