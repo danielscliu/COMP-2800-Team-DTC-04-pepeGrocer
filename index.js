@@ -5,6 +5,7 @@ const request = require('request');
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+
 //<editor-fold desc="FIREBASE SETUP">
 //--new
 var admin = require("firebase-admin");
@@ -83,7 +84,8 @@ async function map5Closest(lat, lon) {
                     let name = obj[i].title;
                     let address = obj[i].address.label;
                     let identification = obj[i].id;
-                    listClosest.push(new basicStoreInfoObjectCreator(name, address, identification));
+                    let direction = makeGoogleMapsDirection(address);
+                    listClosest.push(new basicStoreInfoObjectCreator(name, address, identification, direction));
                 }
                 res(listClosest);
             } catch (e) {
@@ -95,10 +97,11 @@ async function map5Closest(lat, lon) {
     }) // end promise
 }
 
-function basicStoreInfoObjectCreator(name, address, identification) {
+function basicStoreInfoObjectCreator(name, address, identification, direction) {
     this.name = name;
     this.address = address;
     this.identification = identification;
+    this.directions = direction;
 }
 
 //</editor-fold>
@@ -311,7 +314,7 @@ app.get("/aboutUs", (req, res) => res.render("pages/aboutUs"));
 
 app.get("/items", (req, res) => res.render("pages/missingItems"));
 
-app.get("/time", (req, res) => res.render("pages/waitTime", {stores:"none"}));
+app.get("/time", (req, res) => res.render("pages/waitTime", {stores: "none"}));
 
 app.get("/lineup", (req, res) => res.render("pages/lineup"));
 
@@ -328,23 +331,61 @@ app.post("/waitTime", (req, res) => {
         let lat = req.body.latitude;
         let lon = req.body.longitude;
         map5Closest(lat, lon)
-            .then(result => 
-                res.render("pages/waitTime", {stores:result})
-                    
-                    //console.log(`here is a store : ${value["name"]}`);
-                    //res.render("/pages/waitTime", {stores: value})
-                    
-                
-
-        )
-
-
-
+            .then(result =>
+                res.render("pages/waitTime", {stores: result})
+            )
     } else if (req.body.submitBtn === "Submit") {
+        //SUBMIT HAS BEEN MOVED TO POST waitTimeSubmit AJAX
 
-        res.render("pages/missingItems");
     }
 });
+
+
+
+app.post("/waitTimeSubmit", (req, res) => {
+    let waitTimeValue = req.body.waitTimeValue;
+    let storeID = req.body.storeID;
+    let address = req.body.storeAddress;
+    let name = req.body.storeName;
+    console.log(waitTimeValue, storeID, address, name)
+
+    updateStoreWaitTime(storeID, name, address, waitTimeValue)
+        .then(() => {
+            console.log("then complete");
+            res.render("pages/missingItems");
+            console.log("render complete");
+        })
+})
+
+///update database with store
+function updateStoreWaitTime(storeID, name, address, waitTimeValue) {
+    return new Promise(function (res, rej) {
+        let ref = db.collection('stores');
+        ref.doc(storeID).get()
+            .then((a) => {
+                if (a.exists) {
+                    ref.doc(storeID).update({
+                        waittime: waitTimeValue
+                    }).then(() => {
+                        console.log("update Successful");
+                        res();
+                    })
+                        .catch((err) => console.log(err));
+                } else {
+                    ref.doc(storeID).set({
+                        name: name,
+                        address: address,
+                        waittime: waitTimeValue
+                    }).then(() => {
+                        console.log("success adding new storeID");
+                        res();
+                    })
+                        .catch((err) => console.log(err));
+                }
+            }).catch((err) => console.log(err));
+    })
+}
+
 
 app.post("/missingItems", (req, res) => {
     console.log(req.body.itemStatus);
