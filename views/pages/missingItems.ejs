@@ -224,11 +224,22 @@
     $('#submitToServer').on("click", function () {
 
         let itemName = document.getElementById("inputBox").value;
-        let templateList = `<div class="card stockCard">
+        let inStockList = `<div class="card stockCard">
         <div class="card-body">
         <div id="listOfItems" class="row">
-        <h7>${itemName}</h7>`
-        $(".itemStockBox").append(templateList);
+        <h7>Updated: ${itemName} is currently in stock.</h7>`
+
+        let noStockList = `<div class="card stockCard">
+        <div class="card-body">
+        <div id="listOfItems" class="row">
+        <h7>Updated: ${itemName} is currently not in stock.</h7>`
+
+        if (document.getElementById("hasStock").checked) {
+            $(".itemStockBox").append(inStockList);
+        }
+        if (document.getElementById("noStock").checked) {
+            $(".itemStockBox").append(noStockList);
+        }
     })
 
 
