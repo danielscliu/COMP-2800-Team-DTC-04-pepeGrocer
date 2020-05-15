@@ -33,32 +33,20 @@ function addressToLonLat(address) {
             'geocode' +
             '?q=' + filteredAddress +
             '&apiKey=dXmHzMbOVAkqdex7o_440a8wmmMozdhTDxFO-hClAtU', function (error, response, body) {
-            if (error) return rej(err);
-            try {
-                res(JSON.parse(body))
-            } catch (e) {
-                rej(e);
-            }
+            let geocode = [];
+            let json = JSON.parse(body)
+            let jsonItems = json.items[0];
+            let lat = jsonItems.access[0].lat;
+            let lng = jsonItems.access[0].lng;
+            geocode.push(lat, lng);
+            res(geocode);
+
 
         })
     }) // end promise
 }
 
-function asyncAddress(address) {
-    addressToLonLat(address)
-        .then((val) => {
-            let geocode = [];
-            let json = val;
-            let jsonItems = json.items[0];
-            let lat = jsonItems.access[0].lat;
-            let lng = jsonItems.access[0].lng;
-            geocode.push(lat, lng);
-            let listClosest = map5Closest(geocode[0], geocode[1]);
-            return listClosest;
-        })
-}
 
-// let test = asyncAddress("9088 Dixon Ave Richmond");
 // console.log(test);
 //</editor-fold>
 
@@ -91,8 +79,6 @@ async function map5Closest(lat, lon) {
             } catch (e) {
                 rej(e);
             }
-
-
         })
     }) // end promise
 }
@@ -267,7 +253,6 @@ function asyncReacUserShoppingList(res, uid) {
 let food = []
 
 
-
 //SHOW SAVED LIST BUTTON FORM
 app.post("/showSavedList", function (req, res) {
     let uid = req.body.hiddenUID;
@@ -288,9 +273,21 @@ app.post('/shoppinglist', (req, res) => {
 });
 
 app.get('/shoppinglist', (req, res) => {
-    // create user
+    // create user if does not exist
+// DANIEL THEN .THEN RES.RENDER BELOW
     res.render("pages/shoppingList", {list: []});
 });
+
+
+// DANIEL WORK ON THIS PLEASE
+// CHECK IF COLLECTION > DOC(UID) <- IF THIS EXISTS
+// IF YES, .THEN => RES(); TO RESOLVE
+function createUserShoppingList(uid) {
+    return new Promise((function (res, rej) {
+            let ref = db.collection('users');
+        })
+    )
+}
 
 app.post('/writeShoppingListToDatabase', (req, res) => {
     // console.log("success receive post from shoppinglist.ejs");
@@ -300,7 +297,7 @@ app.post('/writeShoppingListToDatabase', (req, res) => {
     writeShoppingList(uid, array);
 })
 
-
+// DANIEL SHOPPINGLIST PATH IS HERE. NOTE IT'S COLLECTION > DOC(UID) > SHOPPINGLIST > SHOPPINGLIST
 function writeShoppingList(uid, dataObject) {
     console.log("yup writing");
     //clear shopping list database first before storing
@@ -348,22 +345,55 @@ app.get("/items", (req, res) => res.render("pages/missingItems"));
 
 app.get("/time", (req, res) => res.render("pages/waitTime", {stores: "none"}));
 
-app.get("/lineup", (req, res) => res.render("pages/lineup"));
+app.get("/lineup", (req, res) => res.render("pages/lineup", {stores: "none"}));
 
 // This post endpoint comes from the /waitTime url when you type in an item and press "submit to server"//
-app.post("/updateMissingItems", (req, res) =>{
+app.post("/updateMissingItems", (req, res) => {
     console.log(req.body)
     updateStoreItem(req.body.id, req.body.name, req.body.stock)
-    .then(res.render("pages/waitTime"))
+        .then(res.render("pages/waitTime"))
 
 })
 
+app.post("/lineUpNearMeQuery", (req, res) => {
+    let lat = req.body.latitude;
+    let lon = req.body.longitude;
+    if (req.body.submitBtn === "Search") {
+        let address = req.body.address;
+        address.replace(" ", "+");
+        addressToLonLat(address)
+            .then((val) => {
+                map5Closest(val[0], val[1])
+                    .then((result) => {
+                        res.render("pages/waitTime", {stores: result});
+                    }).catch((err) => console.log("error map5"));
+            })
+            .catch(() => console.log("error address to LL"))
+
+
+    } else {
+        map5Closest(lat, lon)
+            .then(result =>
+                res.render("pages/waitTime", {stores: result})
+            )
+    }
+})
 
 app.post("/waitTime", (req, res) => {
     let result;
     if (req.body.submitBtn === "Search") {
-        console.log(req.body.address);
-        res.render("pages/waitTime");
+        let address = req.body.address;
+        address.replace(" ", "+");
+        addressToLonLat(address)
+            .then((val) => {
+                map5Closest(val[0], val[1])
+                    .then((result) => {
+                        res.render("pages/waitTime", {stores: result});
+                    }).catch((err) => console.log("error map5"));
+            })
+            .catch(() => console.log("error address to LL"))
+
+
     } else if (req.body.submitBtn === "Near Me") {
         console.log("GeoLocation");
 
@@ -400,7 +430,7 @@ app.post("/waitTime", (req, res) => {
 //     let name = req.body.storeName;
 //     // console.log(waitTimeValue, storeID, address, name);
 
-
+// DANIEL LOGIC IS HERE
 ///update database with store
 function updateStoreWaitTime(storeID, name, address, waitTimeValue) {
     return new Promise(function (res, rej) {
@@ -438,18 +468,16 @@ function updateStoreItem(storeID, item, status) {
             .then(() => {
 
                     ref.doc(storeID).update({
-                        [item] : Boolean(status),
+                        [item]: Boolean(status),
                     }).then(() => {
                         console.log("newitem!");
                         res();
                     })
                         .catch((err) => console.log(err));
                 }
-            )})}
-
-
-
-
+            )
+    })
+}
 
 
 app.post("/missingItems", (req, res) => {
