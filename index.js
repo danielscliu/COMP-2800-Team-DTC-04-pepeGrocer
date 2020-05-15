@@ -33,32 +33,20 @@ function addressToLonLat(address) {
             'geocode' +
             '?q=' + filteredAddress +
             '&apiKey=dXmHzMbOVAkqdex7o_440a8wmmMozdhTDxFO-hClAtU', function (error, response, body) {
-            if (error) return rej(err);
-            try {
-                res(JSON.parse(body))
-            } catch (e) {
-                rej(e);
-            }
+            let geocode = [];
+            let json = JSON.parse(body)
+            let jsonItems = json.items[0];
+            let lat = jsonItems.access[0].lat;
+            let lng = jsonItems.access[0].lng;
+            geocode.push(lat, lng);
+            res(geocode);
+
 
         })
     }) // end promise
 }
 
-function asyncAddress(address) {
-    addressToLonLat(address)
-        .then((val) => {
-            let geocode = [];
-            let json = val;
-            let jsonItems = json.items[0];
-            let lat = jsonItems.access[0].lat;
-            let lng = jsonItems.access[0].lng;
-            geocode.push(lat, lng);
-            let listClosest = map5Closest(geocode[0], geocode[1]);
-            return listClosest;
-        })
-}
 
-// let test = asyncAddress("9088 Dixon Ave Richmond");
 // console.log(test);
 //</editor-fold>
 
@@ -91,8 +79,6 @@ async function map5Closest(lat, lon) {
             } catch (e) {
                 rej(e);
             }
-
-
         })
     }) // end promise
 }
@@ -380,8 +366,18 @@ app.post("/lineUpNearMeQuery", (req, res) => {
 app.post("/waitTime", (req, res) => {
     let result;
     if (req.body.submitBtn === "Search") {
-        console.log(req.body.address);
-        res.render("pages/waitTime");
+        let address = req.body.address;
+        address.replace(" ", "+");
+        addressToLonLat(address)
+            .then((val) => {
+                map5Closest(val[0], val[1])
+                    .then((result) => {
+                        res.render("pages/waitTime", {stores: result});
+                    }).catch((err) => console.log("error map5"));
+            })
+            .catch(() => console.log("error address to LL"))
+
+
     } else if (req.body.submitBtn === "Near Me") {
         console.log("GeoLocation");
 
