@@ -274,9 +274,10 @@
     store_id = document.getElementById("storeID").name
     item = document.querySelector("#inputBox").value
     // returns itemStatus as a boolean 
-    itemStatus = document.getElementById("hasStock").checked
+    
 
     function ajaxPost() {
+        
         if (document.querySelector("#inputBox").value === ""){
             alert("please enter in an item before submitting")
         }else {
@@ -286,7 +287,7 @@
                     data: {
                         id: store_id,
                         name: document.querySelector("#inputBox").value,
-                        stock: itemStatus,
+                        stock: document.getElementById("hasStock").checked,
                         storeName: document.querySelector("#storeName").innerHTML
                         },
                     
