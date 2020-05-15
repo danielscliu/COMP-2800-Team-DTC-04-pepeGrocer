@@ -234,12 +234,10 @@
 
                 $.ajax({
                 type: 'POST',
-                data: {
-                    
-
-                    // "uid": 1 //user.uid
+                data: {items: [foodItemsList],
+                "uid": 1 //user.uid
                 },
-                url: '/shoppingListStartUid'
+                url: '/writeShoppingListToDatabase'
             })
 
 
