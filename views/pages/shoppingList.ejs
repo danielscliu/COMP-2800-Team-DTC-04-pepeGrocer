@@ -34,6 +34,10 @@
         .itemStockBox {
             overflow-x: hidden;
         }
+        body {
+            overflow-y: hidden;
+        }
+
     </style>
 
     <title>Shopping List</title>
@@ -187,11 +191,7 @@
                 <div class="row justify-content-center">
                     <input type="text" name="items" placeholder="Enter an item" id="inputBox"/>
                     <input type="button" value="Add" id="add"/>
-                    <% for(let i=0; i < list.length; i++ ) { %>
-                    <section class="custom-control custom-checkbox name='items'">
-                        <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
-                        <h5><label id='${itemNum}' style='color: white;' class="custom-control-label" for="customCheck${itemNum}"><%= list[i] %></label></h5>
-                        </section><% } %>
+
                     <!-- This should not affect visually but need it to post values for lat lon; -->
                     <input id="coordinateLongitude" type="hidden" name="longitude" value=""></input>
                     <input id="coordinateLatitude" type="hidden" name="latitude" value=""></input>
@@ -203,10 +203,17 @@
         <div style="text-align: center;">
             <button type="submit" value="Submit List" id="submitListBtn">Submit List</button>
         </div>
-        <form method="post" action="/showSavedList">
+        <br>
+        <form style="text-align: center;" method="post" action="/showSavedList">
             <textarea style="display: none" name="hiddenUID" id="hiddenUID" ></textarea>;
             <button type="submit">Show saved list</button>
         </form>
+        <br>
+        <form style="text-align: center;" method="POST" action="/shoppingList">
+            <textarea style="display: none" name="hiddenUID" id="hiddenUID2" ></textarea>;
+            <button id='clear' type="submit">Clear all items</button>
+        </form>
+
     </div>
     <br>
     <div id="stockItems" class="container vertical-align table-responsive searchByIngredientsContainer">
@@ -214,6 +221,12 @@
             <h6 id='itemStatus' style="color: white">Shopping Checklist</h6>
         </div>
         <form class="itemStockBox" method="post">
+
+            <% for(let i=0; i < list.length; i++ ) { %>
+                <section class="custom-control custom-checkbox name='items'">
+                    <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
+                    <h5><label id='${itemNum}' style='color: white;' class="custom-control-label" for="customCheck${itemNum}"><%= list[i]['leFruit'] %></label></h5>
+                    </section><% } %>
 
 
         </form>
@@ -241,6 +254,8 @@
     // ################## Array of the items On-click of submit #########################
 
     $(document).ready(function () {
+    
+
         $('#submitListBtn').on('click', function (e) {
             e.preventDefault();
             var totalCountItems = $('form').find('section').length;
@@ -252,6 +267,15 @@
                 console.log(foodItemsList);
                 Array.from(foodItemsList);
             }
+
+            document.getElementById('clear').onclick = 
+
+            $('#clear').on('click', function() {
+                var foodItemsList = []
+            })
+
+
+
             //OK WORKS
             $.ajax({
                 type: 'POST',
@@ -287,6 +311,7 @@
         if (user) {
             // TODO: CHANGE TO
             document.getElementById("hiddenUID").innerHTML = 1;
+            document.getElementById("hiddenUID2").innerHTML = 1;
             console.log("loggedin");
         } else {
             console.log("NOPE not logged in");
