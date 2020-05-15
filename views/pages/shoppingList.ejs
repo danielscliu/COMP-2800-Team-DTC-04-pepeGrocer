@@ -187,7 +187,11 @@
                 <div class="row justify-content-center">
                     <input type="text" name="items" placeholder="Enter an item" id="inputBox"/>
                     <input type="button" value="Add" id="add"/>
-
+                    <% for(let i=0; i < list.length; i++ ) { %>
+                    <section class="custom-control custom-checkbox name='items'">
+                        <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
+                        <h5><label id='${itemNum}' style='color: white;' class="custom-control-label" for="customCheck${itemNum}"><%= list[i] %></label></h5>
+                        </section><% } %>
                     <!-- This should not affect visually but need it to post values for lat lon; -->
                     <input id="coordinateLongitude" type="hidden" name="longitude" value=""></input>
                     <input id="coordinateLatitude" type="hidden" name="latitude" value=""></input>
@@ -218,7 +222,10 @@
 
 
 <!-- ###############Add buttons by jquery -->
-<span><%= console.log("in EJS: " + list.length); %></span>
+<span><%= console.log("in EJS: " + [list.length]); %></span>
+
+
+
 
 </body>
 <script>
@@ -259,7 +266,6 @@
             })
         });
     });
-
 
 </script>
 <script>
