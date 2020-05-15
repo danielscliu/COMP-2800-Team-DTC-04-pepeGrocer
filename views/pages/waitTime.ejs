@@ -213,12 +213,18 @@
                                 </div>
                             </div>
                         </div>
+
+                    <form action="/waitTime" method="post">
+                        <textarea style="display: none" name="storeID" id="storeIDRequested" ></textarea>;
+                        <textarea style="display: none" name="waitTimeValue" id="inputval" >0</textarea>;
+                        <textarea style="display: none" name="storeAddress" id="storeAddressRequested" ></textarea>;
+                        <textarea style="display: none" name="storeName" id="storeNameRequested" ></textarea>;
                         <div class="row justify-content-center">
                             <input class="btn custom-btn" style="color: white" type='submit' value="Submit"
-                                   id="submitWaitTime" name="submitWaitTime">
+                                   id="Submit" name="submitBtn">
                         </div>
 
-
+                    </form>
 
                         <div class="row justify-content-center" style="padding-top: 2vh">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -303,10 +309,7 @@
 
 
 
-<span type="hidden" id="storeIDRequested" ></span>;
-<span type="hidden" id="inputval" >0</span>;
-<span type="hidden" id="storeAddressRequested" ></span>;
-<span type="hidden" id="storeNameRequested" ></span>;
+
 
 
 <script>
@@ -320,19 +323,19 @@
 </script>
 
 <script>
-    $('#submitWaitTime').click(function (e) {
-        e.preventDefault();
-        $.ajax({
-            type: "POST",
-            url: "/waitTimeSubmit",
-            data: {
-                storeID : document.getElementById("storeIDRequested").innerHTML,
-                waitTimeValue : document.getElementById("inputval").innerHTML,
-                storeAddress : document.getElementById("storeAddressRequested").innerHTML,
-                storeName : document.getElementById("storeNameRequested").innerHTML
-            }
-        })
-    })
+    // $('#submitWaitTime').click(function (e) {
+    //     e.preventDefault();
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "/waitTimeSubmit",
+    //         data: {
+    //             storeID : document.getElementById("storeIDRequested").innerHTML,
+    //             waitTimeValue : document.getElementById("inputval").innerHTML,
+    //             storeAddress : document.getElementById("storeAddressRequested").innerHTML,
+    //             storeName : document.getElementById("storeNameRequested").innerHTML
+    //         }
+    //     })
+    // })
 </script>
 
 <script>
