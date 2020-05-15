@@ -100,18 +100,18 @@
                 <a class="nav-link" href="/search">Search by Ingredients</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/underConstruction.html">Shopping List</a>
+                <a class="nav-link" href="/shoppinglist">Shopping List</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/lineup">Store Lineup Near Me
-<!--                    <span>class="sr-only">(current)</span>-->
-                </a>
+                <a class="nav-link" href="/lineup">Store Lineup Near Me<span
+                            class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/aboutUs">About Us</a>
             </li>
             <li class="nav-item">
-                <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary" type='button' id='signout'
+                <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary" type='button'
+                   id='signout'
                    style='color:aliceblue'>Log Out</a>
             </li>
         </ul>
@@ -231,13 +231,13 @@
 </div>
 
 <script>
-    let slider = document.getElementById("waitTimeRange");
-    let output = document.getElementById("waitTimeValue");
-    output.innerHTML = slider.value;
+    // let slider = document.getElementById("waitTimeRange");
+    // let output = document.getElementById("waitTimeValue");
+    // output.innerHTML = slider.value;
 
-    slider.oninput = function() {
-        output.innerHTML = this.value;
-    }
+    // slider.oninput = function() {
+    //     output.innerHTML = this.value;
+    // }
 
     const logout = document.querySelector("#confirmLogOut");
     logout.addEventListener('click', function () {
