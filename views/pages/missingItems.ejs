@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" ,
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/style.css">
+    <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
+    <title>Wait Time and Missing Item</title>
+
+    <style>
+        .custom-control-input:checked ~ .custom-control-label::before {
+            color: white;
+            border-color: black;
+        }
+
+        .custom-control-input:checked ~ .custom-control-label::before {
+            background-color: orange;
+        }
+    </style>
+
+</head>
+
+
+<body id="missingItemBody">
+
+<script
+        src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<!--################################################FIREBASE ZONE. DO NOT TOUCH ####################################-->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+
+
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
+
+
+<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+
+<!--firebase API config files-->
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyBqB5QHNRRquDJxd9OiXXa9c33dI4zDSDA",
+        authDomain: "firebaetest-6e21a.firebaseapp.com",
+        databaseURL: "https://firebaetest-6e21a.firebaseio.com",
+        projectId: "firebaetest-6e21a",
+        storageBucket: "firebaetest-6e21a.appspot.com",
+        messagingSenderId: "763860546362",
+        appId: "1:763860546362:web:35a3ed2ac35df4abd5d603",
+        measurementId: "G-V56860GVZL"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
+<!--################################################ END FIREBASE ZONE ####################################-->
+<!--CHECK PERSISTENCE-->
+<script>
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            console.log("Logged in OK");
+        } else {
+            console.log("NOPE not logged in");
+            window.location.href = "/";
+        }
+    });
+</script>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <a class="navbar-brand" id='pepeGrocer' href="/menu">
+        <span id="pepe">pepe</span><span id="grocer">Grocer</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon navbar-light">
+            </span>
+    </button>
+
+    <div class="collapse navbar-collapse" id='navbarNav'>
+        <ul class="navbar-nav w-100 mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link active">Report Missing Items/Wait Time</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/search">Search by Ingredients</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/shoppinglist">Shopping List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/lineup">Store Lineup Near Me<span
+                            class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/aboutUs">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary" type='button'
+                   id='signout'
+                   style='color:aliceblue'>Log Out</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: orange">
+            <div class="modal-body">
+                <div class="container-fluid searchByIngredientsContainer">
+                    <div class="row">
+                        <h3>Are you sure you want to sign out?</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 offset-3">
+                            <div class="row justify-content-center" id="logOutBtn">
+                                <button type="button" id="confirmLogOut" class="btn btn-dark btn-block"> Log Out
+                                </button>
+                            </div>
+                            <div class="row justify-content-center" id="closeBtn">
+                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <img src="imgs/monkaS.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div id='mainBlock' class="container vertical-align table-responsive missingItemContainer">
+
+    <!--We are wrapping this in a form to send it off to server-->
+    <!-- <form> -->
+    <div id='storeNameMissingItem'>
+        <h3 id="storeName" style="text-align: center"><%= storeName %></h3>
+        <input class="" type="hidden" id="storeID" name= <%= storeID %>>
+        <input class="" type="hidden" name="">
+    </div>
+    <!-- </form> -->
+
+    <form action='/missingItems' method='post'>
+
+        <div class="row justify-content-center" id='storeNameMissingItem'>
+            <h7>Enter an item and its stock status:</h7>
+        </div>
+
+        <div class="row justify-content-center" id="submitStock">
+            <input type="text" name="itemStatus" placeholder="Enter Item" id="inputBox"/>
+
+            <!-- No use for this button anymore, if we click it it will render the page again without being given param StoreName-->
+            <input type="hidden" value="Submit" id="submitStockBtn"/>
+
+            <button type="button" id="submitToServer" onclick="ajaxPost()" value="">Submit To Server</button>
+        </div>
+
+        <div class="row justify-content-center" id="stockRadio" style="padding-top: 3vh">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input class="custom-control-input" id="hasStock" type="radio" name="stock" value="inStock">
+                <label class="custom-control-label" for="hasStock" style="color: white">
+                    In Stock
+                </label>
+            </div>
+
+            <div class="custom-control custom-radio custom-control-inline">
+                <input class="custom-control-input" id="noStock" type="radio" name="stock" value="notInStock">
+                <label class="custom-control-label" for="noStock" style="color: white">
+                    Not In Stock
+                </label>
+            </div>
+        </div>
+
+        <div class="row justify-content-center" style="padding-top: 2vh">
+            <button type="button" class="btn btn-secondary" onclick="window.location='/time'">Back to wait time</button>
+        </div>
+
+        <hr>
+    </form>
+
+
+    <div id="stockItems" class="container vertical-align table-responsive searchByIngredientsContainer">
+        <div id='itemStock'>
+            <h6 id='itemStatus' style="color: white">Inputted Item Status</h6>
+        </div>
+        <div class="itemStockBox">
+
+
+        </div>
+    </div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+</div>
+
+<script>
+    $('#submitToServer').on("click", function () {
+
+        let itemName = document.getElementById("inputBox").value;
+        let templateList = `<div class="card stockCard">
+        <div class="card-body">
+        <div id="listOfItems" class="row">
+        <h7>${itemName}</h7>`
+        $(".itemStockBox").append(templateList);
+    })
+
+
+</script>
+
+<script>
+    // let slider = document.getElementById("waitTimeRange");
+    // let output = document.getElementById("waitTimeValue");
+    // output.innerHTML = slider.value;
+
+    // slider.oninput = function() {
+    //     output.innerHTML = this.value;
+    // }
+
+    const logout = document.querySelector("#confirmLogOut");
+    logout.addEventListener('click', function () {
+        firebase.auth().signOut();
+        console.log("user signed out");
+        window.location.href = "/";
+    });
+</script>
+
+
+<!-- Yes I need the script at the top otherwise EJS will give an placeholder to render pages-->
+<script>
+    items = []
+
+    // document.getElementById("updateItemButton").addEventListener("click", addItem)
+
+    function addItem() {
+        itemToAdd = document.getElementById("inputBox").value
+        if (document.getElementById("hasStock").checked) {
+            items[itemToAdd] = true
+        } else if (document.getElementById("noStock").checked) {
+            items[itemToAdd] = false
+        } else {
+            alert("Please check off either In Stock or Not in Stock")
+
+        }
+
+    }
+
+
+</script>
+
+
+<script>
+    store_id = document.getElementById("storeID").name
+    item = document.querySelector("#inputBox").value
+
+    // returns itemStatus as a boolean
+
+
+    function ajaxPost() {
+
+        if (document.querySelector("#inputBox").value === "") {
+            alert("please enter in an item before submitting")
+        } else {
+
+            $.ajax({
+                type: 'POST',
+                data: {
+                    id: store_id,
+                    name: document.querySelector("#inputBox").value,
+                    stock: document.getElementById("hasStock").checked,
+                    storeName: document.querySelector("#storeName").innerHTML
+                },
+
+                url: '/updateMissingItems'
+            })
+        }
+        // text_node = document.createElement("h6")
+        // text_node.innerHTML = item
+        // document.getElementsByClassName("itemStockBox").append(text_node);
+
+
+    }
+</script>
+
+
+</body>
+</html>
+
+

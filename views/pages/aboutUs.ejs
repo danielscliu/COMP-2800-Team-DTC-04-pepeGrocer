@@ -79,17 +79,17 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     <div class="collapse navbar-collapse" id='navbarNav'>
         <ul class="navbar-nav w-100 mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/underConstruction.html">Report Missing Items/Wait Time</a>
+                <a class="nav-link" href="/time">Report Missing Items/Wait Time</a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="/search">Search by Ingredients</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/underConstruction.html">Shopping List</a>
+                <a class="nav-link" href="/shoppinglist">Shopping List</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/underConstruction.html">Store Lineup Near Me<span
+                <a class="nav-link" href="/lineup">Store Lineup Near Me<span
                             class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
@@ -102,6 +102,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         </ul>
     </div>
 </nav>
+
 <div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content"  style="background-color: orange">
@@ -129,6 +130,93 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     </div>
 </div>
 
+<div class="modal fade" id="jayModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"  style="background-color: orange">
+            <div class="modal-body">
+                <div class="container-fluid aboutUsContainer">
+                    <div class="row aboutUsRow">
+                        <h3>Github: <a href="https://github.com/jsui5">jsui5</a></h3>
+                    </div>
+                    <div class="row aboutUsRow">
+                        <div class="col-6 offset-3">
+                            <div class="row aboutUsRow justify-content-center" id="closeBtn">
+                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="sepehrModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"  style="background-color: orange">
+            <div class="modal-body">
+                <div class="container-fluid aboutUsContainer">
+                    <div class="row aboutUsRow">
+                        <h3>Github: <a href="https://github.com/sepehrman">sepehrman</a></h3>
+                    </div>
+                    <div class="row aboutUsRow">
+                        <div class="col-6 offset-3">
+                            <div class="row aboutUsRow justify-content-center" id="closeBtn">
+                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="kevinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"  style="background-color: orange">
+            <div class="modal-body">
+                <div class="container-fluid aboutUsContainer">
+                    <div class="row aboutUsRow">
+                        <h3>Github: <a href="https://github.com/shihkster1015/">shihkster1015</a></h3>
+                    </div>
+                    <div class="row aboutUsRow">
+                        <div class="col-6 offset-3">
+                            <div class="row aboutUsRow justify-content-center" id="closeBtn">
+                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="danielModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"  style="background-color: orange">
+            <div class="modal-body">
+                <div class="container-fluid aboutUsContainer">
+                    <div class="row aboutUsRow">
+                        <h3>Github: <a href="https://github.com/danielscliu/">danielscliu</a></h3>
+                    </div>
+                    <div class="row aboutUsRow">
+                        <div class="col-6 offset-3">
+                            <div class="row aboutUsRow justify-content-center" id="closeBtn">
+                                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div id='mainBlock' class="container vertical-align table-responsive searchByIngredientsContainer">
 <div class="description" style="text-align:center; color: #FFA31A;">
   <h1>Our Team</h1>
@@ -153,12 +241,10 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     <div class="card aboutUsCard">
       <img src="/imgs/daniel.jpg" alt="Daniel" style="width:100%">
       <div class="container aboutUsContainer">
-        <h2 class="nameTitle">Daniel Liu      </h2>
+        <h2 class="nameTitle">Daniel Liu</h2>
         <p class="aboutUsTitle">Backend Developer</p>
-
         <p>The Man</p>
-          <spam>Github: <a href="https://github.com/danielscliu/">danielscliu</a></spam>
-        <p><button class="aboutUsBtn">Contact</button></p>
+        <p><button class="aboutUsBtn" data-toggle="modal" data-target="#danielModal">Contact</button></p>
       </div>
     </div>
   </div>
@@ -167,11 +253,10 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     <div class="card aboutUsCard">
       <img src="/imgs/kevin.jpg" alt="Kevin" style="width:100%">
       <div class="container aboutUsContainer">
-        <h2 class="nameTitle">Kevin Shih      </h2>
+        <h2 class="nameTitle">Kevin Shih</h2>
         <p class="aboutUsTitle">Backend Developer</p>
         <p>The Myth</p>
-        <spam>Github: <a href="https://github.com/shihkster1015/">shihkster1015</a></spam>
-        <p><button class="aboutUsBtn">Contact</button></p>
+        <p><button class="aboutUsBtn" data-toggle="modal" data-target="#kevinModal">Contact</button></p>
       </div>
     </div>
   </div>
@@ -183,8 +268,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         <h2 class="nameTitle">Sephrman</h2>
         <p class="aboutUsTitle">Frontend Developer</p>
         <p>The Sepehrman</p>
-        <spam>Github: <a href="https://github.com/jsui5">sepehrman</a></spam>
-        <p><button class="aboutUsBtn">Contact</button></p>
+        <p><button class="aboutUsBtn" data-toggle="modal" data-target="#sepehrModal">Contact</button></p>
       </div>
     </div>
   </div>
@@ -193,11 +277,10 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     <div class="card aboutUsCard">
       <img src="/imgs/jay.jfif" alt="Jay" style="width:100%">
       <div class="container aboutUsContainer">
-        <h2 class="nameTitle">Jay Sui      </h2>
+        <h2 class="nameTitle">Jay Sui</h2>
         <p class="aboutUsTitle">Frontend Developer</p>
         <p>The Legend</p>
-        <spam>Github: <a href="https://github.com/jsui5">jsui5</a></spam>
-        <p><button class="aboutUsBtn">Contact</button></p>
+        <p><button class="aboutUsBtn" data-toggle="modal" data-target="#jayModal">Contact</button></p>
       </div>
     </div>
   </div>
