@@ -334,6 +334,8 @@ app.post("/waitTime", (req, res) => {
             .then(result =>
                 res.render("pages/waitTime", {stores: result})
             )
+            return
+            // .then(result => res.redirect("./items"))
     } else if (req.body.submitBtn === "Submit") {
         //SUBMIT HAS BEEN MOVED TO POST waitTimeSubmit AJAX
 
@@ -355,6 +357,7 @@ app.post("/waitTimeSubmit", (req, res) => {
             res.render("pages/missingItems");
             console.log("render complete");
         })
+        
 })
 
 ///update database with store
