@@ -237,7 +237,7 @@ function asyncReadUserShit(res, uid) {
         shoppingListArray = entries;
         console.log(shoppingListArray);
     }).then(() => {
-        res.render("pages/shoppingList", { list:shoppingListArray });
+        res.render("pages/shoppingList", {list: shoppingListArray});
     })
 }
 
@@ -271,8 +271,6 @@ app.get("/fLogin", function (req, res) {
 });
 
 
-
-
 // ROUTE TO SEARCH INGREDIENTS
 app.get("/search", (req, res) =>
     res.render("pages/searchByIngredients", {stores: [], itemStockBoolean: itemStockBoolean}));
@@ -292,7 +290,7 @@ app.get("/shop", (req, res) => res.render("pages/shoppingList"));
 
 app.get("/items", (req, res) => res.render("pages/missingItems"));
 
-app.get("/time", (req, res) => res.render("pages/waitTime", {stores:"none"}));
+app.get("/time", (req, res) => res.render("pages/waitTime", {stores: "none"}));
 
 app.get("/lineup", (req, res) => res.render("pages/lineup"));
 
@@ -309,28 +307,60 @@ app.post("/waitTime", (req, res) => {
         let lat = req.body.latitude;
         let lon = req.body.longitude;
         map5Closest(lat, lon)
-            .then(result => 
-                res.render("pages/waitTime", {stores:result})
-
-        )
+            .then(result =>
+                res.render("pages/waitTime", {stores: result})
+            )
     } else if (req.body.submitBtn === "Submit") {
         //SUBMIT HAS BEEN MOVED TO POST waitTimeSubmit AJAX
 
     }
 });
 
+
+
 app.post("/waitTimeSubmit", (req, res) => {
-    console.log(req.body.waitTimeValue);
-    console.log(req.body.storeID);
-    console.log(req.body.storeAddress)
+    let waitTimeValue = req.body.waitTimeValue;
+    let storeID = req.body.storeID;
+    let address = req.body.storeAddress;
+    let name = req.body.storeName;
+    console.log(waitTimeValue, storeID, address, name)
 
-
-    // res.render("pages/missingItems");
+    updateStoreWaitTime(storeID, name, address, waitTimeValue)
+        .then(() => {
+            console.log("then complete");
+            res.render("pages/missingItems");
+            console.log("render complete");
+        })
 })
 
-
 ///update database with store
-
+function updateStoreWaitTime(storeID, name, address, waitTimeValue) {
+    return new Promise(function (res, rej) {
+        let ref = db.collection('stores');
+        ref.doc(storeID).get()
+            .then((a) => {
+                if (a.exists) {
+                    ref.doc(storeID).update({
+                        waittime: waitTimeValue
+                    }).then(() => {
+                        console.log("update Successful");
+                        res();
+                    })
+                        .catch((err) => console.log(err));
+                } else {
+                    ref.doc(storeID).set({
+                        name: name,
+                        address: address,
+                        waittime: waitTimeValue
+                    }).then(() => {
+                        console.log("success adding new storeID");
+                        res();
+                    })
+                        .catch((err) => console.log(err));
+                }
+            }).catch((err) => console.log(err));
+    })
+}
 
 
 app.post("/missingItems", (req, res) => {
