@@ -357,10 +357,25 @@ app.post("/updateMissingItems", (req, res) => {
 app.post("/lineUpNearMeQuery", (req, res) => {
     let lat = req.body.latitude;
     let lon = req.body.longitude;
-    map5Closest(lat, lon)
-        .then(result =>
-            res.render("pages/lineup", {stores: result})
-        )
+    if (req.body.submitBtn === "Search") {
+        let address = req.body.address;
+        address.replace(" ", "+");
+        addressToLonLat(address)
+            .then((val) => {
+                map5Closest(val[0], val[1])
+                    .then((result) => {
+                        res.render("pages/waitTime", {stores: result});
+                    }).catch((err) => console.log("error map5"));
+            })
+            .catch(() => console.log("error address to LL"))
+
+
+    } else {
+        map5Closest(lat, lon)
+            .then(result =>
+                res.render("pages/waitTime", {stores: result})
+            )
+    }
 })
 
 app.post("/waitTime", (req, res) => {
