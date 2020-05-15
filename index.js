@@ -325,6 +325,14 @@ app.get("/time", (req, res) => res.render("pages/waitTime", {stores: "none"}));
 
 app.get("/lineup", (req, res) => res.render("pages/lineup"));
 
+// This post endpoint comes from the /waitTime url when you type in an item and press "submit to server"//
+app.post("/updateMissingItems", (req, res) =>{
+    console.log(req.body)
+    updateStoreItem(req.body.id, req.body.name, req.body.stock)
+    .then(res.render("pages/waitTime"))
+    
+})
+
 
 app.post("/waitTime", (req, res) => {
     let result;
@@ -341,31 +349,32 @@ app.post("/waitTime", (req, res) => {
             .then(result =>
                 res.render("pages/waitTime", {stores: result})
             )
-            return
-            // .then(result => res.redirect("./items"))
+        // return
+        // .then(result => res.redirect("./items"))
     } else if (req.body.submitBtn === "Submit") {
-        //SUBMIT HAS BEEN MOVED TO POST waitTimeSubmit AJAX
-
+        console.log("yes bitch");
+        let waitTimeValue = req.body.waitTimeValue;
+        let storeID = req.body.storeID;
+        let address = req.body.storeAddress;
+        let name = req.body.storeName;
+        console.log(waitTimeValue);
+        updateStoreWaitTime(storeID, name, address, waitTimeValue)
+            .then(() => {
+                console.log("then complete");
+                res.render("pages/missingItems", {storeName: name, storeID: storeID});
+                console.log("render complete");
+            })
     }
 });
 
 
+// app.post("/waitTimeSubmit", (req, res) => {
+//     let waitTimeValue = req.body.waitTimeValue;
+//     let storeID = req.body.storeID;
+//     let address = req.body.storeAddress;
+//     let name = req.body.storeName;
+//     // console.log(waitTimeValue, storeID, address, name);
 
-app.post("/waitTimeSubmit", (req, res) => {
-    let waitTimeValue = req.body.waitTimeValue;
-    let storeID = req.body.storeID;
-    let address = req.body.storeAddress;
-    let name = req.body.storeName;
-    console.log(waitTimeValue, storeID, address, name)
-
-    updateStoreWaitTime(storeID, name, address, waitTimeValue)
-        .then(() => {
-            console.log("then complete");
-            res.render("pages/missingItems");
-            console.log("render complete");
-        })
-        
-})
 
 ///update database with store
 function updateStoreWaitTime(storeID, name, address, waitTimeValue) {
@@ -395,6 +404,27 @@ function updateStoreWaitTime(storeID, name, address, waitTimeValue) {
             }).catch((err) => console.log(err));
     })
 }
+
+
+function updateStoreItem(storeID, item, status) {
+    return new Promise(function (res, rej) {
+        let ref = db.collection('stores');
+        ref.doc(storeID).get()
+            .then(() => {
+                
+                    ref.doc(storeID).update({
+                        [item] : status
+                    }).then(() => {
+                        console.log("newitem!");
+                        res();
+                    })
+                        .catch((err) => console.log(err));
+                }
+            )})}
+          
+    
+            
+  
 
 
 app.post("/missingItems", (req, res) => {
