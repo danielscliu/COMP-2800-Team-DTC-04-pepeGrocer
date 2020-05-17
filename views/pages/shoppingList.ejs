@@ -245,6 +245,10 @@
 <span><%= console.log("in EJS: " + [list.length]); %></span>
 
 
+
+
+
+
 </body>
 <script>
     var foodItemsList = [];
@@ -300,14 +304,8 @@
 
         var shopList = `<section class="custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
-        <label class="custom-control-label" for="customCheck${itemNum}"><h5>${description}</h5></label>
+        <label id='${itemNum}' style='color: white;' class="custom-control-label" for="customCheck${itemNum}">${description}</label>
         </section>`
-        
-        
-        // `<section class="custom-control custom-checkbox name='items'">
-        // <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
-        // <h5><label id='customCheck${itemNum}' style='color: white;' class="custom-control-label" for="customCheck${itemNum}">${description}</label></h5>
-        // </section>`
 
         if (description == '') {
             alert('Please fill in an input for your item')
