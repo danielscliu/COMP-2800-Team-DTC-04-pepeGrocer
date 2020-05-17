@@ -221,10 +221,9 @@
             <h6 id='itemStatus' style="color: white">Shopping Checklist</h6>
         </div>
         <form class="itemStockBox" method="post">
-            <!-- ##########################  WHERE CHECKBOXES ARE ADDED ################## -->
 
 
-
+            <!-- ############## This is where the checkboxes are being added -->
 
             <% for(let i=0; i < list.length; i++ ) { %>
                 <section class="custom-control custom-checkbox name='items'">
@@ -244,10 +243,6 @@
 
 <!-- ###############Add buttons by jquery -->
 <span><%= console.log("in EJS: " + [list.length]); %></span>
-
-
-
-
 
 
 </body>
@@ -301,18 +296,23 @@
 
     $("#add").on("click", function () {
 
-        var description = document.getElementById("inputBox").value;
+        var description = document.getElementById("inputBox").value.trim();
 
         var shopList = `<section class="custom-control custom-checkbox">
-  <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
-  <label class="custom-control-label" for="customCheck${itemNum}">${description}</label>
-</section>`
+        <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
+        <label class="custom-control-label" for="customCheck${itemNum}"><h5>${description}</h5></label>
+        </section>`
+        
+        
+        // `<section class="custom-control custom-checkbox name='items'">
+        // <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
+        // <h5><label id='customCheck${itemNum}' style='color: white;' class="custom-control-label" for="customCheck${itemNum}">${description}</label></h5>
+        // </section>`
 
         if (description == '') {
             alert('Please fill in an input for your item')
         }
         else {
-
 
         $(".itemStockBox").append(shopList)
         itemNum++;
