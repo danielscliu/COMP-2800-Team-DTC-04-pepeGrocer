@@ -6,6 +6,12 @@
 
 .itemStockBox {
     overflow-y: auto;
+    height: 62vh;
+    background-color: orange;
+}
+
+.outStockBox {
+    overflow-y: auto;
     height: 48vh;
     background-color: orange;
 }
@@ -51,6 +57,11 @@ div#mainBlock {
 }
 
 #waitTimeBody {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #2e2b2e;
+}
+
+#itemStockBody {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #2e2b2e;
 }
