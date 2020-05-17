@@ -365,6 +365,8 @@ app.get("/time", (req, res) => res.render("pages/waitTime", {stores: "none"}));
 
 app.get("/lineup", (req, res) => res.render("pages/lineup", {stores: "none"}));
 
+app.get("/stock", (req, res) => res.render("pages/itemStock"));
+
 // This post endpoint comes from the /waitTime url when you type in an item and press "submit to server"//
 app.post("/updateMissingItems", (req, res) => {
     console.log("received post from item update")
