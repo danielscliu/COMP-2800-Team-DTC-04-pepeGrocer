@@ -61,10 +61,11 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         });
     };
 </script>
-<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 
 
-<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script async defer src="https://connect.facebook.net/en_US/sdk.js">
+
+</script>
 <div id='mainBlock' class="container vertical-align table-responsive">
     <div class="row justify-content-center">
         <h1><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h1>
@@ -73,7 +74,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 
     <div class="row justify-content-center">
         <h4 style="color:white; text-align: center">
-            Enter your existing email and click on <span style="color: orange">Next</span> to log in
+            Enter your existing email and click on <strong>Next</strong> to log in
             <hr>
 
         </h4>
@@ -81,23 +82,54 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     <div class="row justify-content-center">
         <div class="col-md-6 justify-content-center">
             <h5 style="text-align: center; color: white">
-                Don't have an account with us? Enter your preferred email and click on <span
-                    style="color: orange">Next</span> to sign up
+                Don't have an account with us? Enter your preferred email and click on Next to sign up
             </h5>
         </div>
 
+    <!--        <div class="row justify-content-center">-->
+<!--            <div class="col-md-6 justify-content-center">-->
+<!--                <h5 style="text-align: center; color: white">-->
+<!--                    Click <span onclick="googleSignin()" style='color:orange'>here</span> to log in with a-->
+<!--                    google account.-->
+<!--                </h5>-->
+<!--            </div>-->
+
+<!--        </div>-->
+        <div class="row justify-content-center" id="firebaseui-auth-container" style="padding-top: 5vh"></div>
+        <div class="row justify-content-center" id="pepeImg" style="padding-top: 5vh">
+            <img id="pepeHypers" src="/imgs/pepeHype.png"></img>
+        </div>
     </div>
-    <div class="row justify-content-center" id="firebaseui-auth-container" style="padding-top: 5vh"></div>
-    <div class="row justify-content-center" id="pepeImg" style="padding-top: 5vh">
-        <img id="pepeHypers" src="/imgs/pepeHype.png"></img>
+    <!--GOOGLE SIGN IN SECTION -->
+    <script>
+
+        var provider = new firebase.auth.GoogleAuthProvider();
+
+        function googleSignin() {
+            firebase.auth().signInWithRedirect(provider);
+        }
+    </script>
+<!--    CHECK AUTH CHANGE-->
+    <script>
+
+        firebase.auth().getRedirectResult().then(function(result) {
+            if (result.credential) {
+                console.log("logged in via google");
+                var token = result.credential.accessToken;
+            }
+        }).catch(function(error) {
+            console.log("log in failed");
+        });
+    </script>
+
+    <!--FACEBOOK SHARE BUTTON-->
+    <div class="fb-share-button" data-href="http://www.pepegrocer.herokuapp.com" data-layout="button" data-size="large">
+        <a
+                target="_blank"
+                href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse"
+                class="fb-xfbml-parse-ignore">Share</a>
     </div>
 </div>
-
-<!--FACEBOOK SHARE BUTTON-->
-<div class="fb-share-button" data-href="http://www.pepegrocer.herokuapp.com" data-layout="button" data-size="large"><a
-        target="_blank"
-        href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse"
-        class="fb-xfbml-parse-ignore">Share</a></div>
 </body>
 
 <script>
@@ -120,6 +152,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
         signInOptions: [
             // Leave the lines as is for the providers you want to offer your users.
             firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         ],
         // Terms of service url.
         tosUrl: '<your-tos-url>',
