@@ -282,13 +282,15 @@
                                     <h5 class="card-title"><%= stores[index]["name"] %></h5>
                                     <h7 class="card-subtitle"><%= stores[index]["address"] %></h7>
                                     <div style="padding-top: 3vh">
-                                        <h6 class="card-text btn btn-secondary" data-toggle="modal"
+                                        <h6  class="card-text btn btn-secondary" data-toggle="modal"
                                             id= <%= stores[index]["identification"] %>
                                             data-target="#waitTimeModal"
                                         onclick="editHiddenID('<%= stores[index]["identification"] %>','<%= stores[index]["address"] %>', '<%= stores[index]["name"] %>')">Report wait time and missing items</h6>
 
                                         <!-- need to link to itemStock.ejs -->
-                                        <h6 class="btn btn-secondary" style="margin-top: 2vh">Current out of stock items at store</h6>
+                                      
+                                        <a href = "/individualstore/<%= stores[index]["identification"] %>"  class="btn btn-secondary" style="margin-top: 2vh">Current out of stock items at store</a>
+                                    
                                     </div>
 
 
@@ -310,6 +312,16 @@
     </div>
 <!--</editor-fold>-->
 
+<script>
+    //-- This gets stock of the page when you click the <h6> tag "Current out of stock items at store"
+    function stockPage (hereid) {
+        console.log(hereid)
+
+    }
+
+    
+
+</script>
 
 
 
