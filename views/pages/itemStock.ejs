@@ -142,7 +142,7 @@
     <!--We are wrapping this in a form to send it off to server-->
     <!-- <form> -->
     <div id='storeNameMissingItem'>
-        <h3 id="storeName" style="text-align: center"> {Store Name}'s Current Out Of Stock Items</h3>
+        <h3 id="storeName" style="text-align: center"><%=name%> </h3>
         <input class="" type="hidden" id="storeID" name= storeID>
         <input class="" type="hidden" name="">
     </div>
@@ -160,13 +160,20 @@
         <h6 id='itemStatus' style="color: white">Current out of stock items: </h6>
     </div>
     <div class="itemStockBox">
+  
+        <% for( let index = 0; index < inventory.length; index++ ) { %>
+
+            
         <div class="card storeCard">
             <div class="card-body">
                 <div id="listOfItems" class="row">
-                    <h6>{Item Name} is out of stock.</h6>
+                    <h6><%= inventory[index][0]%> <%= inventory[index][1]%></h6>
                 </div>
             </div>
         </div>
+        
+        <% } %>
+
     </div>
 </div>
 <hr>

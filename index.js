@@ -228,6 +228,27 @@ function getUserShoppingListDatabase(uid) {
     )
 }
 
+// This function gets the list of items from db based on store
+
+function getItemInventory(hereid) {
+    return new Promise(function (res,rej){
+        db.collection("stores").doc(hereid).get()
+        .then(function (snapshot){
+            if (snapshot.exists) {
+               // console.log(snapshot.data())
+                res(snapshot.data())
+            } else {
+                return;
+            }
+        }).catch(error =>error.log(error))
+    }
+    )
+}
+// hereid = "here:pds:place:124c28rw-df81e2852b0e407099396ea40bf289e7"
+// getItemInventory(hereid).then( response =>
+//     console.log(response)
+// )
+
 function shoppinglistObjectCreator(k1, k2) {
     this.leFruit = k1;
     this.leBool = k2;
@@ -251,6 +272,12 @@ function asyncReacUserShoppingList(res, uid) {
 
 // ############### All shopping list ##########################
 let food = []
+
+// individual store inventory 
+app.post("/individualStock", function(req, res) {
+    console.log(req.body);
+    res.render("pages/itemStock")
+})
 
 
 //SHOW SAVED LIST BUTTON FORM
@@ -295,6 +322,36 @@ app.get('/shoppinglist', (req, res) => {
 // DANIEL THEN .THEN RES.RENDER BELOW
     res.render("pages/shoppingList", {list: []});
 });
+
+
+/// To render the page 
+app.get("/individualstore/:hereid", (req, res) => {
+    //console.log(req.params);
+    let storename = ""
+    let inventory = []
+    let hereid = req.params.hereid
+    getItemInventory(hereid)
+    .then(response => {
+        console.log(response)
+        for(var key in response){
+            if (typeof(response[key]) === "boolean"){
+                inventory.push([key,response[key]])
+            //inventory.push([key, response[key]])
+            } if (key == "name") 
+            {storename = response[key]}
+        }
+    })
+        .then(response =>
+            {
+            console.log("we are done looping through inventory")
+            console.log(inventory)
+            console.log(storename)
+            res.render("pages/itemStock", {inventory:inventory, name:storename})
+            }
+        )})
+    
+   
+
 
 
 // DANIEL WORK ON THIS PLEASE
@@ -366,6 +423,9 @@ app.get("/time", (req, res) => res.render("pages/waitTime", {stores: "none"}));
 app.get("/lineup", (req, res) => res.render("pages/lineup", {stores: "none"}));
 
 app.get("/stock", (req, res) => res.render("pages/itemStock"));
+
+// app.get("/individualStoreStock", )
+
 
 // This post endpoint comes from the /waitTime url when you type in an item and press "submit to server"//
 app.post("/updateMissingItems", (req, res) => {
