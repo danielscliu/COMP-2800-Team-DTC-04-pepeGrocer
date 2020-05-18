@@ -72,64 +72,69 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     </div>
     <hr>
 
-    <div class="row justify-content-center">
-        <h4 style="color:white; text-align: center">
-            Enter your existing email and click on <strong>Next</strong> to log in
-            <hr>
+    <!--    <div class="row justify-content-center">-->
+    <!--        <h4 style="color:white; text-align: center">-->
+    <!--            Enter your existing email and click on <strong>Next</strong> to log in-->
+    <!--            <hr>-->
 
-        </h4>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-6 justify-content-center">
-            <h5 style="text-align: center; color: white">
-                Don't have an account with us? Enter your preferred email and click on Next to sign up
-            </h5>
-        </div>
-
-    <!--        <div class="row justify-content-center">-->
-<!--            <div class="col-md-6 justify-content-center">-->
-<!--                <h5 style="text-align: center; color: white">-->
-<!--                    Click <span onclick="googleSignin()" style='color:orange'>here</span> to log in with a-->
-<!--                    google account.-->
-<!--                </h5>-->
-<!--            </div>-->
-
+    <!--        </h4>-->
+    <!--    </div>-->
+<!--    <div class="row justify-content-center">-->
+<!--        <div class="row justify-content-center">-->
+<!--            <h5 style="text-align: center; color: white">-->
+<!--                Sign in with -->
+<!--            </h5>-->
 <!--        </div>-->
-        <div class="row justify-content-center" id="firebaseui-auth-container" style="padding-top: 5vh"></div>
-        <div class="row justify-content-center" id="pepeImg" style="padding-top: 5vh">
-            <img id="pepeHypers" src="/imgs/pepeHype.png"></img>
+<!--    </div>-->
+
+    <div class="row justify-content-center">
+        <div class="row justify-content-center" id="firebaseui-auth-container" style="padding-top: 10vh"></div>
+    </div>
+
+
+    <div class="row justify-content-center" style="padding-top: 5vh">
+        <div class="fb-share-button" data-href="http://www.pepegrocer.herokuapp.com" data-layout="button"
+             data-size="large">
+            <a
+                    target="_blank"
+                    href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse"
+                    class="fb-xfbml-parse-ignore">Share</a>
         </div>
     </div>
-    <!--GOOGLE SIGN IN SECTION -->
-    <script>
 
-        var provider = new firebase.auth.GoogleAuthProvider();
-
-        function googleSignin() {
-            firebase.auth().signInWithRedirect(provider);
-        }
-    </script>
-<!--    CHECK AUTH CHANGE-->
-    <script>
-
-        firebase.auth().getRedirectResult().then(function(result) {
-            if (result.credential) {
-                console.log("logged in via google");
-                var token = result.credential.accessToken;
-            }
-        }).catch(function(error) {
-            console.log("log in failed");
-        });
-    </script>
-
-    <!--FACEBOOK SHARE BUTTON-->
-    <div class="fb-share-button" data-href="http://www.pepegrocer.herokuapp.com" data-layout="button" data-size="large">
-        <a
-                target="_blank"
-                href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse"
-                class="fb-xfbml-parse-ignore">Share</a>
+    <div class="row justify-content-center" id="pepeImg" style="padding-top: 5vh">
+        <img id="pepeHypers" src="/imgs/pepeHype.png"></img>
     </div>
+
+
 </div>
+
+<!--FACEBOOK SHARE BUTTON-->
+
+</div>
+
+<!--GOOGLE SIGN IN SECTION -->
+<script>
+
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    function googleSignin() {
+        firebase.auth().signInWithRedirect(provider);
+    }
+</script>
+<!--    CHECK AUTH CHANGE-->
+<script>
+
+    firebase.auth().getRedirectResult().then(function (result) {
+        if (result.credential) {
+            console.log("logged in via google");
+            var token = result.credential.accessToken;
+        }
+    }).catch(function (error) {
+        console.log("log in failed");
+    });
+</script>
+
 </body>
 
 <script>
