@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/style.css">
 
 
-    <title>FireBase Test</title>
+    <title>Login</title>
 </head>
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -49,39 +49,62 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 
 
 <body id="loginBody">
+
+<!--//FACEBOOK LOGIN SHARE-->
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '555830321768350',
+            autoLogAppEvents: true,
+            xfbml: true,
+            version: 'v7.0'
+        });
+    };
+</script>
+<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+
+<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 <div id='mainBlock' class="container vertical-align table-responsive">
     <div class="row justify-content-center">
         <h1><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h1>
     </div>
     <hr>
 
-<div class="row justify-content-center">
-    <h4 style="color:white; text-align: center">
-        Enter your existing email and click on <span style="color: orange">Next</span> to log in
-    <hr>
+    <div class="row justify-content-center">
+        <h4 style="color:white; text-align: center">
+            Enter your existing email and click on <span style="color: orange">Next</span> to log in
+            <hr>
 
-    </h4>
-</div>
+        </h4>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-6 justify-content-center">
             <h5 style="text-align: center; color: white">
-                Don't have an account with us? Enter your preferred email and click on <span style="color: orange">Next</span> to sign up
+                Don't have an account with us? Enter your preferred email and click on <span
+                    style="color: orange">Next</span> to sign up
             </h5>
         </div>
 
     </div>
-<div class="row justify-content-center" id="firebaseui-auth-container" style="padding-top: 5vh"></div>
+    <div class="row justify-content-center" id="firebaseui-auth-container" style="padding-top: 5vh"></div>
     <div class="row justify-content-center" id="pepeImg" style="padding-top: 5vh">
         <img id="pepeHypers" src="/imgs/pepeHype.png"></img>
     </div>
 </div>
+
+<!--FACEBOOK SHARE BUTTON-->
+<div class="fb-share-button" data-href="http://www.pepegrocer.herokuapp.com" data-layout="button" data-size="large"><a
+        target="_blank"
+        href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse"
+        class="fb-xfbml-parse-ignore">Share</a></div>
 </body>
 
 <script>
 
     // CHANGE USER PERSISTENCE TO THIS SESSION (EXITS WHEN TAB/WINDOW CLOSES)
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then(function() {
+        .then(function () {
             console.log("user persistence confirmed SESSION");
             return firebase.auth().signInWithEmailAndPassword(email, password);
         });
@@ -90,14 +113,14 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     // LOG IN UI
     var uiConfig = {
 
-    // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-    signInFlow: 'popup',
+        // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+        signInFlow: 'popup',
         credentialHelper: firebaseui.auth.CredentialHelper.NONE,
         signInSuccessUrl: "/menu",
         signInOptions: [
-        // Leave the lines as is for the providers you want to offer your users.
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    ],
+            // Leave the lines as is for the providers you want to offer your users.
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        ],
         // Terms of service url.
         tosUrl: '<your-tos-url>',
         // Privacy policy url.

@@ -27,6 +27,19 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
 <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
 
+<!--//FACEBOOK LOGIN SHARE-->
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '555830321768350',
+            autoLogAppEvents: true,
+            xfbml: true,
+            version: 'v7.0'
+        });
+    };
+</script>
+<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+
 <!--firebase API config files-->
 <script>
     var firebaseConfig = {
@@ -171,18 +184,33 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
                         About Us
                     </button>
                 </div>
+                <div class="row">
+                    <button type="button"
+                            onclick="window.location='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse'"
+                            id="fb-blue" class="btn-block menuBtn">
+                        Share on facebook
+                    </button>
+                </div>
             </div>
         </div>
-
     </div>
 
+</div>
+
+
+</div>
+
+<!--FACEBOOK SHARE BUTTON-->
+<div class="fb-share-button" data-href="http://www.pepegrocer.herokuapp.com" data-layout="button" data-size="large"><a
+            target="_blank"
+            href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse"></a>
 </div>
 
 </body>
 <!--LOGOUT SCRIPT-->
 <script>
     const logout = document.querySelector("#confirmLogOut");
-    logout.addEventListener('click', function(){
+    logout.addEventListener('click', function () {
         firebase.auth().signOut();
         console.log("user signed out");
         window.location.href = "/";

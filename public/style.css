@@ -175,6 +175,12 @@ div #grey {
     background-color: #808080;
 }
 
+div #fb-blue {
+    background-color: #1774eb;
+    color:white;
+    font-weight: bold;
+}
+
 div #cream {
     background-color: #FFA31A;
 }
