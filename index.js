@@ -54,6 +54,7 @@ function addressToLonLat(address) {
 //////////////////////// map5Closest(lat, lon): RETURN TOP 5 GROCERY STORE CLOSEST TO LOCATION ///////////////////////
 //<editor-fold desc="map_top_5">
 async function map5Closest(lat, lon) {
+    console.log("inside map5Closest already");
     return new Promise(function (res, rej) {
         request('https://discover.search.hereapi.com/v1/' +
             'discover' +
@@ -275,6 +276,7 @@ function clearShoppingListDatabase(uid) {
             .catch(() => console.log("clear shopping list failed"))
     })
 }
+
 // FORM CLEAR SHOPPING LIST
 app.post('/clearShoppingList', (req, res) => {
     let uid = req.body.hiddenUID2;
@@ -286,7 +288,7 @@ app.post('/clearShoppingList', (req, res) => {
 app.post('/shoppinglist', (req, res) => {
     // let shopping = req.body.items;
     // console.log(req.body);
-    
+
     res.render("pages/shoppingList", {list: []});
 });
 
@@ -417,15 +419,32 @@ app.post("/waitTime", (req, res) => {
 
 
     } else if (req.body.submitBtn === "Near Me") {
-        console.log("GeoLocation");
+        setTimeout(function() {
 
-        // console.log(req.body)
-        let lat = req.body.latitude;
-        let lon = req.body.longitude;
-        map5Closest(lat, lon)
-            .then(result =>
-                res.render("pages/waitTime", {stores: result})
-            )
+            console.log("GeoLocation");
+
+            // console.log(req.body)
+            let lat;
+            let lon;
+            getLatFromPage(req, res)
+                .then((result) => {
+                    lat = result
+                })
+            getLonFromPage(req, res)
+                .then((result) => {
+                    lon = result
+                }).then(() => {
+                if (lon > -1000.0 && lon < 1000.0) {
+                    map5Closest(lat, lon)
+                        .then(result =>
+                            res.render("pages/waitTime", {stores: result}))
+                } else {
+                    console.log("error sending to map5closest SEND ERROR ALERT")
+                }
+        })
+
+        }, 3000);
+
         //return
         // .then(result => res.redirect("./items"))
     } else if (req.body.submitBtn === "Submit") {
@@ -444,15 +463,20 @@ app.post("/waitTime", (req, res) => {
     }
 });
 
+function getLonFromPage(req, res) {
+    return new Promise(function (res, rej) {
+            res(req.body.longitude);
+    })
+}
 
-// app.post("/waitTimeSubmit", (req, res) => {
-//     let waitTimeValue = req.body.waitTimeValue;
-//     let storeID = req.body.storeID;
-//     let address = req.body.storeAddress;
-//     let name = req.body.storeName;
-//     // console.log(waitTimeValue, storeID, address, name);
+function getLatFromPage(req, res) {
+    return new Promise(function (res, rej) {
+        res(req.body.latitude);
+    })
+}
 
-// DANIEL LOGIC IS HERE
+
+
 ///update database with store
 function updateStoreWaitTime(storeID, name, address, waitTimeValue) {
     return new Promise(function (res, rej) {
@@ -488,26 +512,25 @@ function updateStoreItem(storeID, item, status) {
         let ref = db.collection('stores');
         ref.doc(storeID).get()
             .then(() => {
-                if (status === "true"){
+                    if (status === "true") {
 
-                    ref.doc(storeID).update({
-                        [item]: true,
-                    }).then(() => {
-                        console.log("stored as: " + true)
-                        console.log("newitem!");
-                        res();
-                    })
-                        .catch((err) => console.log(err));
-                }
-                else {
-                    ref.doc(storeID).update({
-                        [item]: false,
-                    }).then(() => {
-                        console.log("stored as: " + false)
-                        console.log("newitem!");
-                        res();
-                    })
-                }
+                        ref.doc(storeID).update({
+                            [item]: true,
+                        }).then(() => {
+                            console.log("stored as: " + true)
+                            console.log("newitem!");
+                            res();
+                        })
+                            .catch((err) => console.log(err));
+                    } else {
+                        ref.doc(storeID).update({
+                            [item]: false,
+                        }).then(() => {
+                            console.log("stored as: " + false)
+                            console.log("newitem!");
+                            res();
+                        })
+                    }
 
                 }
             )
