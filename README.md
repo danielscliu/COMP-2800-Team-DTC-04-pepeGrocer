@@ -4,9 +4,9 @@
 
 
 ### Live Link
-```
-[pepeGrocer]( https://pepegrocer.herokuapp.com)
-```
+
+* [pepeGrocer]( https://pepegrocer.herokuapp.com)
+
 
 
 ### APIs Used
