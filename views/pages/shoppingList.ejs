@@ -206,7 +206,7 @@
         <br>
         <form style="text-align: center;" method="post" action="/clearShoppingList">
             <textarea style="display: none" name="hiddenUID2" id="hiddenUID2" ></textarea>;
-            <button id='clear' type="submit">Clear all items</button>
+            <button id='clear' type="submit">Delete all items</button>
         </form>
 
     </div>
@@ -246,11 +246,12 @@
         $('#submitListBtn').on('click', function (e) {
             e.preventDefault();
             var totalCountItems = $('form').find('section').length;
-            console.log(totalCountItems);
-            let i = 1;
+            // console.log(totalCountItems);
+            let i = 0;
 
-            while(i <= totalCountItems){
-            var itemValues = document.getElementById(i).innerHTML
+            while(i < itemNum) {
+            var itemValues = document.getElementById(i).innerHTML;
+            console.log("ItemNum is: "+ itemNum);
             console.log(itemValues);
             foodItemsList.push(itemValues);
             console.log(foodItemsList);
@@ -288,7 +289,7 @@
 </script>
 <script>
     
-    var itemNum = 1;
+    var itemNum = 0;
     $(document).ready(function () {
     $("#add").on("click", function () {
         var description = document.getElementById("inputBox").value.trim();
