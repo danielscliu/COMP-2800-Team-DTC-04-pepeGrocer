@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
 
+    <style>
+        .top-buffer {
+            margin-top: 2vh;
+        }
+    </style>
+
     <title>Menu</title>
 </head>
 
@@ -144,53 +150,52 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 </div>
 
 
-<div id='mainBlock' class="container vertical-align table-responsive menuContainer">
+<div id='mainBlock' class="container vertical-align table-responsive menuContainer" style="height: 92vh">
 
 
-    <div class="paragraph menuParagraph">
-        <p class="white">
-        <p>Welcome, <span id="user"></span>.</p>
-        <p>You have 5 free searches left.</p>
-        <p>Please update a missing item or
-        <p>report a lineup status to earn more searches</p>
-        </p>
+    <div class="row justify-content-center" style="text-align: center; color: white; padding-top: 5vh">
+        <h3>Welcome, <span id="user"></span>.</h3>
+<!--        <p>You have 5 free searches left.</p>-->
+<!--        <p>Please update a missing item or-->
+<!--        <p>report a lineup status to earn more searches</p>-->
+<!--        </p>-->
     </div>
 
     <div class="container menuContainer">
-        <div class="row">
+        <div class="row top-buffer">
             <div class="col-md-4 offset-md-4">
                 <div class="row">
                     <button type="button" onclick="window.location='/time'" id="cream"
                             class="btn-block menuBtn">Report Missing Item Wait Time
                     </button>
                 </div>
-                <div class="row">
+                <div class="row top-buffer">
                     <button id="grey" onclick="window.location='/search'" type="button" class="btn-block menuBtn">Search
                         by Ingredient
                     </button>
                 </div>
-                <div class="row">
+                <div class="row top-buffer">
                     <button type="button" id="cream" onclick="window.location='/shoppinglist'"
                             class="btn-block menuBtn">Shopping List
                     </button>
                 </div>
-                <div class="row">
+                <div class="row top-buffer">
                     <button style="display: none;" id="grey" type="button" onclick="window.location='/lineup'"
                             class="btn-block menuBtn">Store Lineup near me
                     </button>
                 </div>
-                <div class="row">
+                <div class="row top-buffer">
                     <button type="button" onclick="window.location='/aboutUs'" id="grey" class="btn-block menuBtn">
                         About Us
                     </button>
                 </div>
-                <div class="row">
-                    <button type="button"
-                            onclick="window.location='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse'"
-                            id="fb-blue" class="btn-block menuBtn">
-                        Share on facebook
-                    </button>
-                </div>
+<!--                <div class="row top-buffer">-->
+<!--                    <button type="button"-->
+<!--                            onclick="window.location='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse'"-->
+<!--                            id="fb-blue" class="btn-block menuBtn">-->
+<!--                        Share on facebook-->
+<!--                    </button>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
@@ -201,10 +206,10 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 </div>
 
 <!--FACEBOOK SHARE BUTTON-->
-<div class="fb-share-button" data-href="http://www.pepegrocer.herokuapp.com" data-layout="button" data-size="large"><a
-            target="_blank"
-            href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse"></a>
-</div>
+<!--<div class="fb-share-button" data-href="http://www.pepegrocer.herokuapp.com" data-layout="button" data-size="large"><a-->
+<!--            target="_blank"-->
+<!--            href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse"></a>-->
+<!--</div>-->
 
 </body>
 <!--LOGOUT SCRIPT-->
