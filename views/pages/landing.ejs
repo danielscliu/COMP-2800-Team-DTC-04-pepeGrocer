@@ -6,7 +6,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
+    <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+    <!--//FACEBOOK LOGIN SHARE-->
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '555830321768350',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v7.0'
+            });
+        };
+    </script>
 
+    <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
     <link rel="stylesheet" href="/style.css">
     <style>
         body {
@@ -88,6 +101,16 @@
 
 <!--<form action="" method="post" style="color: white;">-->
 <div id='mainBlock' class="container vertical-align table-responsive missingItemContainer" style="height: 100vh">
+
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Try this app out!"
+       data-url="http://www.pepegrocer.herokuapp.com" data-show-count="false">Tweet</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <div class="fb-share-button" data-href="http://www.pepegrocer.herokuapp.com" data-layout="button" data-size="small">
+        <a target="_blank"
+           href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse"
+           class="fb-xfbml-parse-ignore">Share</a></div>
+
     <div class="row justify-content-center">
         <h3><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h3>
     </div>
@@ -97,7 +120,8 @@
     <div class="row justify-content-center" style="padding-top: 3vh; padding-left: 3vw; padding-right: 3vw">
         <p style="color: white; text-align: center">This app is in its early stages of development</p>
         <p style="color: white; text-align: center">Don't become a meme using this app irresponsibly</p>
-        <p style="color: white; text-align: center;">For now, You will get to experience the very basics of what this app has to offer</p>
+        <p style="color: white; text-align: center;">For now, You will get to experience the very basics of what this
+            app has to offer</p>
     </div>
     <div class="row justify-content-center userlog" style="padding-top: 2vh">
         <!-- <h3 >Login:</h3><input class="box" type="text" name="username">
