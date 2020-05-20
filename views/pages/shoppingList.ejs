@@ -224,7 +224,6 @@
                         <input type="checkbox" class="custom-control-input" id=<%= "customCheck"+ (i+1) %>>
                         <label id="asd" style='color: white; font-weight: bold;' class="custom-control-label" for=<%= "customCheck" + (i+1) %>><%= list[i]['leFruit'] %></label>
                     </section><% } %>
-
         </form>
 
     </div>
@@ -238,10 +237,6 @@
 <span><%= console.log("in EJS: " + [list.length]); %></span>
 
 
-
-
-
-
 </body>
 <script>
     var foodItemsList = [];
@@ -252,17 +247,33 @@
             e.preventDefault();
             var totalCountItems = $('form').find('section').length;
             console.log(totalCountItems);
-            for (let i = 1; i <= totalCountItems; i++) {
-                var itemValues = document.getElementById(i).innerHTML;
-                console.log((itemValues));
-                foodItemsList.push(itemValues);
-                console.log(foodItemsList);
-                Array.from(foodItemsList);
+            let i = 1;
+
+            while(i <= totalCountItems){
+            var itemValues = document.getElementById(i).innerHTML
+            console.log(itemValues);
+            foodItemsList.push(itemValues);
+            console.log(foodItemsList);
+            Array.from(foodItemsList);
+            i++;
+            console.log("Number of i is: "+ i);
+            
+            // ############ In Case the program breaks ##########
+            //     var totalCountItems = $('form').find('section').length;
+            // console.log(totalCountItems);
+            // for (let i = 1; i <= totalCountItems; i++) {
+            //     var itemValues = document.getElementById(i).innerHTML;
+            //     console.log(itemValues);
+            //     foodItemsList.push(itemValues);
+            //     console.log(foodItemsList);
+            //     Array.from(foodItemsList);
             }
+
             document.getElementById('clear').onclick = 
             $('#clear').on('click', function() {
-                var foodItemsList = []
-            })
+                var foodItemsList = [];
+            });
+
             //OK WORKS
             $.ajax({
                 type: 'POST',
@@ -286,9 +297,11 @@
         <label id='${itemNum}' style='color: white; font-weight: bold;' class="custom-control-label" for="customChec${itemNum}">${description}</label>
         </section>`
         if (description == '') {
-            alert('Please fill in an input for your item')
+            $('#error').remove();
+            $(".itemStockBox").append("<br><h4 id='error' style='text-align: center'>oof, We can't add an empty item to the list</h4>");
         }
         else {
+        $("#error").remove();
         $(".itemStockBox").append(shopList)
         itemNum++;
         }
