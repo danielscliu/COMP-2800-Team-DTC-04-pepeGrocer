@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const request = require('request');
+const rp = require('request-promise');
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
@@ -23,27 +24,34 @@ admin.initializeApp({
 var db = admin.firestore();
 //</editor-fold>
 
-
 //////////////////IN PROGRESS ///////////////
 //<editor-fold desc="searchByAddress">
 function addressToLonLat(address) {
     var filteredAddress = address.replace(" ", "+");
+    console.log(address);
     return new Promise(function (res, rej) {
         request('https://discover.search.hereapi.com/v1/' +
             'geocode' +
             '?q=' + filteredAddress +
             '&apiKey=dXmHzMbOVAkqdex7o_440a8wmmMozdhTDxFO-hClAtU', function (error, response, body) {
-            let geocode = [];
-            let json = JSON.parse(body)
-            let jsonItems = json.items[0];
-            let lat = jsonItems.access[0].lat;
-            let lng = jsonItems.access[0].lng;
-            geocode.push(lat, lng);
-            res(geocode);
+
+                try {
+                    let geocode = [];
+                    let json = JSON.parse(body)
+                    let jsonItems = json.items[0];
+                    let lat = jsonItems.access[0].lat;
+                    let lng = jsonItems.access[0].lng;
+                    geocode.push(lat, lng);
+                    res(geocode);
+
+                } catch (e) {
+                    console.log(e);
+                }
 
 
-        })
-    }) // end promise
+        }
+        )
+    })
 }
 
 
@@ -69,13 +77,14 @@ async function map5Closest(lat, lon) {
                 let listClosest = [];
                 let json = JSON.parse(body);
                 let obj = json.items;
-                for (i = 0; i < 5; i++) {
-                    let name = obj[i].title;
-                    let address = obj[i].address.label;
-                    let identification = obj[i].id;
-                    let direction = makeGoogleMapsDirection(address);
-                    listClosest.push(new basicStoreInfoObjectCreator(name, address, identification, direction));
-                }
+                console.log(obj);
+                // for (i = 0; i < 5; i++) {
+                //     let name = obj[i].title;
+                //     let address = obj[i].address.houseNumber + " " + object[i].address.street;
+                //     let identification = obj[i].id;
+                //     let direction = makeGoogleMapsDirection(address);
+                //     listClosest.push(new basicStoreInfoObjectCreator(name, address, identification, direction));
+                // }
                 res(listClosest);
             } catch (e) {
                 rej(e);
@@ -369,7 +378,7 @@ app.get("/lineup", (req, res) => res.render("pages/lineup", {stores: "none"}));
 
 app.get("/stock", (req, res) => res.render("pages/itemStock"));
 
-// This post endpoint comes from the /waitTime url when you type in an item and press "submit to server"//
+// This post endpoint comes from the /waitTime url when you type in an item and press "/ to server"//
 app.post("/updateMissingItems", (req, res) => {
     console.log("received post from item update")
     console.log(req.body)
@@ -419,7 +428,7 @@ app.post("/waitTime", (req, res) => {
 
 
     } else if (req.body.submitBtn === "Near Me") {
-        setTimeout(function() {
+        setTimeout(function () {
 
             console.log("GeoLocation");
 
@@ -441,7 +450,7 @@ app.post("/waitTime", (req, res) => {
                 } else {
                     console.log("error sending to map5closest SEND ERROR ALERT")
                 }
-        })
+            })
 
         }, 3000);
 
@@ -465,7 +474,7 @@ app.post("/waitTime", (req, res) => {
 
 function getLonFromPage(req, res) {
     return new Promise(function (res, rej) {
-            res(req.body.longitude);
+        res(req.body.longitude);
     })
 }
 
@@ -474,7 +483,6 @@ function getLatFromPage(req, res) {
         res(req.body.latitude);
     })
 }
-
 
 
 ///update database with store
