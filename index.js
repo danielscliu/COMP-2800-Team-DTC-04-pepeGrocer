@@ -327,11 +327,18 @@ app.get('/shoppinglist', (req, res) => {
 
 
 /// To render the page
-app.get("/individualstore/:hereid", (req, res) => {
+app.get("/individualstore/:hereid/:name/:address", (req, res) => {
     //console.log(req.params);
     let storename = ""
     let inventory = []
     let hereid = req.params.hereid
+    
+    updateStoreWaitTime(hereid, req.params.name, req.params.address, 0)
+    .then( () =>{
+
+    
+    
+
     getItemInventory(hereid)
         .then(response => {
             console.log(response)
@@ -352,6 +359,7 @@ app.get("/individualstore/:hereid", (req, res) => {
                 res.render("pages/itemStock", {inventory: inventory, name: storename})
             }
         )
+    })
 })
 
 
