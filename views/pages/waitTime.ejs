@@ -112,7 +112,7 @@
 <!--<editor-fold desc="NAVBAR">-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-    <a class="navbar-brand" id='pepeGrocer' href="/menu">
+    <a class="navbar-brand pepeGrocer" href="/menu">
         <span id="pepe">pepe</span><span id="grocer">Grocer</span>
     </a>
 
@@ -241,7 +241,7 @@
 <!--<editor-fold desc="BUTTONS TOP ">-->
 <div id='mainBlock' class="container vertical-align table-responsive waitTimeContainer">
     <div class="row justify-content-center" id='waitTime'>
-        <h3 style="color: white">Report Missing Items/Wait Time</h3>
+        <h3 style="color: white; text-align: center">Report Missing Items/Wait Time</h3>
     </div>
 
     <div class="row justify-content-center" id="addressInput">
@@ -285,11 +285,11 @@
                                         <h6  class="card-text btn btn-secondary" data-toggle="modal"
                                             id= <%= stores[index]["identification"] %>
                                             data-target="#waitTimeModal"
-                                        onclick="editHiddenID('<%= stores[index]["identification"] %>','<%= stores[index]["address"] %>', '<%= stores[index]["name"] %>')">Report wait time and missing items</h6>
+                                        onclick="editHiddenID('<%= stores[index]["identification"] %>','<%= stores[index]["address"] %>', '<%= stores[index]["name"] %>')">Report wait time or missing item</h6>
 
                                         <!-- need to link to itemStock.ejs -->
                                       
-                                        <a href = "/individualstore/<%= stores[index]["identification"] %>"  class="btn btn-secondary" style="margin-top: 2vh">Current out of stock items at store</a>
+                                        <a href = "/individualstore/<%= stores[index]["identification"] %>"  class="btn btn-secondary" style="margin-top: 2vh">Items currently out of stock at this store</a>
                                     
                                     </div>
 

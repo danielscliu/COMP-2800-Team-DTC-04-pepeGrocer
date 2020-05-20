@@ -79,6 +79,7 @@ async function map5Closest(lat, lon) {
                 let obj = json.items;
                 for (i = 0; i < 5; i++) {
                     let name = obj[i].title;
+                    name = name.replace(/'/, "")
                     let address = obj[i].address.houseNumber + " " + obj[i].address.street +
                         ", " + obj[i].address.city + " " + obj[i].address.state +
                         ", " + obj[i].address.postalCode + ", " + obj[i].address.countryName;
@@ -230,19 +231,20 @@ function getUserShoppingListDatabase(uid) {
 // This function gets the list of items from db based on store
 
 function getItemInventory(hereid) {
-    return new Promise(function (res,rej){
-        db.collection("stores").doc(hereid).get()
-        .then(function (snapshot){
-            if (snapshot.exists) {
-               // console.log(snapshot.data())
-                res(snapshot.data())
-            } else {
-                return;
-            }
-        }).catch(error =>error.log(error))
-    }
+    return new Promise(function (res, rej) {
+            db.collection("stores").doc(hereid).get()
+                .then(function (snapshot) {
+                    if (snapshot.exists) {
+                        // console.log(snapshot.data())
+                        res(snapshot.data())
+                    } else {
+                        return;
+                    }
+                }).catch(error => error.log(error))
+        }
     )
 }
+
 // hereid = "here:pds:place:124c28rw-df81e2852b0e407099396ea40bf289e7"
 // getItemInventory(hereid).then( response =>
 //     console.log(response)
@@ -273,7 +275,7 @@ function asyncReacUserShoppingList(res, uid) {
 let food = []
 
 // individual store inventory
-app.post("/individualStock", function(req, res) {
+app.post("/individualStock", function (req, res) {
     console.log(req.body);
     res.render("pages/itemStock")
 })
@@ -331,27 +333,26 @@ app.get("/individualstore/:hereid", (req, res) => {
     let inventory = []
     let hereid = req.params.hereid
     getItemInventory(hereid)
-    .then(response => {
-        console.log(response)
-        for(var key in response){
-            if (typeof(response[key]) === "boolean"){
-                inventory.push([key,response[key]])
-            //inventory.push([key, response[key]])
-            } if (key == "name")
-            {storename = response[key]}
-        }
-    })
-        .then(response =>
-            {
-            console.log("we are done looping through inventory")
-            console.log(inventory)
-            console.log(storename)
-            res.render("pages/itemStock", {inventory:inventory, name:storename})
+        .then(response => {
+            console.log(response)
+            for (var key in response) {
+                if (typeof (response[key]) === "boolean") {
+                    inventory.push([key, response[key]])
+                    //inventory.push([key, response[key]])
+                }
+                if (key == "name") {
+                    storename = response[key]
+                }
             }
-        )})
-
-
-
+        })
+        .then(response => {
+                console.log("we are done looping through inventory")
+                console.log(inventory)
+                console.log(storename)
+                res.render("pages/itemStock", {inventory: inventory, name: storename})
+            }
+        )
+})
 
 
 // DANIEL WORK ON THIS PLEASE
@@ -372,26 +373,37 @@ app.post('/writeShoppingListToDatabase', (req, res) => {
     writeShoppingList(uid, array);
 })
 
-// DANIEL SHOPPINGLIST PATH IS HERE. NOTE IT'S COLLECTION > DOC(UID) > SHOPPINGLIST > SHOPPINGLIST
+// UPDATE LIST WITHOUT CLEARING
 function writeShoppingList(uid, dataObject) {
-    console.log("yup writing");
-    //clear shopping list database first before storing
-    db.collection('users').doc(uid).collection('shoppingList')
-        .doc('shoppingList').set({})
-        .then(() => {
-            console.log("shopping list succcesfully cleared for storing")
-            for (let i = 0; i < dataObject.length; i++) {
-                db.collection('users').doc(uid).collection('shoppingList')
-                    .doc("shoppingList").update({
-                    [dataObject[i]]: true
-                }).then(() => console.log("success write shopping list to database"))
-                    .catch((err) => console.log(err))
+    for (let i = 0; i < dataObject.length; i++) {
+        db.collection('users').doc(uid).collection('shoppingList')
+            .doc("shoppingList").update({
+            [dataObject[i]]: true
+        }).then(() => console.log("success write shopping list to database"))
+            .catch((err) => console.log(err))
 
-            }
-        })
-        .catch((err) => console.log(err))
-
+    }
 }
+// DANIEL SHOPPINGLIST PATH IS HERE. NOTE IT'S COLLECTION > DOC(UID) > SHOPPINGLIST > SHOPPINGLIST
+// function writeShoppingList(uid, dataObject) {
+//     console.log("yup writing");
+//     //clear shopping list database first before storing
+//     db.collection('users').doc(uid).collection('shoppingList')
+//         .doc('shoppingList').set({})
+//         .then(() => {
+//             console.log("shopping list succcesfully cleared for storing")
+//             for (let i = 0; i < dataObject.length; i++) {
+//                 db.collection('users').doc(uid).collection('shoppingList')
+//                     .doc("shoppingList").update({
+//                     [dataObject[i]]: true
+//                 }).then(() => console.log("success write shopping list to database"))
+//                     .catch((err) => console.log(err))
+//
+//             }
+//         })
+//         .catch((err) => console.log(err))
+//
+// }
 
 //</editor-fold>
 
