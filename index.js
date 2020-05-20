@@ -412,7 +412,7 @@ app.post("/waitTime", (req, res) => {
             .then((val) => {
                 map5Closest(val[0], val[1])
                     .then((result) => {
-                        res.render("pages/waitTime", {stores: result});
+                        res.render("pages/waitTime", {errMsg: ' ', stores: result});
                     }).catch((err) => console.log("error map5"));
             })
             .catch(() => console.log("error address to LL"))
@@ -427,31 +427,19 @@ app.post("/waitTime", (req, res) => {
         let lon;
         lat = req.body.latitude;
         lon = req.body.longitude;
-        // getLatFromPage(req, res)
-        //     .then((result) => {
-        //         lat = result
-        //     })
-        getLonFromPage(req, res)
-            .then((result) => {
-                lon = result
-            }).then(() => {
-            if (lon !== "") {
-                map5Closest(lat, lon)
-                    .then(result =>
-                        res.render("pages/waitTime", {errMsg: ' ', stores: result}))
-            } else {
-                console.log("It's blank");
-                res.render("pages/waitTime", {
-                    errMsg: 'alert("Error! Unable to get geolocation. Please try again in a few seconds and make sure you\'ve enabled geolocation")',
-                    stores: "none"
-                });
-            }
+        if (lon !== "") {
+            map5Closest(lat, lon)
+                .then(result =>
+                    res.render("pages/waitTime", {errMsg: ' ', stores: result}))
+        } else {
+            console.log("It's blank");
+            res.render("pages/waitTime", {
+                errMsg: 'alert("Error! Unable to get geolocation. Please try again in a few seconds ' +
+                    'and make sure you\'ve enabled geolocation")',
+                stores: "none"
+            });
+        }
 
-        })
-
-
-        //return
-        // .then(result => res.redirect("./items"))
     } else if (req.body.submitBtn === "Submit") {
         console.log("yes bitch");
         let waitTimeValue = req.body.waitTimeValue;
