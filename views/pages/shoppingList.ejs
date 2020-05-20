@@ -16,28 +16,23 @@
             color: white;
             border-color: black;
         }
-
         .custom-control-input:checked ~ .custom-control-label::before {
             background-color: orange;
         }
-
         .itemStockBox {
             height: 400px;
         }
-
         .custom-control {
             left: 20px;
             top: 20px;
             margin: 20px;
         }
-
         .itemStockBox {
             overflow-x: hidden;
         }
         body {
             overflow-y: hidden;
         }
-
     </style>
 
     <title>Shopping List</title>
@@ -230,7 +225,6 @@
                         <label id="asd" style='color: white; font-weight: bold;' class="custom-control-label" for=<%= "customCheck" + (i+1) %>><%= list[i]['leFruit'] %></label>
                     </section><% } %>
 
-
         </form>
 
     </div>
@@ -251,13 +245,9 @@
 </body>
 <script>
     var foodItemsList = [];
-
-
     // ################## Array of the items On-click of submit #########################
-
     $(document).ready(function () {
     
-
         $('#submitListBtn').on('click', function (e) {
             e.preventDefault();
             var totalCountItems = $('form').find('section').length;
@@ -269,15 +259,10 @@
                 console.log(foodItemsList);
                 Array.from(foodItemsList);
             }
-
             document.getElementById('clear').onclick = 
-
             $('#clear').on('click', function() {
                 var foodItemsList = []
             })
-
-
-
             //OK WORKS
             $.ajax({
                 type: 'POST',
@@ -289,34 +274,26 @@
             })
         });
     });
-
 </script>
 <script>
     
     var itemNum = 1;
-
     $(document).ready(function () {
-
     $("#add").on("click", function () {
-
         var description = document.getElementById("inputBox").value.trim();
-
         var shopList = `<section class="custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" id="customChec${itemNum}">
-        <label id='C${itemNum}' style='color: white; font-weight: bold;' class="custom-control-label" for="customChec${itemNum}">${description}</label>
+        <label id='${itemNum}' style='color: white; font-weight: bold;' class="custom-control-label" for="customChec${itemNum}">${description}</label>
         </section>`
-
         if (description == '') {
             alert('Please fill in an input for your item')
         }
         else {
-
         $(".itemStockBox").append(shopList)
         itemNum++;
         }
         document.getElementById('inputBox').value = '';
     });
-
 });
 </script>
 
@@ -331,8 +308,6 @@
             console.log("NOPE not logged in");
         }
     })
-
-
 </script>
 
 <script>
@@ -342,6 +317,5 @@
         console.log("user signed out");
         window.location.href = "/";
     });
-
 </script>
 </html>
