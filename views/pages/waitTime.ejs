@@ -395,7 +395,9 @@
         console.log("user signed out");
         window.location.href = "/";
     });
-
+<% if (errMsg != null) {%>
+    <%- errMsg %>
+    <%}%>
 </script>
 </body>
 
