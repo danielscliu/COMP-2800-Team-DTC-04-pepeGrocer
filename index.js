@@ -79,6 +79,7 @@ async function map5Closest(lat, lon) {
                 let obj = json.items;
                 for (i = 0; i < 5; i++) {
                     let name = obj[i].title;
+                    name = name.replace(/'/, "")
                     let address = obj[i].address.houseNumber + " " + obj[i].address.street +
                         ", " + obj[i].address.city + " " + obj[i].address.state +
                         ", " + obj[i].address.postalCode + ", " + obj[i].address.countryName;
