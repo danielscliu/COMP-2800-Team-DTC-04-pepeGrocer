@@ -27,7 +27,8 @@ var db = admin.firestore();
 //////////////////IN PROGRESS ///////////////
 //<editor-fold desc="searchByAddress">
 function addressToLonLat(address) {
-    var filteredAddress = address.replace(" ", "+");
+    var filteredAddress = address.replace(/ /g, "+");
+    filteredAddress = address.replace(/,/g, "");
     console.log(address);
     return new Promise(function (res, rej) {
         request('https://discover.search.hereapi.com/v1/' +
@@ -211,19 +212,7 @@ app.post("/searchByIngredients", (req, res) => {
 
     }
 });
-//</editor-fold>
 
-
-/// USERDB SET DATA
-// db.collection('users').doc("1").collection('shoppingList')
-//     .doc("shoppingList").set({
-//     apple: true,
-//     banana: true,
-//     orange: false,
-//     mango: false
-// }).then(() => console.log("success"));
-
-//<editor-fold desc="shopping list functions">
 function getUserShoppingListDatabase(uid) {
     return new Promise(function (res, rej) {
             db.collection('users').doc(uid).collection('shoppingList')
@@ -374,7 +363,7 @@ app.get("/aboutUs", (req, res) => res.render("pages/aboutUs"));
 
 app.get("/items", (req, res) => res.render("pages/missingItems"));
 
-app.get("/time", (req, res) => res.render("pages/waitTime", {stores: "none"}));
+app.get("/time", (req, res) => res.render("pages/waitTime", {stores: "none", errMsg : ""}));
 
 app.get("/lineup", (req, res) => res.render("pages/lineup", {stores: "none"}));
 
@@ -430,31 +419,34 @@ app.post("/waitTime", (req, res) => {
 
 
     } else if (req.body.submitBtn === "Near Me") {
-        setTimeout(function () {
 
             console.log("GeoLocation");
 
             // console.log(req.body)
-            let lat;
+            let lat = -999;
             let lon;
-            getLatFromPage(req, res)
-                .then((result) => {
-                    lat = result
-                })
+            lat = req.body.latitude;
+            lon = req.body.longitude;
+            // getLatFromPage(req, res)
+            //     .then((result) => {
+            //         lat = result
+            //     })
             getLonFromPage(req, res)
                 .then((result) => {
                     lon = result
                 }).then(() => {
-                if (lon > -1000.0 && lon < 1000.0) {
+                if (lon !== "") {
                     map5Closest(lat, lon)
                         .then(result =>
-                            res.render("pages/waitTime", {stores: result}))
+                            res.render("pages/waitTime", {errMsg : ' ', stores: result}))
                 } else {
-                    console.log("error sending to map5closest SEND ERROR ALERT")
+                    console.log("It's blank");
+                    result = " ";
+                    res.render("pages/waitTime", {errMsg : 'alert("Error! Unable to get geolocation. Please try again in a few seconds  ")', stores: result});
                 }
+
             })
 
-        }, 3000);
 
         //return
         // .then(result => res.redirect("./items"))
