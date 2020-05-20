@@ -49,7 +49,7 @@ function addressToLonLat(address) {
                 }
 
 
-        }
+            }
         )
     })
 }
@@ -78,13 +78,15 @@ async function map5Closest(lat, lon) {
                 let json = JSON.parse(body);
                 let obj = json.items;
                 console.log(obj);
-                // for (i = 0; i < 5; i++) {
-                //     let name = obj[i].title;
-                //     let address = obj[i].address.houseNumber + " " + object[i].address.street;
-                //     let identification = obj[i].id;
-                //     let direction = makeGoogleMapsDirection(address);
-                //     listClosest.push(new basicStoreInfoObjectCreator(name, address, identification, direction));
-                // }
+                for (i = 0; i < 5; i++) {
+                    let name = obj[i].title;
+                    let address = obj[i].address.houseNumber + " " + obj[i].address.street +
+                        ", " + obj[i].address.city + " " + obj[i].address.state +
+                        ", " + obj[i].address.postalCode + ", " + obj[i].address.countryName;
+                    let identification = obj[i].id;
+                    let direction = makeGoogleMapsDirection(address);
+                    listClosest.push(new basicStoreInfoObjectCreator(name, address, identification, direction));
+                }
                 res(listClosest);
             } catch (e) {
                 rej(e);
