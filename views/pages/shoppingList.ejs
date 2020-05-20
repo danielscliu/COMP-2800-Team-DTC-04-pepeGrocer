@@ -222,13 +222,12 @@
         </div>
         <form class="itemStockBox" method="post">
 
-
             <!-- ############## This is where the checkboxes are being added -->
 
             <% for(let i=0; i < list.length; i++ ) { %>
-                <section class="custom-control custom-checkbox name='items'">
-                    <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
-                    <h5><label id='${itemNum}' style='color: white;' class="custom-control-label" for="customCheck${itemNum}"><%= list[i]['leFruit'] %></label></h5>
+                <section class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id=<%= "customCheck"+ (i+1) %>>
+                        <label id="asd" style='color: white; font-weight: bold;' class="custom-control-label" for=<%= "customCheck" + (i+1) %>><%= list[i]['leFruit'] %></label>
                     </section><% } %>
 
 
@@ -303,8 +302,8 @@
         var description = document.getElementById("inputBox").value.trim();
 
         var shopList = `<section class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
-        <label id='${itemNum}' style='color: white;' class="custom-control-label" for="customCheck${itemNum}">${description}</label>
+        <input type="checkbox" class="custom-control-input" id="customChec${itemNum}">
+        <label id='C${itemNum}' style='color: white; font-weight: bold;' class="custom-control-label" for="customChec${itemNum}">${description}</label>
         </section>`
 
         if (description == '') {
