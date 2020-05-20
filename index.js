@@ -363,7 +363,7 @@ app.get("/aboutUs", (req, res) => res.render("pages/aboutUs"));
 
 app.get("/items", (req, res) => res.render("pages/missingItems"));
 
-app.get("/time", (req, res) => res.render("pages/waitTime", {stores: "none", errMsg : ""}));
+app.get("/time", (req, res) => res.render("pages/waitTime", {stores: "none", errMsg: ""}));
 
 app.get("/lineup", (req, res) => res.render("pages/lineup", {stores: "none"}));
 
@@ -420,32 +420,34 @@ app.post("/waitTime", (req, res) => {
 
     } else if (req.body.submitBtn === "Near Me") {
 
-            console.log("GeoLocation");
+        console.log("GeoLocation");
 
-            // console.log(req.body)
-            let lat = -999;
-            let lon;
-            lat = req.body.latitude;
-            lon = req.body.longitude;
-            // getLatFromPage(req, res)
-            //     .then((result) => {
-            //         lat = result
-            //     })
-            getLonFromPage(req, res)
-                .then((result) => {
-                    lon = result
-                }).then(() => {
-                if (lon !== "") {
-                    map5Closest(lat, lon)
-                        .then(result =>
-                            res.render("pages/waitTime", {errMsg : ' ', stores: result}))
-                } else {
-                    console.log("It's blank");
-                    result = " ";
-                    res.render("pages/waitTime", {errMsg : 'alert("Error! Unable to get geolocation. Please try again in a few seconds  ")', stores: result});
-                }
+        // console.log(req.body)
+        let lat = -999;
+        let lon;
+        lat = req.body.latitude;
+        lon = req.body.longitude;
+        // getLatFromPage(req, res)
+        //     .then((result) => {
+        //         lat = result
+        //     })
+        getLonFromPage(req, res)
+            .then((result) => {
+                lon = result
+            }).then(() => {
+            if (lon !== "") {
+                map5Closest(lat, lon)
+                    .then(result =>
+                        res.render("pages/waitTime", {errMsg: ' ', stores: result}))
+            } else {
+                console.log("It's blank");
+                res.render("pages/waitTime", {
+                    errMsg: 'alert("Error! Unable to get geolocation. Please try again in a few seconds and make sure you\'ve enabled geolocation")',
+                    stores: "none"
+                });
+            }
 
-            })
+        })
 
 
         //return
