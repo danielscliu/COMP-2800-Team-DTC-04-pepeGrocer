@@ -281,23 +281,25 @@
 
                             <div class="col-sm-6">
                                 <div class="row justify-content-center">
+                                    <div class="col">
+                                        <h5 class="card-title" style="text-align: center"><%= stores[index]["name"] %></h5>
+                                        <h7 class="card-subtitle" style="text-align: center"><%= stores[index]["address"] %></h7>
+                                        <div style="padding-top: 3vh">
+                                            <div class="row justify-content-center" style="text-align: center">
+                                                <h6  class="card-text btn btn-secondary" data-toggle="modal"
+                                                     id= <%= stores[index]["identification"] %>
+                                                     data-target="#waitTimeModal"
+                                                     onclick="editHiddenID('<%= stores[index]["identification"] %>','<%= stores[index]["address"] %>', '<%= stores[index]["name"] %>')">Report wait time or missing item</h6>
 
-                                    <h5 class="card-title" style="text-align: center"><%= stores[index]["name"] %></h5>
-                                    <h7 class="card-subtitle" style="text-align: center"><%= stores[index]["address"] %></h7>
-                                    <div style="padding-top: 3vh">
-                                        <div class="row justify-content-center" style="padding-left: 1vw; text-align: center">
-                                            <h6  class="card-text btn btn-secondary" data-toggle="modal"
-                                                 id= <%= stores[index]["identification"] %>
-                                                 data-target="#waitTimeModal"
-                                                 onclick="editHiddenID('<%= stores[index]["identification"] %>','<%= stores[index]["address"] %>', '<%= stores[index]["name"] %>')">Report wait time or missing item</h6>
+                                            </div>
+                                            <div class="row justify-content-center" style="text-align: center">
+                                                <!-- need to link to itemStock.ejs -->
 
-                                        </div>
-                                        <div class="row justify-content-center" style="padding-left: 1vw; text-align: center">
-                                            <!-- need to link to itemStock.ejs -->
+                                                <a href = "/individualstore/<%= stores[index]["identification"] %>"  class="btn btn-secondary" style="margin-top: 2vh">Items currently out of stock at this store</a>
 
-                                            <a href = "/individualstore/<%= stores[index]["identification"] %>"  class="btn btn-secondary" style="margin-top: 2vh">Items currently out of stock at this store</a>
+                                            </div>
+                                    </div>
 
-                                        </div>
 
                                     </div>
                                     </div>
