@@ -280,10 +280,10 @@
                             <div class="row">
 
                             <div class="col-sm-6">
-                                <div class="row justify-content-center">
+                                <div class="row justify-content-center" style="text-align: center">
                                     <div class="col">
-                                        <h5 class="card-title" style="text-align: center"><%= stores[index]["name"] %></h5>
-                                        <h7 class="card-subtitle" style="text-align: center"><%= stores[index]["address"] %></h7>
+                                        <h5 class="card-title"><%= stores[index]["name"] %></h5>
+                                        <h7 class="card-subtitle"><%= stores[index]["address"] %></h7>
                                         <div style="padding-top: 3vh">
                                             <div class="row justify-content-center" style="text-align: center">
                                                 <h6  class="card-text btn btn-secondary" data-toggle="modal"
@@ -299,8 +299,6 @@
 
                                             </div>
                                     </div>
-
-
                                     </div>
                                     </div>
 
@@ -308,14 +306,12 @@
                             </div>
 
 
-                            <div class="col-sm-6" style="padding-top: 3vh">
+                            <div class="col-sm-6" style="padding-top: 2vh">
 
-                                <div class="col">
                                     <div class="row justify-content-center">
                                     <a href=<%= stores[index]["directions"] %>><img src="/imgs/googleMap.png"
                                                                                     height="100px" width="100px"
                                                                                     class='images'></a>
-                                </div>
                                 </div>
 
                             </div>

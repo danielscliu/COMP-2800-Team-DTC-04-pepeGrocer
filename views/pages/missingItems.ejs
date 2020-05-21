@@ -174,7 +174,7 @@
             <!-- No use for this button anymore, if we click it it will render the page again without being given param StoreName-->
             <input type="hidden" value="Submit" id="submitStockBtn"/>
 
-            <button type="button" id="submitToServer" onclick="ajaxPost()" value="">Submit To Server</button>
+            <button type="button" id="submitToServer" onclick="ajaxPost(); statusUpdate()" value="">Submit To Server</button>
         </div>
 
         <div class="row justify-content-center" id="stockRadio" style="padding-top: 3vh">
@@ -221,8 +221,8 @@
 </div>
 
 <script>
-    $('#submitToServer').on("click", function () {
 
+        function statusUpdate() {
         let itemName = document.getElementById("inputBox").value;
         let inStockList = `<div class="card stockCard">
         <div class="card-body">
@@ -235,12 +235,12 @@
         <h7>Updated: ${itemName} is currently not in stock.</h7>`
 
         if (document.getElementById("hasStock").checked) {
-            $(".itemStockBox").append(inStockList);
+            $(".outStockBox").append(inStockList);
         }
         if (document.getElementById("noStock").checked) {
-            $(".itemStockBox").append(noStockList);
+            $(".outStockBox").append(noStockList);
         }
-    })
+    }
 
 
 </script>
@@ -318,7 +318,6 @@
 
     }
 </script>
-
 
 </body>
 </html>
