@@ -190,7 +190,8 @@ function storeSummary(name, address, waitTime) {
 }
 
 function makeGoogleMapsDirection(address) {
-    address = address.replace(" ", "+");
+    address = address.replace(/ /g, "+");
+    address = address.replace(/,/g, "");
     address = "https://www.google.com/maps?saddr=Current+Location&daddr=" + address;
     return address;
 }
