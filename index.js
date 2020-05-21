@@ -197,8 +197,7 @@ function makeGoogleMapsDirection(address) {
 }
 
 app.post("/searchByIngredients", (req, res) => {
-    let targetItem = req.body.ingredients;
-    targetItem = targetItem.toLowerCase();
+    let targetItem = req.body.ingredients.toLowerCase();
     if (targetItem === "") {
         res.render("pages/searchByIngredients", {stores: storeInStock, itemStockBoolean: itemStockBoolean})
     } else {
@@ -451,9 +450,9 @@ app.get("/stock", (req, res) => res.render("pages/itemStock"));
 // This post endpoint comes from the /waitTime url when you type in an item and press "submit to server"//
 // This post endpoint comes from the /waitTime url when you type in an item and press "/ to server"//
 app.post("/updateMissingItems", (req, res) => {
-    console.log("received post from item update")
-    console.log(req.body)
-    updateStoreItem(req.body.id, req.body.name, req.body.stock)
+    console.log("received post from item update");
+    console.log(req.body);
+    updateStoreItem(req.body.id, req.body.name.toLowerCase(), req.body.stock)
         // .then(res.render("pages/missingItems"))
         .then(res.send(200, "success post"))
 
