@@ -101,8 +101,6 @@ async function map5Closest(lat, lon) {
             })
     }) // end promise here
 }
-map5Closest(49.123, -123.333)
-
 
 function basicStoreInfoObjectCreator(name, address, identification, direction) {
     this.name = name;
@@ -338,36 +336,48 @@ app.get('/shoppinglist', (req, res) => {
 /// To render the page
 app.get("/individualstore/:hereid/:name/:address", (req, res) => {
     //console.log(req.params);
-    let storename = ""
-    let inventory = []
-    let hereid = req.params.hereid
+    let storename = "";
+    let inventory = [];
+    let hereid = req.params.hereid;
+    console.log(req.params);
 
-    updateStoreWaitTime(hereid, req.params.name, req.params.address, 0)
-        .then(() => {
+    try {
 
 
-            getItemInventory(hereid)
-                .then(response => {
-                    console.log(response)
-                    for (var key in response) {
-                        if (typeof (response[key]) === "boolean") {
-                            inventory.push([key, response[key]])
-                            //inventory.push([key, response[key]])
+        updateStoreWaitTime(hereid, req.params.name, req.params.address, 0)
+            .then(() => {
+
+
+                getItemInventory(hereid)
+                    .then(response => {
+                        console.log(response);
+                        for (var key in response) {
+                            if ((response[key]) === false) {
+                                inventory.push([key, response[key]])
+                                //inventory.push([key, response[key]])
+                            }
+                            if (key == "name") {
+                                storename = response[key]
+                            }
                         }
-                        if (key == "name") {
-                            storename = response[key]
+                    })
+                    .then(response => {
+                            console.log("we are done looping through inventory")
+                            console.log(inventory)
+                            console.log(storename)
+                            res.render("pages/itemStock", {inventory: inventory, name: storename})
                         }
-                    }
-                })
-                .then(response => {
-                        console.log("we are done looping through inventory")
-                        console.log(inventory)
-                        console.log(storename)
-                        res.render("pages/itemStock", {inventory: inventory, name: storename})
-                    }
-                )
-        })
-})
+                    )
+            })
+    } catch (error) {
+        console.error("cannot get this page")
+
+    }
+});
+
+app.get("/individualstore///", (req,res)=>{
+    res.send("Sorry this store doesn't exist. Please go back, enter an address or click on Near Me first, and try again. Thanks! :)")
+});
 
 
 // DANIEL WORK ON THIS PLEASE
@@ -498,7 +508,6 @@ app.post("/waitTime", (req, res) => {
         addressToLonLat(address)
             .then((val) => {
                 setTimeout(function() {
-                    console.log("here bitch")
                     map5Closest(val[0], val[1])
                         .then((result) => {
                             res.render("pages/waitTime", {errMsg: ' ', stores: result});
