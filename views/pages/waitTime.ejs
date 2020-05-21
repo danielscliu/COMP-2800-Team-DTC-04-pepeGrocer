@@ -12,6 +12,7 @@
     <title>Wait Time and Missing Item</title>
 
 
+
     <style>
         .custom-control-input:checked ~ .custom-control-label::before {
             color: white;
@@ -133,10 +134,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="/shoppinglist">Shopping List</a>
             </li>
-            <!--            <li class="nav-item">-->
-            <!--                <a class="nav-link" href="/lineup">Store Lineup Near Me<span-->
-            <!--                            class="sr-only">(current)</span></a>-->
-            <!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="/lineup">Store Lineup Near Me<span-->
+<!--                            class="sr-only">(current)</span></a>-->
+<!--            </li>-->
             <li class="nav-item">
                 <a class="nav-link" href="/aboutUs">About Us</a>
             </li>
@@ -193,31 +194,31 @@
         <div class="modal-content" style="background-color: #2e2b2e">
             <div class="modal-body">
                 <div class="container-fluid">
-                    <!--                    <form>-->
-                    <div class="row" id="waitTimeRow">
-                        <div class="col">
-                            <div class="form-group">
-                                <div>
-                                    <label for="waitTime" id="waitTimeTitle">Wait time input:</label>
-                                </div>
+<!--                    <form>-->
+                        <div class="row" id="waitTimeRow">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div>
+                                        <label for="waitTime" id="waitTimeTitle">Wait time input:</label>
+                                    </div>
 
-                                <div>
-                                    <input type="range" class="slider" name="waitingTime" min="0" max="120" step="1"
-                                           value="0" id="waitTimeRange">
-                                </div>
+                                    <div>
+                                        <input type="range" class="slider" name="waitingTime" min="0" max="120" step="1"
+                                               value="0" id="waitTimeRange">
+                                    </div>
 
-                                <div>
-                                    <p id="waitTimeText">Wait Time: <span id="waitTimeValue"></span> Minutes</p>
+                                    <div>
+                                        <p id="waitTimeText">Wait Time: <span id="waitTimeValue"></span> Minutes</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
                     <form action="/waitTime" method="post">
-                        <textarea style="display: none" name="storeID" id="storeIDRequested"></textarea>;
-                        <textarea style="display: none" name="waitTimeValue" id="inputval">0</textarea>;
-                        <textarea style="display: none" name="storeAddress" id="storeAddressRequested"></textarea>;
-                        <textarea style="display: none" name="storeName" id="storeNameRequested"></textarea>;
+                        <textarea style="display: none" name="storeID" id="storeIDRequested" ></textarea>;
+                        <textarea style="display: none" name="waitTimeValue" id="inputval" >0</textarea>;
+                        <textarea style="display: none" name="storeAddress" id="storeAddressRequested" ></textarea>;
+                        <textarea style="display: none" name="storeName" id="storeNameRequested" ></textarea>;
                         <div class="row justify-content-center">
                             <input class="btn custom-btn" style="color: white" type='submit' value="Submit"
                                    id="Submit" name="submitBtn">
@@ -225,11 +226,11 @@
                     </form>
 
 
-                    <div class="row justify-content-center" style="padding-top: 2vh">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+                        <div class="row justify-content-center" style="padding-top: 2vh">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
 
-                    <!--                    </form>-->
+<!--                    </form>-->
                 </div>
             </div>
         </div>
@@ -262,65 +263,84 @@
 </div>
 <!--</editor-fold>-->
 <!--<editor-fold desc="EJS repeat ">-->
-<div id='mainBlock' class="container vertical-align table-responsive searchByIngredientsContainer">
+    <div id='mainBlock' class="container vertical-align table-responsive searchByIngredientsContainer">
 
-    <div id="stores" class="container vertical-align table-responsive searchByIngredientsContainer">
-        <div id='waitTimeArea'>
-            <h6 id='store' style="color: white">Stores:</h6>
-        </div>
-        <div class="waitTimeBox">
+        <div id="stores" class="container vertical-align table-responsive searchByIngredientsContainer">
+            <div id='waitTimeArea'>
+                <h6 id='store' style="color: white">Stores:</h6>
+            </div>
+            <div class="waitTimeBox">
 
-            <% for( let index = 0; index < stores.length; index++ ) { %>
-
-
-
-                <div class="card storeCard">
-                    <div class="card-body">
-                        <div class="row">
-                            <h5 class="card-title"><%= stores[index]["name"] %></h5>
-                            <h7 class="card-subtitle"><%= stores[index]["address"] %></h7>
-                            <div style="padding-top: 3vh">
-                                <h6 class="card-text btn btn-secondary" data-toggle="modal"
-                                    id= <%= stores[index]["identification"] %>
-                                    data-target="#waitTimeModal"
-                                    onclick="editHiddenID('<%= stores[index]["identification"] %>','<%= stores[index]["address"] %>', '<%= stores[index]["name"] %>')">
-                                    Report wait time or missing item</h6>
-
-                                <!-- need to link to itemStock.ejs -->
-
-                                <a href="/individualstore/<%= stores[index]["identification"] %>"
-                                   class="btn btn-secondary" style="margin-top: 2vh">Items currently out of stock at
-                                    this store</a>
+                <% for( let index = 0; index < stores.length; index++ ) { %>
 
 
-                                <!--                            <p class="card-text">Last Reported</p>-->
+
+                    <div class="card storeCard">
+                        <div class="card-body">
+                            <div class="row">
+
+                            <div class="col-sm-6">
+                                <div class="row justify-content-center">
+
+                                    <h5 class="card-title" style="text-align: center"><%= stores[index]["name"] %></h5>
+                                    <h7 class="card-subtitle" style="text-align: center"><%= stores[index]["address"] %></h7>
+                                    <div style="padding-top: 3vh">
+                                        <div class="row justify-content-center" style="padding-left: 1vw; text-align: center">
+                                            <h6  class="card-text btn btn-secondary" data-toggle="modal"
+                                                 id= <%= stores[index]["identification"] %>
+                                                 data-target="#waitTimeModal"
+                                                 onclick="editHiddenID('<%= stores[index]["identification"] %>','<%= stores[index]["address"] %>', '<%= stores[index]["name"] %>')">Report wait time or missing item</h6>
+
+                                        </div>
+                                        <div class="row justify-content-center" style="padding-left: 1vw; text-align: center">
+                                            <!-- need to link to itemStock.ejs -->
+
+                                            <a href = "/individualstore/<%= stores[index]["identification"] %>"  class="btn btn-secondary" style="margin-top: 2vh">Items currently out of stock at this store</a>
+
+                                        </div>
+
+                                    </div>
+                                    </div>
+
+
+                                    <!--                            <p class="card-text">Last Reported</p>-->
+                            </div>
+
+
+                            <div class="col-sm-6" style="padding-top: 3vh">
+                                <div class="row justify-content-center">
+                                    <a href=<%= stores[index]["directions"] %>><img src="/imgs/googleMap.png"
+                                                                                    height="100px" width="100px"
+                                                                                    class='images'></a>
+                                </div>
+
+                            </div>
+
+
                             </div>
                         </div>
-
-                        <div class="row justify-content-center" style="padding-top: 3vh">
-                            <a href=<%= stores[index]["directions"] %>><img src="/imgs/googleMap.png"
-                                                                            height="100px" width="100px"
-                                                                            class='images'></a>
-                        </div>
                     </div>
-                </div>
 
-            <% } %>
+                <% } %>
 
+            </div>
         </div>
     </div>
-</div>
 <!--</editor-fold>-->
 
 <script>
     //-- This gets stock of the page when you click the <h6> tag "Current out of stock items at store"
-    function stockPage(hereid) {
+    function stockPage (hereid) {
         console.log(hereid)
 
     }
 
 
+
 </script>
+
+
+
 
 
 <script>
@@ -391,9 +411,9 @@
         console.log("user signed out");
         window.location.href = "/";
     });
-    <% if (errMsg != null) { %>
+<% if (errMsg != null) {%>
     <%- errMsg %>
-    <% } %>
+    <%}%>
 </script>
 </body>
 
