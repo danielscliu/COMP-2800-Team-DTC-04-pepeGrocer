@@ -20,7 +20,7 @@
             background-color: orange;
         }
         .itemStockBox {
-            height: 46vh;
+            height: 60vh;
         }
         .custom-control {
             left: 20px;
@@ -195,20 +195,17 @@
             </form>
         </div>
         <br>
-        <div style="text-align: center;" class="row justify-content-center">
+        <div class="row justify-content-center">
             <button type="submit" value="Submit List" id="submitListBtn" onclick="submitUpdate()">Save Current List</button>
-        </div>
-        <br>
-        <form style="text-align: center;" method="post" action="/showSavedList">
+        <form style="text-align: center; padding-left: 2vw; padding-right: 2vw" method="post" action="/showSavedList">
             <textarea style="display: none" name="hiddenUID" id="hiddenUID" ></textarea>;
             <button type="submit">Show Saved List</button>
         </form>
-        <br>
         <form style="text-align: center;" method="post" action="/clearShoppingList">
             <textarea style="display: none" name="hiddenUID2" id="hiddenUID2" ></textarea>;
             <button id='clear' type="submit">Delete All Items</button>
         </form>
-
+        </div>
     </div>
     <br>
     <div id="stockItems" class="container vertical-align table-responsive searchByIngredientsContainer">
