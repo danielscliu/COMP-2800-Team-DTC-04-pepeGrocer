@@ -369,7 +369,7 @@ app.get("/individualstore/:hereid/:name/:address", (req, res) => {
 });
 
 app.get("/individualstore///", (req,res)=>{
-    res.send("Sorry this store doesn't exist, please go back and try again. Thanks! :)")
+    res.send("Sorry this store doesn't exist. Please go back, enter an address or click on Near Me first, and try again. Thanks! :)")
 });
 
 
