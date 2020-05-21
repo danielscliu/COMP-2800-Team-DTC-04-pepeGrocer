@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const request = require('request');
+const rp = require('request-promise');
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
@@ -26,35 +27,36 @@ var db = admin.firestore();
 //////////////////IN PROGRESS ///////////////
 //<editor-fold desc="searchByAddress">
 function addressToLonLat(address) {
-    var filteredAddress = address.replace(/ /g, "+");
-    filteredAddress = address.replace(/,/g, "");
-    console.log(address);
+    var filteredAddress = address.replace(/\s/g, "+");
+    filteredAddress = filteredAddress.replace(/,/g, "");
+    console.log("entered address: " + filteredAddress);
     return new Promise(function (res, rej) {
-        request('https://discover.search.hereapi.com/v1/' +
-            'geocode' +
-            '?q=' + filteredAddress +
-            '&apiKey=dXmHzMbOVAkqdex7o_440a8wmmMozdhTDxFO-hClAtU', function (error, response, body) {
-
-                try {
+        var options = {
+            uri: 'https://discover.search.hereapi.com/v1/' +
+                'geocode' +
+                '?q=' + filteredAddress +
+                '&apiKey=dXmHzMbOVAkqdex7o_440a8wmmMozdhTDxFO-hClAtU',
+            json: true
+        };
+        rp(options)
+            .then((body) => {
+                // console.log(body)
+                setTimeout(function () {
                     let geocode = [];
-                    let json = JSON.parse(body)
-                    let jsonItems = json.items[0];
-                    let lat = jsonItems.access[0].lat;
-                    let lng = jsonItems.access[0].lng;
+                    let jsonItems = body.items[0];
+                    let lat = jsonItems.position.lat;
+                    let lng = jsonItems.position.lng;
                     geocode.push(lat, lng);
+                    console.log(geocode);
                     res(geocode);
+                }, 1500)
 
-                } catch (e) {
-                    console.log(e);
-                }
-
-
-            }
-        )
+            })
     })
 }
 
-
+// https://discover.search.hereapi.com/v1/geocode?q=richmond&apiKey=dXmHzMbOVAkqdex7o_440a8wmmMozdhTDxFO-hClAtU
+// addressToLonLat("9088 dixon ave richmond")
 // console.log(test);
 //</editor-fold>
 
@@ -64,36 +66,43 @@ function addressToLonLat(address) {
 async function map5Closest(lat, lon) {
     console.log("inside map5Closest already");
     return new Promise(function (res, rej) {
-        request('https://discover.search.hereapi.com/v1/' +
-            'discover' +
-            '?at=' + lat + ',' + lon +
-            '&limit=5' +
-            '&q=grocery' +
-            '&in=countryCode:can' +
-            '&apiKey=uxpiwh4lgSnnxBOklrdEVCdCaStR0ZQ_6DA1X-GGMu0', function (error, response, body) {
-
-            if (error) return rej(err);
-            try {
-                let listClosest = [];
-                let json = JSON.parse(body);
-                let obj = json.items;
-                for (i = 0; i < 5; i++) {
-                    let name = obj[i].title;
-                    name = name.replace(/'/, "")
-                    let address = obj[i].address.houseNumber + " " + obj[i].address.street +
-                        ", " + obj[i].address.city + " " + obj[i].address.state +
-                        ", " + obj[i].address.postalCode + ", " + obj[i].address.countryName;
-                    let identification = obj[i].id;
-                    let direction = makeGoogleMapsDirection(address);
-                    listClosest.push(new basicStoreInfoObjectCreator(name, address, identification, direction));
-                }
-                res(listClosest);
-            } catch (e) {
-                rej(e);
-            }
-        })
-    }) // end promise
+        var option = {
+            uri: 'https://discover.search.hereapi.com/v1/' +
+                'discover' +
+                '?at=' + lat + ',' + lon +
+                '&limit=5' +
+                '&q=grocery' +
+                '&in=countryCode:can' +
+                '&apiKey=uxpiwh4lgSnnxBOklrdEVCdCaStR0ZQ_6DA1X-GGMu0',
+            json: true
+        }
+        rp(option)
+            .then((body) => {
+                console.log(lat);
+                console.log("rp map5");
+                setTimeout(function () {
+                    // console.log(body);
+                    listClosest = [];
+                    for (i = 0; i < 5; i++) {
+                        let name = body.items[i].title;
+                        console.log(name);
+                        let obj=body.items;
+                        // console.log(body.items[i])
+                        // name = name.replace(/'/, "")
+                        let address = obj[i].address.houseNumber + " " + obj[i].address.street +
+                            ", " + obj[i].address.city + " " + obj[i].address.state +
+                            ", " + obj[i].address.postalCode + ", " + obj[i].address.countryName;
+                        let identification = obj[i].id;
+                        let direction = makeGoogleMapsDirection(address);
+                        listClosest.push(new basicStoreInfoObjectCreator(name, address, identification, direction));
+                    }
+                    res(listClosest);
+                }, 2500)
+            })
+    }) // end promise here
 }
+map5Closest(49.123, -123.333)
+
 
 function basicStoreInfoObjectCreator(name, address, identification, direction) {
     this.name = name;
@@ -332,34 +341,32 @@ app.get("/individualstore/:hereid/:name/:address", (req, res) => {
     let storename = ""
     let inventory = []
     let hereid = req.params.hereid
-    
+
     updateStoreWaitTime(hereid, req.params.name, req.params.address, 0)
-    .then( () =>{
+        .then(() => {
 
-    
-    
 
-    getItemInventory(hereid)
-        .then(response => {
-            console.log(response)
-            for (var key in response) {
-                if (typeof (response[key]) === "boolean") {
-                    inventory.push([key, response[key]])
-                    //inventory.push([key, response[key]])
-                }
-                if (key == "name") {
-                    storename = response[key]
-                }
-            }
+            getItemInventory(hereid)
+                .then(response => {
+                    console.log(response)
+                    for (var key in response) {
+                        if (typeof (response[key]) === "boolean") {
+                            inventory.push([key, response[key]])
+                            //inventory.push([key, response[key]])
+                        }
+                        if (key == "name") {
+                            storename = response[key]
+                        }
+                    }
+                })
+                .then(response => {
+                        console.log("we are done looping through inventory")
+                        console.log(inventory)
+                        console.log(storename)
+                        res.render("pages/itemStock", {inventory: inventory, name: storename})
+                    }
+                )
         })
-        .then(response => {
-                console.log("we are done looping through inventory")
-                console.log(inventory)
-                console.log(storename)
-                res.render("pages/itemStock", {inventory: inventory, name: storename})
-            }
-        )
-    })
 })
 
 
@@ -392,6 +399,7 @@ function writeShoppingList(uid, dataObject) {
 
     }
 }
+
 // DANIEL SHOPPINGLIST PATH IS HERE. NOTE IT'S COLLECTION > DOC(UID) > SHOPPINGLIST > SHOPPINGLIST
 // function writeShoppingList(uid, dataObject) {
 //     console.log("yup writing");
@@ -469,7 +477,7 @@ app.post("/lineUpNearMeQuery", (req, res) => {
                 map5Closest(val[0], val[1])
                     .then((result) => {
                         res.render("pages/waitTime", {stores: result});
-                    }).catch((err) => console.log("error map5"));
+                    }).catch((err) => console.log(err));
             })
             .catch(() => console.log("error address to LL"))
 
@@ -489,10 +497,14 @@ app.post("/waitTime", (req, res) => {
         address.replace(" ", "+");
         addressToLonLat(address)
             .then((val) => {
-                map5Closest(val[0], val[1])
-                    .then((result) => {
-                        res.render("pages/waitTime", {errMsg: ' ', stores: result});
-                    }).catch((err) => console.log("error map5"));
+                setTimeout(function() {
+                    console.log("here bitch")
+                    map5Closest(val[0], val[1])
+                        .then((result) => {
+                            res.render("pages/waitTime", {errMsg: ' ', stores: result});
+                }, 1500)
+
+                    }).catch((err) => console.log(err));
             })
             .catch(() => console.log("error address to LL"))
 
