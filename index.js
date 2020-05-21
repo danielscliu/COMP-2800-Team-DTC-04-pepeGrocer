@@ -329,38 +329,48 @@ app.get('/shoppinglist', (req, res) => {
 /// To render the page
 app.get("/individualstore/:hereid/:name/:address", (req, res) => {
     //console.log(req.params);
-    let storename = ""
-    let inventory = []
-    let hereid = req.params.hereid
-    
-    updateStoreWaitTime(hereid, req.params.name, req.params.address, 0)
-    .then( () =>{
+    let storename = "";
+    let inventory = [];
+    let hereid = req.params.hereid;
+    console.log(req.params);
 
-    
-    
+    try {
 
-    getItemInventory(hereid)
-        .then(response => {
-            console.log(response);
-            for (var key in response) {
-                if ((response[key]) === false) {
-                    inventory.push([key, response[key]])
-                    //inventory.push([key, response[key]])
-                }
-                if (key == "name") {
-                    storename = response[key]
-                }
-            }
-        })
-        .then(response => {
-                console.log("we are done looping through inventory")
-                console.log(inventory)
-                console.log(storename)
-                res.render("pages/itemStock", {inventory: inventory, name: storename})
-            }
-        )
-    })
-})
+
+        updateStoreWaitTime(hereid, req.params.name, req.params.address, 0)
+            .then(() => {
+
+
+                getItemInventory(hereid)
+                    .then(response => {
+                        console.log(response);
+                        for (var key in response) {
+                            if ((response[key]) === false) {
+                                inventory.push([key, response[key]])
+                                //inventory.push([key, response[key]])
+                            }
+                            if (key == "name") {
+                                storename = response[key]
+                            }
+                        }
+                    })
+                    .then(response => {
+                            console.log("we are done looping through inventory")
+                            console.log(inventory)
+                            console.log(storename)
+                            res.render("pages/itemStock", {inventory: inventory, name: storename})
+                        }
+                    )
+            })
+    } catch (error) {
+        console.error("cannot get this page")
+
+    }
+});
+
+app.get("/individualstore///", (req,res)=>{
+    res.send("Sorry this store doesn't exist, please go back and try again. Thanks! :)")
+});
 
 
 // DANIEL WORK ON THIS PLEASE
