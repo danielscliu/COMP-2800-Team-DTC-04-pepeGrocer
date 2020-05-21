@@ -341,9 +341,9 @@ app.get("/individualstore/:hereid/:name/:address", (req, res) => {
 
     getItemInventory(hereid)
         .then(response => {
-            console.log(response)
+            console.log(response);
             for (var key in response) {
-                if (typeof (response[key]) === "boolean") {
+                if ((response[key]) === false) {
                     inventory.push([key, response[key]])
                     //inventory.push([key, response[key]])
                 }
