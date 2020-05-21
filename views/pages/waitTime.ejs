@@ -278,29 +278,47 @@
                     <div class="card storeCard">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title"><%= stores[index]["name"] %></h5>
-                                    <h7 class="card-subtitle"><%= stores[index]["address"] %></h7>
-                                    <div style="padding-top: 3vh">
-                                        <h6  class="card-text btn btn-secondary" data-toggle="modal"
-                                            id= <%= stores[index]["identification"] %>
-                                            data-target="#waitTimeModal"
-                                        onclick="editHiddenID('<%= stores[index]["identification"] %>','<%= stores[index]["address"] %>', '<%= stores[index]["name"] %>')">Report wait time or missing item</h6>
 
-                                        <!-- need to link to itemStock.ejs -->
-                                      
-                                        <a href = "/individualstore/<%= stores[index]["identification"] %>/<%= stores[index]["name"] %>/<%= stores[index]["address"] %>"  class="btn btn-secondary" style="margin-top: 2vh">Items currently out of stock at this store</a>
-                                    
+                            <div class="col-sm-6">
+                                <div class="row justify-content-center">
+
+                                    <h5 class="card-title" style="text-align: center"><%= stores[index]["name"] %></h5>
+                                    <h7 class="card-subtitle" style="text-align: center"><%= stores[index]["address"] %></h7>
+                                    <div style="padding-top: 3vh">
+                                        <div class="row justify-content-center" style="padding-left: 1vw; text-align: center">
+                                            <h6  class="card-text btn btn-secondary" data-toggle="modal"
+                                                 id= <%= stores[index]["identification"] %>
+                                                 data-target="#waitTimeModal"
+                                                 onclick="editHiddenID('<%= stores[index]["identification"] %>','<%= stores[index]["address"] %>', '<%= stores[index]["name"] %>')">Report wait time or missing item</h6>
+
+                                        </div>
+                                        <div class="row justify-content-center" style="padding-left: 1vw; text-align: center">
+                                            <!-- need to link to itemStock.ejs -->
+
+                                            <a href = "/individualstore/<%= stores[index]["identification"] %>"  class="btn btn-secondary" style="margin-top: 2vh">Items currently out of stock at this store</a>
+
+                                        </div>
+
+                                    </div>
                                     </div>
 
 
-                                    <!--                            <p class="card-text">Last Reported</p>-->
-                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6" style="padding-top: 3vh">
+
                                 <div class="col">
+                                    <div class="row justify-content-center">
                                     <a href=<%= stores[index]["directions"] %>><img src="/imgs/googleMap.png"
                                                                                     height="100px" width="100px"
                                                                                     class='images'></a>
                                 </div>
+                                </div>
+
+                            </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -319,7 +337,7 @@
 
     }
 
-    
+
 
 </script>
 
