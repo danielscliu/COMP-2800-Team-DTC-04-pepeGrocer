@@ -16,28 +16,23 @@
             color: white;
             border-color: black;
         }
-
         .custom-control-input:checked ~ .custom-control-label::before {
             background-color: orange;
         }
-
         .itemStockBox {
-            height: 400px;
+            height: 46vh;
         }
-
         .custom-control {
             left: 20px;
             top: 20px;
             margin: 20px;
         }
-
         .itemStockBox {
             overflow-x: hidden;
         }
-        body {
-            overflow-y: hidden;
-        }
-
+        /*body {*/
+        /*    overflow-y: hidden;*/
+        /*}*/
     </style>
 
     <title>Shopping List</title>
@@ -104,7 +99,7 @@
 <!--AJAX CODE WILL BE PROVIDED-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-    <a class="navbar-brand" id='pepeGrocer' href="/menu">
+    <a class="navbar-brand pepeGrocer" href="/menu">
         <span id="pepe">pepe</span><span id="grocer">Grocer</span>
     </a>
 
@@ -182,7 +177,7 @@
 
     <div id='mainBlock' class="container vertical-align table-responsive waitTimeContainer">
         <div class="row justify-content-center" id='waitTime'>
-            <h3 style="color: white">Enter an item to add to the list</h3>
+            <h3 style="color: white; text-align: center">Enter an item to add to the list</h3>
         </div>
 
         <div class="row justify-content-center" id="addressInput">
@@ -200,20 +195,21 @@
             </form>
         </div>
         <br>
-        <div style="text-align: center;">
-            <button type="submit" value="Submit List" id="submitListBtn">Submit List</button>
+        <div class="row justify-content-center">
+            <button type="submit" value="Submit List" id="submitListBtn" onclick="submitUpdate()">Save Current List</button>
         </div>
-        <br>
-        <form style="text-align: center;" method="post" action="/showSavedList">
+        <div class="row justify-content-center" style="padding-top: 3vh; padding-bottom: 3vh">
+        <form style="text-align: center" method="post" action="/showSavedList">
             <textarea style="display: none" name="hiddenUID" id="hiddenUID" ></textarea>;
-            <button type="submit">Show saved list</button>
+            <button type="submit">Show Saved List</button>
         </form>
-        <br>
+        </div>
+        <div class="row justify-content-center">
         <form style="text-align: center;" method="post" action="/clearShoppingList">
             <textarea style="display: none" name="hiddenUID2" id="hiddenUID2" ></textarea>;
-            <button id='clear' type="submit">Clear all items</button>
+            <button id='clear' type="submit">Delete All Items</button>
         </form>
-
+        </div>
     </div>
     <br>
     <div id="stockItems" class="container vertical-align table-responsive searchByIngredientsContainer">
@@ -222,13 +218,13 @@
         </div>
         <form class="itemStockBox" method="post">
 
+            <!-- ############## This is where the checkboxes are being added -->
+
             <% for(let i=0; i < list.length; i++ ) { %>
-                <section class="custom-control custom-checkbox name='items'">
-                    <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
-                    <h5><label id='${itemNum}' style='color: white;' class="custom-control-label" for="customCheck${itemNum}"><%= list[i]['leFruit'] %></label></h5>
+                <section class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id=<%= "customCheck"+ (i+1) %>>
+                        <label id="asd" style='color: white; font-weight: bold;' class="custom-control-label" for=<%= "customCheck" + (i+1) %>><%= list[i]['leFruit'] %></label>
                     </section><% } %>
-
-
         </form>
 
     </div>
@@ -242,39 +238,43 @@
 <span><%= console.log("in EJS: " + [list.length]); %></span>
 
 
-
-
-
-
 </body>
 <script>
     var foodItemsList = [];
-
-
     // ################## Array of the items On-click of submit #########################
-
     $(document).ready(function () {
     
-
         $('#submitListBtn').on('click', function (e) {
             e.preventDefault();
             var totalCountItems = $('form').find('section').length;
-            console.log(totalCountItems);
-            for (let i = 1; i <= totalCountItems; i++) {
-                var itemValues = document.getElementById(i).innerHTML;
-                console.log((itemValues));
-                foodItemsList.push(itemValues);
-                console.log(foodItemsList);
-                Array.from(foodItemsList);
+            // console.log(totalCountItems);
+            let i = 0;
+
+            while(i < itemNum) {
+            var itemValues = document.getElementById(i).innerHTML;
+            console.log("ItemNum is: "+ itemNum);
+            console.log(itemValues);
+            foodItemsList.push(itemValues);
+            console.log(foodItemsList);
+            Array.from(foodItemsList);
+            i++;
+            console.log("Number of i is: "+ i);
+            
+            // ############ In Case the program breaks ##########
+            //     var totalCountItems = $('form').find('section').length;
+            // console.log(totalCountItems);
+            // for (let i = 1; i <= totalCountItems; i++) {
+            //     var itemValues = document.getElementById(i).innerHTML;
+            //     console.log(itemValues);
+            //     foodItemsList.push(itemValues);
+            //     console.log(foodItemsList);
+            //     Array.from(foodItemsList);
             }
 
             document.getElementById('clear').onclick = 
-
             $('#clear').on('click', function() {
-                var foodItemsList = []
-            })
-
-
+                var foodItemsList = [];
+            });
 
             //OK WORKS
             $.ajax({
@@ -287,23 +287,29 @@
             })
         });
     });
-
 </script>
 <script>
-    var itemNum = 1;
-
+    
+    var itemNum = 0;
+    $(document).ready(function () {
     $("#add").on("click", function () {
-
-        var description = document.getElementById("inputBox").value;
-
-        var shopList = `<section class="custom-control custom-checkbox name='items'">
-        <input type="checkbox" class="custom-control-input" id="customCheck${itemNum}">
-        <h5><label id='${itemNum}' style='color: white;' class="custom-control-label" for="customCheck${itemNum}">${description}</label></h5>
+        var description = document.getElementById("inputBox").value.trim();
+        var shopList = `<section class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="customChec${itemNum}">
+        <label id='${itemNum}' style='color: white; font-weight: bold;' class="custom-control-label" for="customChec${itemNum}">${description}</label>
         </section>`
+        if (description == '') {
+            $('#error').remove();
+            $(".itemStockBox").append("<br><h4 id='error' style='text-align: center'>oof, We can't add an empty item to the list</h4>");
+        }
+        else {
+        $("#error").remove();
         $(".itemStockBox").append(shopList)
         itemNum++;
+        }
         document.getElementById('inputBox').value = '';
     });
+});
 </script>
 
 <script>
@@ -317,8 +323,6 @@
             console.log("NOPE not logged in");
         }
     })
-
-
 </script>
 
 <script>
@@ -328,6 +332,13 @@
         console.log("user signed out");
         window.location.href = "/";
     });
+</script>
 
+
+<script>
+    function submitUpdate() {
+        let updateMessage = `<div class="row justify-content-center" style="color: white; text-align: center; padding-top: 2vh"><h6><b>Your shopping list has been saved.</b></h6></div>`
+        $(".itemStockBox").append(updateMessage);
+    }
 </script>
 </html>

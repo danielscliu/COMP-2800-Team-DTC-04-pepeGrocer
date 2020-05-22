@@ -3,8 +3,15 @@
 <head>
     <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" ,
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>FireBase Test</title>
+    <link rel="stylesheet" href="/style.css">
+
+
+    <title>Login</title>
 </head>
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -41,15 +48,82 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 </script>
 
 
-<body>
-<div id="firebaseui-auth-container"></div>
+<body id="loginBody">
+
+
+
+
+
+<div id='mainBlock' class="container vertical-align table-responsive">
+    <div class="row justify-content-center">
+        <h1><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h1>
+    </div>
+    <hr>
+
+        <div class="row justify-content-center">
+            <h4 style="color:white; text-align: center">
+                New User? Click one of the two buttons below to sign up!
+                <hr>
+
+            </h4>
+        </div>
+<!--    <div class="row justify-content-center">-->
+<!--        <div class="row justify-content-center">-->
+<!--            <h5 style="text-align: center; color: white">-->
+<!--                Sign in with -->
+<!--            </h5>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="row justify-content-center">
+        <div class="row justify-content-center" id="firebaseui-auth-container" style="padding-top: 10vh"></div>
+    </div>
+
+
+    <div class="row justify-content-center" style="padding-top: 5vh">
+
+    </div>
+
+    <div class="row justify-content-center" id="pepeImg" style="padding-top: 5vh">
+        <img id="pepeHypers" src="/imgs/pepeHype.png"></img>
+    </div>
+
+
+</div>
+
+<!--FACEBOOK SHARE BUTTON-->
+
+</div>
+
+<!--GOOGLE SIGN IN SECTION -->
+<script>
+
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    function googleSignin() {
+        firebase.auth().signInWithRedirect(provider);
+    }
+</script>
+<!--    CHECK AUTH CHANGE-->
+<script>
+
+    firebase.auth().getRedirectResult().then(function (result) {
+        if (result.credential) {
+            console.log("logged in via google");
+            var token = result.credential.accessToken;
+        }
+    }).catch(function (error) {
+        console.log("log in failed");
+    });
+</script>
+
 </body>
 
 <script>
 
     // CHANGE USER PERSISTENCE TO THIS SESSION (EXITS WHEN TAB/WINDOW CLOSES)
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then(function() {
+        .then(function () {
             console.log("user persistence confirmed SESSION");
             return firebase.auth().signInWithEmailAndPassword(email, password);
         });
@@ -58,14 +132,15 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     // LOG IN UI
     var uiConfig = {
 
-    // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-    signInFlow: 'popup',
+        // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+        signInFlow: 'popup',
         credentialHelper: firebaseui.auth.CredentialHelper.NONE,
         signInSuccessUrl: "/menu",
         signInOptions: [
-        // Leave the lines as is for the providers you want to offer your users.
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    ],
+            // Leave the lines as is for the providers you want to offer your users.
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        ],
         // Terms of service url.
         tosUrl: '<your-tos-url>',
         // Privacy policy url.

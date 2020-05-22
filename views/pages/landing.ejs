@@ -6,13 +6,25 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
+    <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+    <!--//FACEBOOK LOGIN SHARE-->
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '555830321768350',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v7.0'
+            });
+        };
+    </script>
 
+    <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
     <link rel="stylesheet" href="/style.css">
     <style>
         body {
             background-color: #292929;
-            overflow-y: hidden;
-            overflow-x: hidden;
+            /*background-color: black;*/
         }
 
         form {
@@ -24,9 +36,6 @@
             /* text-align: center; */
         }
 
-        .container {
-            text-align: center;
-        }
 
         #login {
             width: 100px;
@@ -50,46 +59,22 @@
             border-radius: 25px;
         }
 
-        /* div.pepe {
-            height: 60vh;
-            /* width: auto;
-            overflow-y: hidden;
-            overflow-x: hidden;
-            top: 40px;
-        } */
-
-        /* div.container {
-            text-align: center;
-        } */
-
         div.container input {
-            /* background-color: red; */
             text-align: center;
             border: white solid 2px;
             position: relative;
         }
 
         img {
-            height: 60vh;
-            /* margin-top: 5px; */
+            padding-top: 10vh;
+            height:30vh;
             width: auto;
-            /* margin-bottom: ; */
-        }
-
-
-        input.box {
-            width: 370px;
-        }
-
-        input.userlog {
-            text-align: center;
-
         }
 
         #pepe {
             position: absolute;
-            bottom: -5vh;
-            left: -5vh;
+            bottom: -15vh;
+            left: -15vh;
             width: 150px;
             height: 150px;
         }
@@ -97,38 +82,69 @@
     </style>
 
 </head>
-<body>
-<header><h3><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h3>
-    <br><h5 style="font-weight: bold;color: #AF640C;">Don’t troll yourself waiting in line</h5>
-    <br>
-    <div style="padding:10px">
-    <p style="color: white;">This app is in its early stages of development</p>
-    <p style="color: white;">Don't become a meme using this app irresponsibly</p>
-    <p style="color: white;">For now, You will get to experience the very basics of what this app has to offer</p>
-        </div>
-</header>
+
 
 <!--<form action="" method="post" style="color: white;">-->
-    <div class="container">
-        <div class="userlog">
-            <!-- <h3 >Login:</h3><input class="box" type="text" name="username">
-            <h3>Password: </h3><input class="box" type="password" name="password"><br> -->
-            <button onclick="window.location='/fLogin'" id="login" type="submit" name="submit"><h4
-                        style="color: white;">Start</h4></button>
-<!--</form>-->
+<div id='mainBlock' class="container vertical-align table-responsive missingItemContainer" style="height: 100vh">
+    <div class="row" style="margin-left: 1vw">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Try this app out!"
+           data-url="http://www.pepegrocer.herokuapp.com" data-show-count="false">Tweet</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-        </div>
+        <div class="fb-share-button" data-href="http://www.pepegrocer.herokuapp.com" data-layout="button" data-size="small" style="padding-left: 1vw">
+            <a target="_blank"
+               href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse"
+               class="fb-xfbml-parse-ignore">Share</a></div>
     </div>
-    <div style="height: 100px" class="access">
-        <!-- <span style="color: white; margin-right: 10px;">First Time? <a href="../../public/fireBase.html" style="color: #FFA31A;">Sign Up</a></span></span><br>
-        <a style="color: #FFA31A; left: 500px;" href="">Forgot Password?</a> -->
+
+
+    <div class="row justify-content-center">
+        <h3><span style="color: white;">pepe</span><span style="color: #FFA31A;">Grocer</span></h3>
+    </div>
+    <div class="row justify-content-center" style="padding-top: 3vh">
+        <h5 style="font-weight: bold;color: #AF640C; text-align: center">Don’t troll yourself waiting in line</h5>
+    </div>
+    <div class="row justify-content-center" style="padding-top: 3vh; padding-left: 3vw; padding-right: 3vw">
+        <p style="color: white; text-align: center">This app is in its early stages of development</p>
+        <p style="color: white; text-align: center">Don't become a meme using this app irresponsibly</p>
+        <p style="color: white; text-align: center;">For now, You will get to experience the very basics of what this
+            app has to offer</p>
+    </div>
+    <div class="row justify-content-center userlog" style="padding-top: 2vh">
+        <!-- <h3 >Login:</h3><input class="box" type="text" name="username">
+        <h3>Password: </h3><input class="box" type="password" name="password"><br> -->
+        <button onclick="window.location='/fLogin'" id="login" type="submit" name="submit"><h4
+                    style="color: white;">Start</h4></button>
+        <!--</form>-->
 
     </div>
-    <img id="pepe" src="/imgs/pepe.png"></img>
-    <br><br>
+    <!--    <div style="height: 100px" class="access">-->
+    <!--        &lt;!&ndash; <span style="color: white; margin-right: 10px;">First Time? <a href="../../public/fireBase.html" style="color: #FFA31A;">Sign Up</a></span></span><br>-->
+    <!--        <a style="color: #FFA31A; left: 500px;" href="">Forgot Password?</a> &ndash;&gt;-->
 
+    <!--    </div>-->
+    <div class="row justify-content-center" id="pepeImg">
+        <img id="pepe " src="/imgs/pepe.png"></img>
+    </div>
 
+</div>
 
 
 </body>
+
+<script>
+    var pepeLimit = 0;
+    document.getElementById('pepe ').addEventListener('click', myFunction);
+
+    function myFunction() {
+        console.log(pepeLimit);
+        if (pepeLimit === 4) {
+            document.getElementById('pepe ').setAttribute("src", "/imgs/tenor-1.gif");
+        } else {
+        }
+        console.log(pepeLimit);
+        pepeLimit++;
+    }
+
+</script>
 </html>

@@ -4,8 +4,32 @@
     background-color: orange;
 }
 
+.itemStockBox {
+    overflow-y: auto;
+    height: 62vh;
+    background-color: orange;
+}
+
+.outStockBox {
+    overflow-y: auto;
+    height: 48vh;
+    background-color: orange;
+}
+
+.waitTimeBox {
+    overflow-y: auto;
+    height: 56vh;
+    background-color: orange;
+}
+
 .storeCard {
     margin: 4vh;
+    background-color: lightgray;
+    border-radius: 1vh;
+}
+
+.stockCard {
+    margin: 2vh;
     background-color: lightgray;
     border-radius: 1vh;
 }
@@ -15,6 +39,35 @@
 }
 
 div#mainBlock {
+    background-color: #2e2b2e;
+}
+
+#missingItemBody{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #2e2b2e;
+}
+
+#shoppingListBody {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #2e2b2e;
+}
+
+#nearMeRow {
+    padding-top: 2vh;
+}
+
+#waitTimeBody {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #2e2b2e;
+}
+
+#itemStockBody {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #2e2b2e;
+}
+
+#loginBody {
+    font-family: Arial, Helvetica, sans-serif;
     background-color: #2e2b2e;
 }
 
@@ -47,13 +100,45 @@ div#mainBlock {
     color: white;
 }
 
+#storeNameMissingItem {
+    padding-top: 1vh;
+    color: white;
+}
+
+#enterWaitTime {
+    padding-top: 1vh;
+    color: white;
+}
+
+#waitTimeTitle {
+    padding-top: 1vh;
+    color: white;
+}
+
+.sliderCol {
+    padding-left: 5vw;
+}
+
+#submitMissingItem {
+    color: white;
+}
+
+#waitTimeText {
+    padding-top: 1vh;
+    color: white;
+}
+
 #inStock {
     color: white;
 }
 
 .navbar-nav > li {
+    margin-left: 3vw;
+    margin-right: 3vw;
+}
+
+.pepeGrocer {
     margin-left: 2vw;
-    margin-right: 2vw;
 }
 
 #notFound {
@@ -94,6 +179,12 @@ div #grey {
     background-color: #808080;
 }
 
+div #fb-blue {
+    background-color: #1774eb;
+    color:white;
+    font-weight: bold;
+}
+
 div #cream {
     background-color: #FFA31A;
 }
@@ -128,7 +219,7 @@ div #cream {
 
 .aboutUsCard {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin: 15px;
+    margin: 25px;
     background-color: #FFA31A;
 }
 

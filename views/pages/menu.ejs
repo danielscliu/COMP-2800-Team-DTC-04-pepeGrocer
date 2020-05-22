@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="shortcut icon" href="imgs/full%20size%20favicon.PNG" type="image/x-icon" sizes="16x16">
 
+    <style>
+        .top-buffer {
+            margin-top: 2vh;
+        }
+    </style>
+
     <title>Menu</title>
 </head>
 
@@ -26,6 +32,19 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 
 <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
 <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+
+<!--//FACEBOOK LOGIN SHARE-->
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '555830321768350',
+            autoLogAppEvents: true,
+            xfbml: true,
+            version: 'v7.0'
+        });
+    };
+</script>
+<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 
 <!--firebase API config files-->
 <script>
@@ -81,7 +100,7 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 
 <nav class="navbar navbar-dark bg-dark">
 
-    <a class="navbar-brand" id='pepeGrocer' href="/menu">
+    <a class="navbar-brand pepeGrocer" href="/menu">
         <span id="pepe">pepe</span><span id="grocer">Grocer</span>
     </a>
 
@@ -94,8 +113,8 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
     <ul class="navbar-nav justify-content-end">
         <li class="nav-item">
             <a data-toggle="modal" data-target="#logOutModal" class="nav-link btn btn-secondary" type='button'
-               id='signout'
-               style='color:aliceblue; width: 5em'>Log Out</a>
+               id='signOut'
+               style='color:aliceblue;'>Log Out</a>
         </li>
     </ul>
 </nav>
@@ -131,58 +150,98 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 </div>
 
 
-<div id='mainBlock' class="container vertical-align table-responsive menuContainer">
+<div id='mainBlock' class="container vertical-align table-responsive menuContainer" style="height: 92vh">
 
 
-    <div class="paragraph menuParagraph">
-        <p class="white">
-        <p>Welcome, <span id="user"></span>.</p>
-        <p>You have 5 free searches left.</p>
-        <p>Please update a missing item or
-        <p>report a lineup status to earn more searches</p>
-        </p>
+    <div class="row justify-content-center" style="text-align: center; color: white; padding-top: 5vh">
+        <h3>Welcome, <span id="user"></span>.</h3>
+<!--        <p>You have 5 free searches left.</p>-->
+<!--        <p>Please update a missing item or-->
+<!--        <p>report a lineup status to earn more searches</p>-->
+<!--        </p>-->
     </div>
 
     <div class="container menuContainer">
-        <div class="row">
+        <div class="row top-buffer">
             <div class="col-md-4 offset-md-4">
                 <div class="row">
-                    <button type="button" onclick="window.location='/underConstruction.html'" id="cream"
+                    <button type="button" onclick="window.location='/time'" id="cream"
                             class="btn-block menuBtn">Report Missing Item Wait Time
                     </button>
                 </div>
-                <div class="row">
+                <div class="row top-buffer">
                     <button id="grey" onclick="window.location='/search'" type="button" class="btn-block menuBtn">Search
                         by Ingredient
                     </button>
                 </div>
-                <div class="row">
-                    <button type="button" id="cream" onclick="window.location='/underConstruction.html'"
+                <div class="row top-buffer">
+                    <button type="button" id="cream" onclick="window.location='/shoppinglist'"
                             class="btn-block menuBtn">Shopping List
                     </button>
                 </div>
-                <div class="row">
-                    <button id="grey" type="button" onclick="window.location='/underConstruction.html'"
+                <div class="row top-buffer">
+                    <button style="display: none;" id="grey" type="button" onclick="window.location='/lineup'"
                             class="btn-block menuBtn">Store Lineup near me
                     </button>
                 </div>
-                <div class="row">
-                    <button type="button" onclick="window.location='/aboutUs'" id="cream" class="btn-block menuBtn">
+                <div class="row top-buffer">
+                    <button type="button" onclick="window.location='/aboutUs'" id="grey" class="btn-block menuBtn">
                         About Us
                     </button>
                 </div>
+<!--                <div class="row top-buffer">-->
+<!--                    <button type="button"-->
+<!--                            onclick="window.location='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse'"-->
+<!--                            id="fb-blue" class="btn-block menuBtn">-->
+<!--                        Share on facebook-->
+<!--                    </button>-->
+<!--                </div>-->
             </div>
         </div>
-
     </div>
 
 </div>
 
+
+</div>
+
+<!--FACEBOOK SHARE BUTTON-->
+<!--<div class="fb-share-button" data-href="http://www.pepegrocer.herokuapp.com" data-layout="button" data-size="large"><a-->
+<!--            target="_blank"-->
+<!--            href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.pepegrocer.herokuapp.com%2F&amp;src=sdkpreparse"></a>-->
+<!--</div>-->
+
 </body>
+<script>
+    window.onload = getLocation();
+
+    coords = []
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        console.log("Latitude: " + position.coords.latitude +
+            "<br>Longitude: " + position.coords.longitude);
+        coords.push(position.coords.latitude, position.coords.longitude);
+        console.log('my array coords are: ' + coords);
+        document.querySelector("#coordinateLongitude").value = position.coords.longitude;
+        document.querySelector("#coordinateLatitude").value = position.coords.latitude;
+
+
+        return (position.coords.latitude, position.coords.longitude);
+    }
+</script>
+
 <!--LOGOUT SCRIPT-->
 <script>
     const logout = document.querySelector("#confirmLogOut");
-    logout.addEventListener('click', function(){
+    logout.addEventListener('click', function () {
         firebase.auth().signOut();
         console.log("user signed out");
         window.location.href = "/";
