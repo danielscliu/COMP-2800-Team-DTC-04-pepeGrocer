@@ -1,6 +1,7 @@
 # 2800
 
-
+###Credits
+* Artistic credit to: Matt Furie- Creator of pepe the frog
 
 
 ### Live Link
