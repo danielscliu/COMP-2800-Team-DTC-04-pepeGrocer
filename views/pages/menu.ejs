@@ -212,6 +212,32 @@ https://firebase.google.com/docs/web/setup#available-libraries -->
 <!--</div>-->
 
 </body>
+<script>
+    window.onload = getLocation();
+
+    coords = []
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        console.log("Latitude: " + position.coords.latitude +
+            "<br>Longitude: " + position.coords.longitude);
+        coords.push(position.coords.latitude, position.coords.longitude);
+        console.log('my array coords are: ' + coords);
+        document.querySelector("#coordinateLongitude").value = position.coords.longitude;
+        document.querySelector("#coordinateLatitude").value = position.coords.latitude;
+
+
+        return (position.coords.latitude, position.coords.longitude);
+    }
+</script>
+
 <!--LOGOUT SCRIPT-->
 <script>
     const logout = document.querySelector("#confirmLogOut");
