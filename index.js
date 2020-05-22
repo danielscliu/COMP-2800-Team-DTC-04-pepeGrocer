@@ -97,7 +97,7 @@ async function map5Closest(lat, lon) {
                         listClosest.push(new basicStoreInfoObjectCreator(name, address, identification, direction));
                     }
                     res(listClosest);
-                }, 2500)
+                }, 1000)
             })
     }) // end promise here
 }
